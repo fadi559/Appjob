@@ -1,33 +1,41 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import home from "../src/Screens/home";
-import loaction from "../src/Screens/loaction";
-import share from "../src/Screens/share";
-import nofiction from "../src/Screens/nofiction";
-import profile from "../src/Screens/profile";
 import Chat from "../src/Screens/chat";
 import Tabnavictor from "./tab";
+import { StyleSheet, Button } from "react-native";
+import ChatScreen from "../src/Screens/ChatScreen";
+import Faa from "../src/Screens/Faa";
+import { ScreenStackHeaderBackButtonImage } from "react-native-screens";
 
 
-const Stacknav = () =>{
-  const Stack =createNativeStackNavigator();
+const Stacknav = (props, route) => {
+  const Stack = createNativeStackNavigator();
 
-  
-    return(
-      <NavigationContainer>
-        
-        <Stack.Navigator>
-      <Stack.Screen name=" Chat" component={ Chat}/>
-     
-      
-      
 
-        </Stack.Navigator>
-      </NavigationContainer>
+  return (
 
-     );
-    }
-  
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="Chat" 
+        component={Chat} 
+        options={({ route, navigation }) => ({
+          headerLeft: () => (<Button title="Back" onPress={() => navigation.goBack()} />),
+        }
+      )} />
+      <Stack.Screen name="ChatScreen" component={ChatScreen} options={({ route, navigation }) => (
 
-       export default Stacknav;
+        {
+          headerLeft: () => (<Button title="Back" onPress={() => navigation.goBack()} />),
+        }
+      )} />
+
+    </Stack.Navigator>
+
+
+
+  );
+}
+
+
+export default Stacknav;

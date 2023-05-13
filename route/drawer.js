@@ -5,22 +5,23 @@ import { NavigationContainer } from '@react-navigation/native';
 
 
 
-const Drawer=createDrawerNavigator();
-const Darwernav =()=>{
+const Drawer = createDrawerNavigator();
+const Darwernav = () => {
 
 
-            return(
-                
-              <Drawer>
-                
-              
+     return (
 
-              </Drawer>
-            
-             
-            );
-            
-        }
+          <Drawer.Navigator>
+               <Drawer.Screen name="ChatScreen" component={ChatScreen} options={({ route, navigation, }) => (
+                    {
+                         headerLeft: () => (<Button title="Back" onPress={() => navigation.goBack()} />),
+                    }
+               )} />
+          </Drawer.Navigator>
+
+     );
+
+}
 
 
-        export default Darwernav;
+export default Darwernav;

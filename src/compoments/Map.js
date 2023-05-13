@@ -6,7 +6,9 @@ import Loaction from '../Screens/loaction';
     
 
 const Mapp = (props) => {
+ 
   return (
+
     <MapView
     style={tw`flex-1`}
     initialRegion={{

@@ -15,26 +15,26 @@ import Chat from './chat';
 
 const Home = () => {
 
-    const data=homeData;
-    const route=useRoute;
-    const navigation=useNavigation()
+    const data = homeData;
+    const route = useRoute;
+    const navigation = useNavigation()
 
     return (
         <ScrollView>
-        
-            <View style={{flex:1,padding:20,}}>
-               
-                
-    <Cardd/>
-   
-  
-               
+
+            <View style={{ flex: 1, padding: 20, }}>
+
+
+                <Cardd />
+
+
+
             </View>
-        
-            </ScrollView>
-           
-           
-       
+
+        </ScrollView>
+
+
+
 
     )
 }

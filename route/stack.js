@@ -5,7 +5,9 @@ import Chat from "../src/Screens/chat";
 import Tabnavictor from "./tab";
 import { StyleSheet, Button } from "react-native";
 import ChatScreen from "../src/Screens/ChatScreen";
-import Faa from "../src/Screens/Faa";
+import Searchbox from "../src/Screens/Searchbox";
+import SignInScreen from "../src/Screens/SignInScreen";
+
 import { ScreenStackHeaderBackButtonImage } from "react-native-screens";
 
 
@@ -16,6 +18,9 @@ const Stacknav = (props, route) => {
   return (
 
     <Stack.Navigator>
+ 
+
+
       <Stack.Screen 
         name="Chat" 
         component={Chat} 
@@ -29,6 +34,8 @@ const Stacknav = (props, route) => {
           headerLeft: () => (<Button title="Back" onPress={() => navigation.goBack()} />),
         }
       )} />
+
+    
 
     </Stack.Navigator>
 

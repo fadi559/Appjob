@@ -1,35 +1,28 @@
+// App.js
 import React from 'react';
-    import { Text,View,Button,StyleSheet } from 'react-native';
-    import tw from 'tailwind-react-native-classnames';
-    import Mapp from '../compoments/Map';
-    import Cardd from '../compoments/Cardd';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import FullPageMap from '../compoments/Map';
 
+const Map2 = () => {
+  const data = {
+    // Add other fields as needed
+    location: {
+      latitude: 31.7717,
+      longitude: 35.2170,
+    },
+  };
 
-    
+  return (
+    <SafeAreaView style={styles.container}>
+      <FullPageMap data={data} />
+    </SafeAreaView>
+  );
+};
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
-    
-    const Loaction=({})=>{
-        return(
-                <View>
-        
-      <View style={tw`h-1/2`}>
-
-      <Mapp/>
-    
-          </View>
-    
-      <View style={tw`h-1/2`}>    
-
-      
-      
-      </View>
-    
-                </View>
-       
-        );
-        };
-    
-    export default Loaction;
-
-    const styles=StyleSheet.create({});  
+export default Map2;

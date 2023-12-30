@@ -10,7 +10,7 @@ import Stacknav from '../../route/stack';
 import { ScreensNames } from '../../route/ScreensNames';
 import ChatList from '../compoments/ChatList';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView } from 'react-native-gesture-handler';
+// import { ScrollView } from 'react-native-gesture-handler';
 import { chatData } from '../res/data/data';
 
 
@@ -21,16 +21,20 @@ const Chat = (props, route) => {
 
   const renderChatItem = () => {
 
-    return chatData.map(({ userId, conversation: { } }) => (
-      <ChatList key={userId} id={userId} chatData={chatData} />
-
-    ))
+    return chatData.map((chatItem) => {
+      return (
+        <ChatList data={chatItem} />
+      )
+    })
 
   }
 
   return (
-    <View>
-      {/* {renderChatItem()} */}
+
+    <View style={styles.continare}>
+
+      {renderChatItem()}
+
     </View>
   )
 
@@ -45,6 +49,7 @@ export default Chat;
 const styles = StyleSheet.create({
   continare: {
     flex: 1,
+    
   }
 
 })

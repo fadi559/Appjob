@@ -1,14 +1,8 @@
+import { Avatar } from "@rneui/base/dist/Avatar/Avatar";
 
 export const homeData = [
     {
-        employer: {
-            employerID: "0309887867",
-            avatar: "",
-            rating: 0,
-            compnayName: "plo",
-            contactName: "ali",
-            phoneNumber: "05835245664",
-        },
+        id: "0309887867",
         jobTitle: "painting",
         jobDiscreption: "string ",
         jobLocation: "jeursalem",
@@ -22,35 +16,111 @@ export const homeData = [
         employer: {
             avatar: "",
             rating: 0,
-            compnayName: "",
+            compnayName: "fidex",
             contactName: "",
-            phoneNumber: "",
+            phoneNumber: "0522700443",
         },
-        jobTitle: "",
+        jobTitle: "blet",
         jobDiscreption: "",
-        jobLocation: "",
+        jobLocation: "ber-shev",
         isemployerPickup: false,
         pickupLocation: "",
         payment: 0,
         isContentious: false,  // all the time 
         dayesNeeded: 10,
+        jobLocation:'tel aviv'
+        
     }
 ]
 
 export const users = {
     "1": {
-        userID: "1",
+        id:'0998948994',
+        compnayName: "aaw",
+        employerID: "01762",
         userName: "Fadi",
-        avatar: null
+        avatar: null,
+        jobLocation:'tel aviv'
     },
     "2": {
-        userID: "2",
-        userName: "Rami",
-        avatar: null
+        employerID: "0264676",
+        userName: "Rappd",
+        avatar: null,
+        compnayName: "skkil",
+        jobLocation:'tel aviv'
+    }, 
+    "3": {
+        employerID: "035646",
+        userName: "Rasmi",
+        avatar: null,
+        compnayName: "space3",
+        phoneNumber: "09988665",
+        jobLocation:'tel aviv'
+    }, 
+    "4": {
+        avatar:<Avatar
+        size={100}
+        rounded
+        icon={{ name: "pencil", type: "font-awesome" }}
+        containerStyle={{ backgroundColor: "#9700b9" }}
+      />,
+
+       employerID: "000965",
+       userName: "rajed",
+        rating: 10,
+        compnayName: "Adhd",
+        phoneNumber: "05835245664",
+        Joptype:'Painter',
+        nots:'good painter with high skills ',
+        jobLocation: "jeursalem",
+        Experience:'2012,2023',
+        skill:(['builder','painter','smith'])
+
     }
 }
 
-export const chatData = [
+
+
+export const JobAplicant =[
+    
+   {
+    id:'7893892',
+    avatar: "",
+    phoneNumber: "98789278",
+    profiledata:"",
+    name:'ali',
+    },
+    {
+    id:'37373682',
+    avatar: "",
+    phoneNumber: "09098978",
+    profiledata:"",
+    name:'fadi',
+    },
+
+    {
+
+    id:'787372',
+    avatar: "",
+    phoneNumber: "87228989",
+    profiledata:"",
+    name:'mahmad',
+    }
+
+
+]
+ export const searchData = [
+    'John Smith',
+    'Alice Johnson',
+    'Michael Brown',
+    'Emma Davis',
+    'David Wilson',
+    'Olivia Taylor',
+    // ... more search data
+  ];
+
+
+  export const chatData = [
     {
         userId: "1",
         conversation: [
@@ -80,5 +150,21 @@ export const chatData = [
                 type: 'in'
             }
         ]
+    },
+    {
+        userId: "3",
+        conversation: [
+            {
+                text: "abc",
+                time: "20:20",
+                type: 'out'
+            },
+            {
+                text: "ok",
+                time: "20:21",
+                type: 'in'
+            }
+        ]
     }
+    
 ]

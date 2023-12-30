@@ -13,31 +13,30 @@ import { users } from '../res/data/data';
 
 const ChatList = (props) => {
     const navigation = useNavigation()
-    const {userId} = props ; 
+    const { data} = props;
+    const {userId , conversation}  = data || {}
+    
+    const user = users[userId];
+    const { userName, avatar } = user || {}    
 
-    const user = users[userId]; 
-    const {userName , avatar} = user
+    const LastConversation = conversation?.[conversation?.length - 1]?.text
 
+    const navigateToChatScreen = () => {
+        navigation.navigate('stack',
+            { screen: ScreensNames.ChatScreen })
+    }
 
-    const userChat = chatData[userId];
-    const{conversation}=userChat; 
-
-    const LastConversation = conversation[conversation.length -1].text
-
-    console.log("user: " , user);
+    console.log("user:", user);
     return (
         <View>
-            <TouchableOpacity onPress={() => {
-                navigation.navigate('stack',
-                    { screen: ScreensNames.ChatScreen })
-            }}>
+            <TouchableOpacity onPress={navigateToChatScreen}>
                 <ListItem bottomDivider >
                     <Avatar
                         rounded title="A" containerStyle={{ backgroundColor: 'grey' }} />
 
                     <ListItem.Content>
-                        <ListItem.Title> {userName}</ListItem.Title>
-                        <ListItem.Subtitle> {conversation} </ListItem.Subtitle>
+                        <ListItem.Title>{userName}</ListItem.Title> 
+                        <ListItem.Subtitle> {LastConversation} </ListItem.Subtitle>
                     </ListItem.Content>
                 </ListItem>
             </TouchableOpacity>

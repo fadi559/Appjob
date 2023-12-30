@@ -2,259 +2,141 @@ import { Alert, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Home from '../Screens/home'
 import Mapp from './Map';
-import { AirbnbRating } from '@rneui/themed';
-import { Button } from '@rneui/base';
+import { BackgroundImage, Button } from '@rneui/base';
 import { Avatar } from '@rneui/themed'
-import Loaction from '../Screens/loaction';
-import Icon from 'react-native-ionicons'
-import Chat from '../Screens/chat';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import Tabnavictor from '../../route/tab';
-import { Modal} from 'react-native';
-import { useState } from 'react';
-import { Pressable } from 'react-native';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
+ import { TouchableOpacity } from 'react-native'
 import { homeData } from '../res/data/data';
-import Faa from '../Screens/Faa';
+import Ionicons from "react-native-vector-icons/Ionicons"
+import Mapbutton from './Mapbutton';
+import Phonebutton from './Phonebutton';
+import Conbutton from './Conbutton';
+import { users } from '../res/data/data';
+import Searchbox from '../Screens/Searchbox';
+import RatingComponent from './RatingComponent';
 
 
-
-const Card = (props) => {
+const Card = (props,data) => {
   const navigation = useNavigation()
-
+  const userID ='4'
+  
+  const getCompnyname =()=>{
+    return users[userID].compnayName
+  }
+  const getJoptype=()=>{
+    return users[userID].Joptype
+  }
+  const getnots =()=>{
+    return users[userID].nots
+  }
+  const getjobLocation=()=>{
+    return users[userID].jobLocation
+  }
   return (
 
     <View style={styles.container}>
-      <View style={styles.box}>
 
+      <View style={styles.box}>
+        
+      <Text style={styles.cityName}> {getjobLocation()} </Text>
+
+      <RatingComponent style={styles.RatingComponent}/>
+       
+     
         <View style={styles.Avatar}>
-          <Text style={{ right: "40%" }}> jeursalem </Text>
-          <Text style={styles.Rating}> {<AirbnbRating size={14} />}</Text>
+       {/* <Text> {users[4].avatar}  </Text> */}
+             <Avatar
+            onPress={()=>
+              navigation.navigate('Profile')}
           
-          <TouchableOpacity>
-            <Avatar
               size={45}
               rounded
               icon={{ name: 'rowing' }}
-              containerStyle={{ backgroundColor: '#3d4db7' }}
-            />
-          </TouchableOpacity>
-          <Text style={styles.text2}  key={homeData}> company </Text>
-          <Text style={styles.text2}  key={homeData}> job type</Text>
-        </View>
-
-        <View>
-        
+              containerStyle={{ backgroundColor: '#3d4db7' }}/>
+         
+          <Text style={styles.text}> {getCompnyname()} </Text>
           
-          
-          <Text style={styles.text}  key={homeData} > string:  </Text>
         </View>
+        <Text style={styles.text2} key={homeData}>{getJoptype()} </Text>
+        <Text style={styles.text2} key={homeData} > Nots: {getnots()} </Text>
 
+        <View style={styles.ViewRowButten}>
+          <View style={styles.viewconButten}>
+            <Conbutton onPress={() =>
+              navigation.navigate('stack',
+                { screen: 'Chat' })} />
+          </View>
 
-        <View style={{ marginVertical: 143,}}>
-          <Conbutton text={'chat'}onPress={() => navigation.navigate('stack', { screen: 'Chat' })} />
+          <Phonebutton userID={userID} />
+
           <Mapbutton />
-        <Chatbutton/>
-        </View>
 
+        </View>
+        
       </View>
     </View>
   )
 }
 
 
-export default Card
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  Avatar:{
+    marginTop:-50,
+
+  },
+
+  ViewRowButten: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: '',
+    marginVertical: 231,
+    marginLeft: -140,
+  },
+  viewconButten: {
+    marginTop: -140,
+    right: -136,
+    width:150,
+  },
   box: {
     width: "100%",
-    height: 460,
+    height: 473,
     padding: 5,
-    backgroundColor: '#dcdcdc',
+    backgroundColor: '#a9a9a9',
     borderRadius: 22,
     flex: 1,
   },
   text: {
-    left: '80%',
-    marginVertical: 44,
+    marginTop:1,
+    marginVertical: 1,
+    marginBottom:15,
   },
   text2: {
-    marginVertical: 10,
-    left:-22
+    marginVertical: 30,
+    marginBottom:-8,
   },
-  Rating: {
-    right: "87%",
-    height: 4,
-  },
-  Avatar:{
-    left:296,
+  cityName: {
+    borderWidth: 1,
+    alignSelf: 'center',
     
   },
-    centeredView: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 22,
-    },
-    modalView: {
-      margin: 20,
-      backgroundColor: 'white',
-      borderRadius: 20,
-      padding: 35,
-      alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-    }
+  RatingComponent:{
+   
+
+    
+  },
+
 })
 
-const CustomTitle = () => {
 
-  return (
-    <View style={{ flexDirection: 'column' }}>
-
-      <Text style={{ fontWeight: 'bold', fontSize: 40 }}>MAP</Text>
+export default Card;
 
 
-    </View>
-  );
-};
-
-const Mapbutton = (props) => {
-  const navigation = useNavigation()
-  return (
-    <View>
-      <Button
-        title={<CustomTitle />}
-        titleStyle={{ fontWeight: 'bold', fontSize: 18 }}
 
 
-        buttonStyle={{
-
-          borderColor: 'transparent',
-
-        }}
-        containerStyle={{
-          width: 200,
-          marginHorizontal: 141,
-          marginVertical: 1,
-        }}
-        icon={{
-          name: 'map-marker',
-          type: 'font-awesome',
-          size: 40,
-          color: 'white',
-        }}
-
-        iconRight
-        iconContainerStyle={{ marginLeft: 25, marginRight: -10 }}
-        onPress={() => navigation.navigate('loaction')}
-
-      />
-    </View>
-  )
-}
-
-const Conbutton = (props) => {
-  return (
-    <View>
-      <Button
-        title={props.text}
-
-        buttonStyle={{
-          backgroundColor: '#6495ed',
-          borderRadius: 13,
-
-        }}
-        titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
-        containerStyle={{
-          marginHorizontal: -3,
-
-          width: 140,
-          marginVertical: -73,
-        }}
-        icon={{
-          name: 'phone',
-          type: 'FontAwesome',
-          size: 30,
-          color: 'black',
-
-        }}
-        iconRight
-        onPress={props.onPress}
-      />
-    </View>
-  )
-}
-const Chatbutton = (props) => {
-  const navigation = useNavigation();
-  const [modalVisible, setModalVisible] = useState(false);
-
-
-  return (
-    <View>
-         <Modal
-        animationType='slide'
-        transparent={true}
-        visible={modalVisible}
-        >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>contact number:</Text>
-            <Button 
-            icon={{
-              name:'close',
-              type:"Ionicons",
-              size:10,
-              color:'black',
-              iconStyle:{height:15}
-              
-              
-              
-            }}
-            
-            onPress={() => setModalVisible(false)}/>
-          
-         
-          </View>
-        </View>
-      </Modal>
-      <Button
-        title={'contact'}
-        buttonStyle={{
-          backgroundColor: '#6495ed',
-          borderRadius: 13,
-          height:71,
-        }}
-        titleStyle={{ fontWeight: 'bold', fontSize: 23}}
-        containerStyle={{
-          marginHorizontal: -3,
-
-          width: 140,
-          marginVertical: -73,
-        }}
-        icon={{
-          name: 'chat',
-          type: 'FontAwesome',
-          size: 30,
-          color: 'black',
-
-        }}
-        iconRight
-        
-        onPress={() => setModalVisible(true)}>
-
-        </Button>
-      
-
-    </View>
-  )
-}
 
 
 

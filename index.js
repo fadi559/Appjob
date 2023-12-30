@@ -1,6 +1,10 @@
 /**
  * @format
  */
+// import 'react-native-gesture-handler';
+  import 'react-native-reanimated';
+  import 'react-native-biometrics';
+
 
 import {AppRegistry} from 'react-native';
 import App from './App';

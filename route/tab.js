@@ -13,11 +13,7 @@ import Icon from "react-native-ionicons";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Searchbox from "../src/Screens/Searchbox";
 import { TouchableOpacity } from 'react-native'
-
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Animated from 'react-native-reanimated';
-import CustomTabBar from "../src/Screens/ChatScreen";
-import SignInScreen from "../src/Screens/SignInScreen";
 
 const TabNavigtor = (props, Route) => {
   const Tab = createBottomTabNavigator();

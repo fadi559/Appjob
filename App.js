@@ -17,9 +17,14 @@ const App = () => {
       return (
            
             <View style={{ flex: 1 }}>
+                  
+            
+
                  <MainNavigator/>
+                 
 
             </View>
+            
             
            
 

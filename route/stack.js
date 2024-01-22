@@ -5,10 +5,10 @@ import Chat from "../src/Screens/chat";
 import Tabnavictor from "./tab";
 import { StyleSheet, Button } from "react-native";
 import ChatScreen from "../src/Screens/ChatScreen";
-import Searchbox from "../src/Screens/Searchbox";
-import SignInScreen from "../src/Screens/SignInScreen";
+import SignupScreen from "../src/Screens/Signup";
+import SignIn from "../src/Screens/SignIn";
 
-import { ScreenStackHeaderBackButtonImage } from "react-native-screens";
+
 
 
 const Stacknav = (props, route) => {
@@ -17,27 +17,28 @@ const Stacknav = (props, route) => {
 
   return (
 
-    <Stack.Navigator>
- 
+    <Stack.Navigator initialRouteName="SignIn">
 
-
-      <Stack.Screen 
+         <Stack.Screen 
         name="Chat" 
         component={Chat} 
         options={({ route, navigation }) => ({
           headerLeft: () => (<Button title="Back" onPress={() => navigation.goBack()} />),
         }
       )} />
-      <Stack.Screen name="ChatScreen" component={ChatScreen} options={({ route, navigation }) => (
 
-        {
-          headerLeft: () => (<Button title="Back" onPress={() => navigation.goBack()} />),
-        }
-      )} />
+    {/* //   <Stack.Screen name="ChatScreen" component={ChatScreen} options={({  }) => ( */}
 
-    
+{/*       
+    //       headerLeft: () => (<Button title="Back" onPress={() => navigation.goBack()} />),
+    //     }
+    //   )} />
+    //     */}
+       <Stack.Screen name='SignIn' component={SignIn}/> 
+       <Stack.Screen name='SignupScreen' component={SignupScreen} /> 
 
-    </Stack.Navigator>
+
+     </Stack.Navigator>
 
 
 

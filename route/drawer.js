@@ -3,7 +3,8 @@ import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/native';
-import SignInScreen from '../src/Screens/SignInScreen';
+
+
 
 
 const Drawer = createDrawerNavigator();
@@ -21,6 +22,7 @@ const Darwernav = () => {
                           onPress={() => navigation.goBack()} />),
                     }
                )} />
+             
               
               
       

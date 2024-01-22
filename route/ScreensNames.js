@@ -4,4 +4,6 @@ export const ScreensNames = {
     stack:'stack',
     SearchResults:"SearchResults",
     Home:'Home',
+    SignupScreen:'SignupScreen',
+    SignInScreen:"SignInScreen",
 }

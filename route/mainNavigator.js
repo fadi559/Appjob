@@ -4,21 +4,30 @@ import React from "react";
 import TabNavigtor from "./tab";
 import Stacknav from "./stack";
 import Darwernav from "./drawer";
-import SignInScreen from "../src/Screens/SignInScreen";
-const MainNavigator = () => {
+import SignupScreen from "../src/Screens/Signup";
+import SignIn from "../src/Screens/SignIn";
 
-    const Stack = createNativeStackNavigator();
+
+
+const Stack = createNativeStackNavigator();
+   
+const MainNavigator = (props,route) => {
+    
+    
 
     return (
         <NavigationContainer>
-            <Stack.Navigator   screenOptions={{
-                headerShown: false
-            }
-            }>
-                  <Stack.Screen name="SignInScreen " component={SignInScreen}/> 
+            <Stack.Navigator initialRouteName='stack' screenOptions={{
+                headerShown: false,
+
+            }}>
+            
+                  {/* <Stack.Screen name='SignupScreen' component={SignupScreen}/>  */}
+                  {/* <Stack.Screen name='SignInScreen' component={SignIn}/>  */}
                 <Stack.Screen name='tab' component={TabNavigtor} />
                 <Stack.Screen name='stack' component={Stacknav} />
                 <Stack.Screen name='drawer' component={Darwernav} />
+
             </Stack.Navigator>
         </NavigationContainer>
     )

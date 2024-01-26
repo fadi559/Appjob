@@ -1,6 +1,5 @@
   
-    // SignupScreen.js
-
+    
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import axios from 'axios';
@@ -18,12 +17,12 @@ const SignupScreen = ({navigtion},props) => {
 
   const handleSignup = async () => {
     setloading(true);
-      // Validate input fields (you can add more validation as needed)
+      
       if (!name || !email || !password) {
       
       }
       try {
-        const { data } = await axios.post ("http://loaclhost:8000/api/signup",{
+        const { data } = await axios.post ("http://localhost:8000/api/signup",{
         name,
          email,
           password,
@@ -79,9 +78,10 @@ const SignupScreen = ({navigtion},props) => {
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=>navigation.navigate('stack',{screen:'SignIn'})}>
-      <Text> signin </Text>
-      </TouchableOpacity>
+      <Text style={{marginTop:15}}>Already Joined  <Text style={styles.SmallSignInButton} 
+       onPress={()=>navigation.navigate('stack',{screen:'SignIn'})} >signIn</Text>  </Text>
+      
+      
     </View>
   );
 };
@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f8f8',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 28,
+    fontWeight:'500',
     marginBottom: 24,
     color: '#333',
   },
@@ -114,16 +114,21 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     height: 50,
-    backgroundColor: '#4caf50',
+    backgroundColor: 'black',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius:40,
   },
   buttonText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
   },
+  SmallSignInButton:{
+    color:'#a52a2a',
+    
+  }
 });
 
 export default SignupScreen;
@@ -131,50 +136,4 @@ export default SignupScreen;
     
     
     
-    //   // SignupScreen23.js
-
-// const SignupScreen = () => {
-//   const navigation = useNavigation();
-
-//   const [name, setName] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const handleSignup = async () => {
-//     try {
-//       const response = await axios.post('http://loaclhost:8000/api/signup', {
-//         name,
-//         email,
-//         password,
-//       });
-
-//       // Handle successful signup
-//       console.log(response.data);
-//       Alert.alert('Signup Successful', 'You can now sign in.');
-
-//       // Navigate to the sign-in screen
-//       navigation.navigate('SignIn');
-//     } catch (error) {
-//       // Handle signup error
-//       Alert.alert('Signup Failed', 'Email already exists or an error occurred during signup.');
-//       console.error('Signup Error:', error);
-//     }
-//   };
-// });
-
-// export default SignupScreen;
-
-
-
-
-
-
-//       // Handle successful signup, e.g., navigate to login screen
-//       console.log(response.data);
-//       Alert.alert('Signup Successful', 'You can now log in.');
-//     } catch (error) {
-//       // Handle signup error
-//       Alert.alert('Signup Failed', 'Email already exists or an error occurred during signup.');
-//       console.error('Signup Error:', error);
-//     }
-//   };
+  

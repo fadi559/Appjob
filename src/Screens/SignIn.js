@@ -82,13 +82,16 @@
 
 //  2SignInScreen.js
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, Image } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import Biometrics from 'react-native-biometrics';
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios';
 import Home from './home';
-import { Screen } from 'react-native-screens';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { TouchableOpacity } from 'react-native'
+import { ImageBackground } from 'react-native';
+
 
 
   const SignIn = ({navigtion}) => {
@@ -96,7 +99,10 @@ import { Screen } from 'react-native-screens';
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [authStatus, setAuthStatus] = useState('');
+
   const[loading,setloading]=useState(false);
+
 
 
   const handleSignin= async () => {
@@ -108,7 +114,7 @@ import { Screen } from 'react-native-screens';
       }
 
       try {
-        const { data } = await axios.post ("http://loaclhost:8000/api/signIn",{
+        const { data } = await axios.post ("http://localhost:8000/api/signIn",{
          email,
           password,
       });
@@ -131,36 +137,46 @@ import { Screen } from 'react-native-screens';
        
       }
     };
-    
-    
-
-    const authenticateWithFaceID = async () => {
+    const authenticate = async () => {
       try {
-        const isFaceIDAvailable = await LocalAuthentication.hasHardwareAsync() && 
-                                  await LocalAuthentication.isEnrolledAsync();
-  
-        if (isFaceIDAvailable) {
-          const isAuthenticated = await LocalAuthentication.authenticateAsync({
-            promptMessage: 'Authenticate with Face ID',
-          });
-  
-          if (isAuthenticated.success) {
-            // Face ID authentication successful, proceed with sign-in
-            handleSignIn();
+        const { available, biometryType } = await Biometrics.isSensorAvailable();
+        if (available && biometryType === Biometrics.BiometryType.FACE_ID) {
+          const { success, error } = await Biometrics.simplePrompt({ promptMessage: 'Authenticate with Face ID' });
+          if (success) {
+            // Face ID authentication successful
+            setAuthStatus('Authentication successful');
+            // Send authentication token to the backend
+            sendAuthTokenToBackend();
           } else {
-            // Face ID authentication failed
-            Alert.alert('Authentication failed', 'Unable to authenticate with Face ID');
+            setAuthStatus('Authentication failed');
           }
         } else {
-          // Face ID not available or not enrolled
-          Alert.alert('Face ID not available', 'Face ID is not available or not enrolled on this device.');
+          setAuthStatus('Face ID not available');
         }
       } catch (error) {
-        console.error('Face ID authentication error:', error);
+        console.error('Biometrics error:', error);
       }
     };
   
-  
+    const sendAuthTokenToBackend = async () => {
+      try {
+        // Send authentication token to the backend for verification
+        const response = await fetch('https://your-backend-url/authenticate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ authToken: 'your-auth-token' }), // Replace 'your-auth-token' with actual token
+        });
+        const data = await response.json();
+        console.log('Authentication response from backend:', data);
+      } catch (error) {
+        console.error('Error sending authentication token to backend:', error);
+      }
+    };
+    
+
+    
   return (
     <View style={styles.container}>
       
@@ -184,17 +200,36 @@ import { Screen } from 'react-native-screens';
         buttonStyle={styles.signInButton}
         
       />
-      <Text> not yet registered </Text>
-      <Button onPress={()=>navigation.navigate('stack',{screen:'SignupScreen'})}/>
-       {authenticateWithFaceID ? (
-        <Button
-          title={`Sign In with ${authenticateWithFaceID}`}
-          onPress={authenticateWithFaceID}
-          buttonStyle={styles.biometricButton}
+      <Text style={styles.SmallSignupButton2}> not yet registered  <Text style={styles.SmallSignupButton} 
+       onPress={()=>navigation.navigate('stack',{screen:'SignupScreen'})} >signup</Text>  </Text>
+      
+      <TouchableOpacity onPress={authenticate} style={styles.button}>
+        <Image 
+        source={require('../Images/faceidsmall.png')}
+        style={styles.faceid}
         />
-       ) : (
-        <Text>Biometrics not available on this device</Text>
-      )}
+        {/* <ImageBackground
+          source={require('../Images/faceidsmall.png')} 
+          style={styles.imageBackground}
+          resizeMode="cover"
+        >
+          <Text style={styles.buttonText}>Authenticate with Face ID</Text>
+        </ImageBackground> */}
+      </TouchableOpacity>
+
+
+
+
+
+
+
+      {/* <Text>{authStatus}</Text>
+
+      <Button  onPress={authenticate} /> */}
+   
+       
+        {/* <Text>Biometrics not available on this device</Text> */}
+      
       
 
     </View>
@@ -229,6 +264,41 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 20,
   },
+  SmallSignupButton:{
+    color:'#a52a2a',
+    height:9,
+    
+  },
+  SmallSignupButton2:{
+    marginTop:10,
+    marginBottom:80,
+  },
+  faceid:{
+
+
+  },
+  // authStatus: {
+  //   marginBottom: 30, // Add margin bottom to create space between status and button
+  // },
+  // button: {
+  //   width: 100, 
+  //   height: 100, 
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  // },
+  // imageBackground: {
+  //   flex: 1,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   borderRadius: 8, 
+  //   overflow: 'hidden',
+  // },
+  // buttonText: {
+  //   color: 'white',
+  //   fontSize: 6,
+  //   fontWeight: 'bold',
+  // },
+
 });
 
 export default SignIn;

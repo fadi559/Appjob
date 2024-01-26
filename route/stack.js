@@ -17,7 +17,7 @@ const Stacknav = (props, route) => {
 
   return (
 
-    <Stack.Navigator initialRouteName="SignIn">
+    <Stack.Navigator initialRouteName="SignIn" screenOptions={{headerShown:false,}} >
 
          <Stack.Screen 
         name="Chat" 
@@ -35,7 +35,7 @@ const Stacknav = (props, route) => {
     //   )} />
     //     */}
        <Stack.Screen name='SignIn' component={SignIn}/> 
-       <Stack.Screen name='SignupScreen' component={SignupScreen}/> 
+       <Stack.Screen name='SignupScreen' component={SignupScreen} /> 
 
 
      </Stack.Navigator>

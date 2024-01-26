@@ -1,6 +1,5 @@
 import { StyleSheet, Text, TextInput, View,Image,useEffect, Modal  } from 'react-native'
 import React, { useState } from 'react'
-// import { TouchableOpacity } from 'react-native-gesture-handler'
 import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-ionicons'
 import Animated, { useSharedValue, withTiming } from 'react-native-reanimated'
@@ -92,7 +91,6 @@ const Searchbox = ({ navigation },props) => {
           renderItem={renderItem}
           keyExtractor={(item) => item}
           style={styles.resultList}
-          
           
         />
       )}

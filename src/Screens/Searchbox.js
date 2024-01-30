@@ -111,13 +111,14 @@ const Searchbox = ({ navigation },props) => {
        }}>
  
       <Image 
+      
       source={
         value==1
       ?require('../Images/clear2.png') 
-     
-      :require('../Images/search.jpg' )}
+    
+      :require('../Images/search-100.png' )}
 
-      style={{width:value==1 ?40:70, height:value==1 ?  30: 40,}} />
+      style={{width:value==1 ?40:40, height:value==1 ?  30:40,}} />
       
        </TouchableOpacity>
   
@@ -132,11 +133,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor:'white',
     
+    
   },
   searchContainer: {
     backgroundColor: '#E7E7E7',
- 
-
   },
   
   resultsContainer: {
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   resultList: {
     marginTop: 8,
      marginVertical:-230,
-    left:15,
+    left:13,
     backgroundColor:'white',
     borderRadius:10,
   },

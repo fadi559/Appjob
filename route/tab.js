@@ -25,13 +25,15 @@ const TabNavigtor = (props, Route) => {
   return (
 
     <SafeAreaProvider >
-    <Tab.Navigator  initialRouteName="home" screenOptions={{title:''}} >
+    <Tab.Navigator  initialRouteName="home" screenOptions={{title:'',
+    headerStyle:{backgroundColor:'#3A416F',borderBottomColor:'black',
+    borderBottomWidth:0.8,},tabBarActiveTintColor:'#3A416F',}} >
 
      
       <Tab.Screen {...tabsParams.profile }  />
       {/* <Tab.Screen {...tabsParams.Nofiction} /> */}
       <Tab.Screen {...tabsParams.share} />
-      <Tab.Screen {...tabsParams.loaction} />
+      {/* <Tab.Screen {...tabsParams.loaction} /> */}
       <Tab.Screen {...tabsParams.home} />
     
 
@@ -75,37 +77,38 @@ const tabsParams ={
       ),
     }
   },
-  loaction: {
+  // loaction: {
     
-    name: "loaction",
-    component: loaction,
-    options: {
-      tabBarLabel: 'loaction',
-      tabBarIcon: ({ color, size }) => (
+  //   name: "loaction",
+  //   component: loaction,
+  //   options: {
+  //     tabBarLabel: 'loaction',
+  //     tabBarIcon: ({ color, size }) => (
        
         
-        <MaterialIcons name="location-on" size={size} color="black"/>
-      ),
-    }
-  },
+  //       <MaterialIcons name="location-on" size={size} color="black"/>
+  //     ),
+  //   }
+  // },
 
   home: {
     name: "home",
     component: home,
     options: ({ navigation}) => ({
       
-      headerRight: () => (
-        <Button
-          onPress={() => navigation.navigate('stack', { screen: 'Chat' })}
-          icon={{
-            name: 'chat',
-            type: 'Entypo'
-          }}
-          color="white"
-          title={'btat'}
-        />
+      // headerRight: () => (
+      //   <Button
+      //     onPress={() => navigation.navigate('stack', { screen: 'Chat' })}
+      //     icon={{
+      //       name: 'chat',
+      //       type: 'Entypo'
+      //     }}
+      //     color="white"
+      //     title={'btat'}
+      //   />
       
-      ),
+      // ),
+      
       headerLeft: () => (
         <Searchbox/>
       ),

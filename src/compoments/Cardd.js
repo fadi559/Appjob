@@ -1,11 +1,10 @@
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { Alert, Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Home from '../Screens/home'
 import Mapp from './Map';
 import { BackgroundImage, Button } from '@rneui/base';
 import { Avatar } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
  import { TouchableOpacity } from 'react-native'
 import { homeData } from '../res/data/data';
 import Ionicons from "react-native-vector-icons/Ionicons"
@@ -62,15 +61,14 @@ const Card = (props,data) => {
         <Text style={styles.text2} key={homeData} > Nots: {getnots()} </Text>
 
         <View style={styles.ViewRowButten}>
-          <View style={styles.viewconButten}>
+         
             <Conbutton onPress={() =>
               navigation.navigate('stack',
                 { screen: 'Chat' })} />
-          </View>
 
           <Phonebutton userID={userID} />
-
-          <Mapbutton />
+          
+    
 
         </View>
         
@@ -92,20 +90,21 @@ const styles = StyleSheet.create({
   ViewRowButten: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: '',
-    marginVertical: 231,
-    marginLeft: -140,
+    justifyContent:'',
+    marginVertical:100,
+    marginLeft:20,
+    
   },
   viewconButten: {
-    marginTop: -140,
-    right: -136,
+    marginTop: -10,
+    left:350,
     width:150,
   },
   box: {
     width: "100%",
-    height: 473,
+    height:330,
     padding: 5,
-    backgroundColor: '#f5f5dc',
+    backgroundColor: '#3A416F',
     borderRadius: 22,
     flex: 1,
   },
@@ -113,20 +112,24 @@ const styles = StyleSheet.create({
     marginTop:1,
     marginVertical: 1,
     marginBottom:15,
+    color:'#E9ECEF',
   },
   text2: {
     marginVertical: 30,
     marginBottom:-8,
+    color:'#E9ECEF',
   },
   cityName: {
-    borderWidth: 1,
+    borderWidth:0.2,
+    borderColor:"#141727",
+    borderRadius:7,
     alignSelf: 'center',
+    color:'#E9ECEF',
+    
     
   },
   RatingComponent:{
    
-
-    
   },
 
 })

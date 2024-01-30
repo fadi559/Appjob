@@ -16,6 +16,7 @@ const ShareScreen = () => {
   const [location, setLocation] = useState('');
   const [notes, setNotes] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
+  const [Phonenumber,setPhonenumber]=useState('');
 
   const handlePickImage = () => {
     ImagePicker.showImagePicker(
@@ -51,6 +52,7 @@ const ShareScreen = () => {
     console.log('Location:', location);
     console.log('Notes:', notes);
     console.log('Selected Image:', selectedImage);
+    console.log('phonenumber',Phonenumber);
     // Actual sharing logic would typically involve interacting with external services or APIs
   };
 
@@ -78,6 +80,13 @@ const ShareScreen = () => {
         placeholder="Notes"
         value={notes}
         onChangeText={(text) => setNotes(text)}
+        multiline
+        containerStyle={styles.inputContainer}
+      />
+       <Input
+        placeholder="phone"
+        value={Phonenumber}
+        onChangeText={(text) => Phonenumber(text)}
         multiline
         containerStyle={styles.inputContainer}
       />
@@ -119,7 +128,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   pickImageButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#3A416F',
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
@@ -128,7 +137,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   pickDocumentButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#3A416F',
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
@@ -146,7 +155,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   shareButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#3A416F',
     borderRadius: 8,
   },
 });

@@ -158,24 +158,7 @@ import { ImageBackground } from 'react-native';
       }
     };
   
-    const sendAuthTokenToBackend = async () => {
-      try {
-        // Send authentication token to the backend for verification
-        const response = await fetch('https://your-backend-url/authenticate', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ authToken: 'your-auth-token' }), // Replace 'your-auth-token' with actual token
-        });
-        const data = await response.json();
-        console.log('Authentication response from backend:', data);
-      } catch (error) {
-        console.error('Error sending authentication token to backend:', error);
-      }
-    };
     
-
     
   return (
     <View style={styles.container}>
@@ -203,30 +186,16 @@ import { ImageBackground } from 'react-native';
       <Text style={styles.SmallSignupButton2}> not yet registered  <Text style={styles.SmallSignupButton} 
        onPress={()=>navigation.navigate('stack',{screen:'SignupScreen'})} >signup</Text>  </Text>
       
+
+
       <TouchableOpacity onPress={authenticate} style={styles.button}>
         <Image 
         source={require('../Images/faceidsmall.png')}
         style={styles.faceid}
         />
-        {/* <ImageBackground
-          source={require('../Images/faceidsmall.png')} 
-          style={styles.imageBackground}
-          resizeMode="cover"
-        >
-          <Text style={styles.buttonText}>Authenticate with Face ID</Text>
-        </ImageBackground> */}
+       
       </TouchableOpacity>
 
-
-
-
-
-
-
-      {/* <Text>{authStatus}</Text>
-
-      <Button  onPress={authenticate} /> */}
-   
        
         {/* <Text>Biometrics not available on this device</Text> */}
       
@@ -274,30 +243,13 @@ const styles = StyleSheet.create({
     marginBottom:80,
   },
   faceid:{
-
-
+    justifyContent: 'center',
+    width: 80, 
+    height: 80, 
+    alignItems: 'center',
+    
   },
-  // authStatus: {
-  //   marginBottom: 30, // Add margin bottom to create space between status and button
-  // },
-  // button: {
-  //   width: 100, 
-  //   height: 100, 
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  // },
-  // imageBackground: {
-  //   flex: 1,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   borderRadius: 8, 
-  //   overflow: 'hidden',
-  // },
-  // buttonText: {
-  //   color: 'white',
-  //   fontSize: 6,
-  //   fontWeight: 'bold',
-  // },
+  
 
 });
 

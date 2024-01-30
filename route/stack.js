@@ -19,23 +19,19 @@ const Stacknav = (props, route) => {
 
     <Stack.Navigator initialRouteName="SignIn" screenOptions={{headerShown:false,}} >
 
-         <Stack.Screen 
+         {/* <Stack.Screen 
         name="Chat" 
         component={Chat} 
-        options={({ route, navigation }) => ({
+        options={({ route, navigation }) => ({ 
           headerLeft: () => (<Button title="Back" onPress={() => navigation.goBack()} />),
         }
-      )} />
+       
+      )} /> */}
 
-    {/* //   <Stack.Screen name="ChatScreen" component={ChatScreen} options={({  }) => ( */}
-
-{/*       
-    //       headerLeft: () => (<Button title="Back" onPress={() => navigation.goBack()} />),
-    //     }
-    //   )} />
-    //     */}
+     
+    
        <Stack.Screen name='SignIn' component={SignIn}/> 
-       <Stack.Screen name='SignupScreen' component={SignupScreen} /> 
+       <Stack.Screen name='SignupScreen' component={SignupScreen} />
 
 
      </Stack.Navigator>

@@ -10,7 +10,7 @@ import { Rating } from '@rneui/base';
 import Stacknav from '../../route/stack'; 
 import { useNavigation } from '@react-navigation/native';
 import Chat from './chat';
-import CardList from '../compoments/CardList';
+
 import Searchbox from './Searchbox';
 
 
@@ -22,7 +22,7 @@ const Home = () => {
     
 
     return (
-        <ScrollView style={{backgroundColor:"white"}}>
+        <ScrollView style={{backgroundColor:"#EBEFF4"}}>
 
             <View style={{ flex: 1, padding: 20, }}>
                 <Cardd/>

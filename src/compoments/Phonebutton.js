@@ -56,24 +56,22 @@ const Phonebutton = (props) => {
   
         <Button
           buttonStyle={{
-            backgroundColor: '#f5f5f5',
+            backgroundColor: '#53618A',
             borderRadius: 13,
-            height: 71,
             borderWidth: 0.2,
-            borderColor: 'black',
-          }}
-          titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
-          containerStyle={{
-            marginHorizontal: -3,
-  
-            width: 155,
+            borderColor: '#627594',
+            width:120,
+            marginVertical:0,
+          
+           
             
           }}
+         
           icon={{
             name: 'phone',
             type: 'FontAwesome',
             size: 30,
-            color: 'black',
+            color: '#E9ECEF',
   
           }}
           iconRight

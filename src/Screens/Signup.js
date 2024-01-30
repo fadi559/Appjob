@@ -13,26 +13,27 @@ const SignupScreen = ({navigtion},props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const[loading,setloading]=useState(false);
+  const [PhoneNumber,setPhoneNumber] = useState('');
 
 
   const handleSignup = async () => {
     setloading(true);
       
-      if (!name || !email || !password) {
+      if (!name || !email || !password ) {
       
       }
       try {
         const { data } = await axios.post ("http://localhost:8000/api/signup",{
-        name,
+          name,
          email,
           password,
+          
       });
       if(data.error){
 
         Alert.alert(data.error);
       }
       else {
-      
         setloading(false);
         console. log ("SIGN up SUCCESS »> ", data); 
         Alert.alert ("Sign up successful");
@@ -42,9 +43,18 @@ const SignupScreen = ({navigtion},props) => {
         Alert.alert('Signup Failed', error);
         console.error('Signup Error:', error);
         setloading(false);
-       
       }
     };
+    // const handleSubmit = async () => {
+    //   try {
+    //     await axios.post('http://localhost:8000/api/phoneNumber', { PhoneNumber });
+    //     Alert.alert('Success', 'Phone number stored successfully');
+    //   } catch (error) {
+    //     Alert.alert('Error', 'Failed to store phone number');
+    //     console.error('Error storing phone number:', error);
+    //   }
+    // };
+  
 
   return (
    
@@ -74,7 +84,7 @@ const SignupScreen = ({navigtion},props) => {
         placeholder="Your Password"
         secureTextEntry
       />
-
+    
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>

@@ -13,20 +13,24 @@ const Conbutton = (props) => {
         <Button
 
           buttonStyle={{
-            backgroundColor: '#f5f5f5',
+            backgroundColor: '#53618A',
             borderRadius: 13,
             borderWidth: 0.2,
-            borderColor: 'black',
+            borderColor: '#627594',
+            width:120,
+            marginHorizontal:40,
+            marginVertical:0,
+            height:50,
+            right:10,
           }}
-          titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
-          containerStyle={{
-            right:-12,
-          }}
+          
+            
+          
           icon={{
             name: 'chat',
             type: 'FontAwesome',
             size: 30,
-            color: 'black',
+            color: '#E9ECEF',
           }}
           onPress={() =>
             navigation.navigate('stack',

@@ -5,27 +5,30 @@ import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'reac
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import SignIn from './SignIn';
+import { Api } from '../res/api';
 
 
 const SignupScreen = ({navigtion},props) => {
     const navigation = useNavigation(props);
+    const [PhoneNumber, setPhoneNumber] =useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const[loading,setloading]=useState(false);
-  const [PhoneNumber,setPhoneNumber] = useState('');
+  
 
 
   const handleSignup = async () => {
     setloading(true);
       
-      if (!name || !email || !password ) {
+      if (!name || !email || !password|| !PhoneNumber) {
       
       }
       try {
-        const { data } = await axios.post ("http://localhost:8000/api/signup",{
+        const { data } = await axios.post (Api.signup,{
           name,
          email,
+         PhoneNumber,
           password,
           
       });
@@ -84,7 +87,15 @@ const SignupScreen = ({navigtion},props) => {
         placeholder="Your Password"
         secureTextEntry
       />
+     <TextInput
+        style={styles.input}
+        value={PhoneNumber}
+        onChangeText={(text) => setPhoneNumber(text)}
+        placeholder="Your PhoneNumber "
+        keyboardType="numeric"
+        maxLength={10}
     
+      /> 
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>

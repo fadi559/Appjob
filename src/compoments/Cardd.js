@@ -57,7 +57,7 @@ const Card = (props,data) => {
           <Text style={styles.text}> {getCompnyname()} </Text>
           
         </View>
-        <Text style={styles.text2} key={homeData}>{getJoptype()} </Text>
+        <Text style={styles.text2} key={homeData}> {getJoptype()} </Text>
         <Text style={styles.text2} key={homeData} > Nots: {getnots()} </Text>
 
         <View style={styles.ViewRowButten}>
@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#3A416F',
     borderRadius: 22,
     flex: 1,
+    borderWidth:0.3,
   },
   text: {
     marginTop:1,

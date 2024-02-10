@@ -18,32 +18,7 @@ const ShareScreen = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [Phonenumber,setPhonenumber]=useState('');
 
-  const handlePickImage = () => {
-    ImagePicker.showImagePicker(
-      { title: 'Select Image', mediaType: 'photo' },
-      (response) => {
-        if (!response.didCancel) {
-          setSelectedImage(response);
-        }
-      }
-    );
-  };
-
-  const handlePickDocument = async () => {
-    try {
-      const result = await DocumentPicker.pick({
-        type: [DocumentPicker.types.allFiles],
-      });
-      console.log(result);
-      // Handle the selected document
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        // User cancelled the picker
-      } else {
-        throw err;
-      }
-    }
-  };
+  
 
   const handleShare = () => {
     // Implement the logic to share the content (job, skills, location, notes, and selected image/document)
@@ -86,11 +61,13 @@ const ShareScreen = () => {
        <Input
         placeholder="phone"
         value={Phonenumber}
-        onChangeText={(text) => Phonenumber(text)}
+        onChangeText={(text) => setPhonenumber(text)}
         multiline
         containerStyle={styles.inputContainer}
+        maxLength={10}
+        keyboardType="numeric"
       />
-      <View style={styles.buttonContainer}>
+      {/* <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.pickImageButton} onPress={handlePickImage}>
           <MaterialIcons name="photo-camera" size={24} color="white" />
         </TouchableOpacity>
@@ -103,7 +80,9 @@ const ShareScreen = () => {
           <Text>Selected Image:</Text>
           <Image source={{ uri: selectedImage.uri }} style={styles.selectedImage} />
         </View>
-      )}
+      )} */}
+
+
       <Button
         title="Share"
         onPress={handleShare}
@@ -126,6 +105,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 16,
+    width:150,
   },
   pickImageButton: {
     backgroundColor: '#3A416F',
@@ -156,7 +136,7 @@ const styles = StyleSheet.create({
   },
   shareButton: {
     backgroundColor: '#3A416F',
-    borderRadius: 8,
+    borderRadius: 20,
   },
 });
 

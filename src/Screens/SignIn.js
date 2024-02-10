@@ -91,6 +91,7 @@ import Home from './home';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native'
 import { ImageBackground } from 'react-native';
+import { Api } from '../res/api';
 
 
 
@@ -114,7 +115,7 @@ import { ImageBackground } from 'react-native';
       }
 
       try {
-        const { data } = await axios.post ("http://localhost:8000/api/signIn",{
+        const { data } = await axios.post (Api.signIn,{
          email,
           password,
       });

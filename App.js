@@ -11,7 +11,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import Tabnavictor from './route/tab';
 import Stacknav from './route/stack';
 import MainNavigator from './route/mainNavigator';
-
+import { useContext } from 'react';
+import { UserContext } from './src/compoments/usercontext';
 
 const App = () => {
       return (
@@ -19,9 +20,11 @@ const App = () => {
             <View style={{ flex: 1 }}>
                   
             
-
+          
+           
                  <MainNavigator/>
                  
+                
 
             </View>
             

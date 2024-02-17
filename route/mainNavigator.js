@@ -16,6 +16,7 @@ const MainNavigator = (props,route) => {
     
 // stack is the initial route 
     return (
+        
         <NavigationContainer>  
             <Stack.Navigator initialRouteName='stack' screenOptions={{
                 headerShown: false,
@@ -30,6 +31,7 @@ const MainNavigator = (props,route) => {
 
             </Stack.Navigator>
         </NavigationContainer>
+        
     )
 }
 

@@ -15,6 +15,8 @@ import Searchbox from "../src/Screens/Searchbox";
 import { TouchableOpacity } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+
+
 const TabNavigtor = (props, Route) => {
   const Tab = createBottomTabNavigator();
 
@@ -24,6 +26,8 @@ const TabNavigtor = (props, Route) => {
 
   return (
 
+    
+    
     <SafeAreaProvider >
     <Tab.Navigator  initialRouteName="home" screenOptions={{title:'',
     headerStyle:{backgroundColor:'#3A416F',borderBottomColor:'black',
@@ -39,6 +43,7 @@ const TabNavigtor = (props, Route) => {
 
     </Tab.Navigator>
     </SafeAreaProvider>
+    
   )
 
 }

@@ -1,42 +1,119 @@
 // ShareScreen.js
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { useContext } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity,Alert} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-// import { Input, Button } from 'react-native-elements';
 import { Button,Input } from '@rneui/base';
-import ImagePicker from 'react-native-image-picker';
-import DocumentPicker from 'react-native-document-picker';
-import mime from 'react-native-mime-types';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import jwt_decode from "jwt-decode";
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import {UserType } from '../compoments/usercontext';
+
 
 const ShareScreen = () => {
   const navigation = useNavigation();
-  const [job, setJob] = useState('');
+  const [jobType, setJobType] = useState('');
   const [skills, setSkills] = useState('');
   const [location, setLocation] = useState('');
   const [notes, setNotes] = useState('');
-  const [selectedImage, setSelectedImage] = useState(null);
   const [Phonenumber,setPhonenumber]=useState('');
+  const [userId,setuserId]=useState('');
+
+
+
+  const handlepost =async () => {
+    
+    const jobPostData = {
+      location,
+      skills,
+      jobType,
+    };
+    try {
+      const response = await fetch('http://localhost:8000/api/jobposts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Include the JWT token here if your endpoint requires authentication
+        },
+        body: JSON.stringify(jobPostData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Something went wrong');
+      }
+  
+      const responseData = await response.json();
+      console.log('Job posted successfully:', responseData);
+      // Optionally, refresh your job posts list to include the new post
+    } catch (error) {
+      console.error('Error posting job:', error);
+    }
+  };
+
 
   
+    
+  
+    
+  // const [userId,setuserId]=useContext(UserType);
 
-  const handleShare = () => {
-    // Implement the logic to share the content (job, skills, location, notes, and selected image/document)
-    console.log('Job:', job);
-    console.log('Skills:', skills);
-    console.log('Location:', location);
-    console.log('Notes:', notes);
-    console.log('Selected Image:', selectedImage);
-    console.log('phonenumber',Phonenumber);
-    // Actual sharing logic would typically involve interacting with external services or APIs
-  };
+
+  // the second try 
+  // const createPost = async () => {
+
+  //   const postData = {
+  //     userId,
+  //   };
+
+  //   if (job) {
+  //     postData.job = job;
+  //   }
+
+  //   axios
+  //     .post("http://localhost:8000/CreatPost", postData)
+  //     .then((response) => {
+  //       setJob("");
+  //     })
+  //     .catch((error) => {
+  //       console.log("error creating post", error);
+  //     });
+  // };
+
+
+  
+  // the first try 
+    
+  // const createPost = async () => {
+
+  //   try {
+
+  //     const postData = {
+       
+  //       job:job,
+  //       userId: userId,
+  //     };
+
+  //     const response = await axios.post(
+  //       "http://localhost:8000/api/CreatPost",
+  //       postData
+  //     );
+
+  //     console.log("post created", response.data);
+  //     if (response.status === 201) {
+  //       navigation.navigate('tab',{screen:'home'});
+  //     }
+  //   } catch (error) {
+  //     console.log("error creating post", error);
+  //   }
+  // };
+
 
   return (
     <View style={styles.container}>
       <Input
         placeholder="Job"
-        value={job}
-        onChangeText={(text) => setJob(text)}
+        value={jobType}
+        onChangeText={(text) => setJobType(text)}
         containerStyle={styles.inputContainer}
       />
       <Input
@@ -67,25 +144,10 @@ const ShareScreen = () => {
         maxLength={10}
         keyboardType="numeric"
       />
-      {/* <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.pickImageButton} onPress={handlePickImage}>
-          <MaterialIcons name="photo-camera" size={24} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.pickDocumentButton} onPress={handlePickDocument}>
-          <MaterialIcons name="attach-file" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
-      {selectedImage && (
-        <View>
-          <Text>Selected Image:</Text>
-          <Image source={{ uri: selectedImage.uri }} style={styles.selectedImage} />
-        </View>
-      )} */}
-
-
+      
       <Button
         title="Share"
-        onPress={handleShare}
+        onPress={handlepost}
         buttonStyle={styles.shareButton}
         containerStyle={styles.shareButtonContainer}
       />

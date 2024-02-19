@@ -1,7 +1,7 @@
- import 'react-native-gesture-handler';
+import 'react-native-gesture-handler';
 // import { GestureHandlerRootView } from 'react-native-gesture-handler';
-  import 'react-native-reanimated';
-  import 'react-native-biometrics';
+import 'react-native-reanimated';
+import 'react-native-biometrics';
 
 
 import React from 'react';
@@ -12,27 +12,16 @@ import Tabnavictor from './route/tab';
 import Stacknav from './route/stack';
 import MainNavigator from './route/mainNavigator';
 import { useContext } from 'react';
-import { UserContext } from './src/compoments/usercontext';
+import {  UserProvider } from './src/compoments/usercontext';
 
 const App = () => {
       return (
-           
             <View style={{ flex: 1 }}>
-                  
-            
-          
-           
-                 <MainNavigator/>
-                 
-                
-
+                  <UserProvider>
+                        <MainNavigator />
+                  </UserProvider>
             </View>
-            
-            
-           
-
       )
-
 }
 
 export default App;

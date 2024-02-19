@@ -10,7 +10,7 @@ import { Api } from '../res/api';
 
 const SignupScreen = ({navigtion},props) => {
     const navigation = useNavigation(props);
-    const [PhoneNumber, setPhoneNumber] =useState('');
+    const [phoneNumber, setphoneNumber] =useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,14 +21,14 @@ const SignupScreen = ({navigtion},props) => {
   const handleSignup = async () => {
     setloading(true);
       
-      if (!name || !email || !password|| !PhoneNumber) {
+      if (!name || !email || !password|| !phoneNumber) {
       
       }
       try {
         const { data } = await axios.post (Api.signup,{
           name,
          email,
-         PhoneNumber,
+         phoneNumber,
           password,
           
       });
@@ -89,8 +89,8 @@ const SignupScreen = ({navigtion},props) => {
       />
      <TextInput
         style={styles.input}
-        value={PhoneNumber}
-        onChangeText={(text) => setPhoneNumber(text)}
+        value={phoneNumber}
+        onChangeText={(text) => setphoneNumber(text)}
         placeholder="Your PhoneNumber "
         keyboardType="numeric"
         maxLength={10}

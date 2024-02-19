@@ -81,6 +81,7 @@ const Card = (props,data) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    
   },
   Avatar:{
     marginTop:-50,
@@ -129,10 +130,7 @@ const styles = StyleSheet.create({
     
     
   },
-  RatingComponent:{
-   
-  },
-
+  
 })
 
 

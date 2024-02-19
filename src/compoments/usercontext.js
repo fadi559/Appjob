@@ -1,14 +1,14 @@
-// import { createContext, useState } from "react";
+import { createContext, useState } from "react";
 
-// const UserType = createContext();
+const UserContext = createContext();
 
-// const UserContext = ({ children }) => {
-//   const [userId, setUserId] = useState("");
-//   return (
-//     <UserType.Provider value={{ userId , setUserId }}>
-//       {children}
-//     </UserType.Provider>
-//   );
-// };
+const UserProvider = ({ children }) => {
+    const [userId, setUserId] = useState("");
+    return (
+        <UserContext.Provider value={{ userId, setUserId }}>
+            {children}
+        </UserContext.Provider>
+    );
+};
 
-// export { UserType, UserContext };
+export { UserContext, UserProvider };

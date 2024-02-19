@@ -42,45 +42,6 @@
 
 
 
-
-
-// import React, { useState } from 'react';
-// import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-// import axios from 'axios';
-
-// const SignInScreen = () => {
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const handleSignIn = async () => {
-//     try {
-//       const serverUrl = 'http://127.0.0.1:3000'; // Replace with your server IP
-      
-
-//       const response = await axios.post(serverUrl, {
-//         username,
-//         password,
-//       });
-
-//       if (response.data.success) {
-//         console.log('Authentication successful');
-//         // Navigate to the home screen or perform actions after successful sign-in
-//       } else {
-//         console.error('Authentication failed:', response.data.message);
-//         // Handle authentication failure (e.g., show error message)
-//       }
-//     } catch (error) {
-//       console.error('Error during sign-in:', error.message);
-//     }
-//   };
-
-
-
-
-
-
-
-//  2SignInScreen.js
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert, Image } from 'react-native';
 import { Input, Button } from 'react-native-elements';

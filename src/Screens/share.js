@@ -8,7 +8,8 @@ import jwt_decode from "jwt-decode";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {UserType } from '../compoments/usercontext';
-
+import { UserContext } from '../compoments/usercontext';
+import { Api } from '../res/api';
 
 const ShareScreen = () => {
   const navigation = useNavigation();
@@ -17,7 +18,7 @@ const ShareScreen = () => {
   const [location, setLocation] = useState('');
   const [notes, setNotes] = useState('');
   const [Phonenumber,setPhonenumber]=useState('');
-  const [userId,setuserId]=useState('');
+  const {userId,setuserId}=useContext(UserContext);
 
 
 
@@ -27,85 +28,28 @@ const ShareScreen = () => {
       location,
       skills,
       jobType,
+      notes,
+      
     };
     try {
-      const response = await fetch('http://localhost:8000/api/jobposts', {
+      const response = await fetch(Api.share, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // Include the JWT token here if your endpoint requires authentication
+          // 'Authorization': `Bearer ${token}`, // Include the JWT token here if your endpoint requires authentication
         },
         body: JSON.stringify(jobPostData),
       });
-  
-      if (!response.ok) {
-        throw new Error('Something went wrong');
-      }
+
+      console.log("res.status: " , response.status);
   
       const responseData = await response.json();
       console.log('Job posted successfully:', responseData);
       // Optionally, refresh your job posts list to include the new post
     } catch (error) {
-      console.error('Error posting job:', error);
+      console.log('Error posting job:', error);
     }
   };
-
-
-  
-    
-  
-    
-  // const [userId,setuserId]=useContext(UserType);
-
-
-  // the second try 
-  // const createPost = async () => {
-
-  //   const postData = {
-  //     userId,
-  //   };
-
-  //   if (job) {
-  //     postData.job = job;
-  //   }
-
-  //   axios
-  //     .post("http://localhost:8000/CreatPost", postData)
-  //     .then((response) => {
-  //       setJob("");
-  //     })
-  //     .catch((error) => {
-  //       console.log("error creating post", error);
-  //     });
-  // };
-
-
-  
-  // the first try 
-    
-  // const createPost = async () => {
-
-  //   try {
-
-  //     const postData = {
-       
-  //       job:job,
-  //       userId: userId,
-  //     };
-
-  //     const response = await axios.post(
-  //       "http://localhost:8000/api/CreatPost",
-  //       postData
-  //     );
-
-  //     console.log("post created", response.data);
-  //     if (response.status === 201) {
-  //       navigation.navigate('tab',{screen:'home'});
-  //     }
-  //   } catch (error) {
-  //     console.log("error creating post", error);
-  //   }
-  // };
 
 
   return (

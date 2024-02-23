@@ -1,31 +1,57 @@
 import { NavigationContainer, useRoute } from '@react-navigation/native';
 import React from 'react';
-import { Text, View, Button } from 'react-native';
-// import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { Text, View, Button, StyleSheet } from 'react-native';
 import { FlatList,ScrollView } from 'react-native';
-import Tab from '../../route/tab';
-import { homeData } from '../res/data/data';
 import Cardd from '../compoments/Cardd';
-import { Rating } from '@rneui/base';
-import Stacknav from '../../route/stack'; 
-import { useNavigation } from '@react-navigation/native';
-import Chat from './chat';
-
-import Searchbox from './Searchbox';
+import { useContext,useCallback,useState,useEffect } from 'react';
+import { UserContext } from '../compoments/usercontext';
+import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import Card from '../compoments/Cardd';
 
 
 const Home = () => {
-
-    const data = homeData;
-    const route = useRoute;
-    const navigation = useNavigation()
     
-
+    const { userId, setUserId } = useContext(UserContext);
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    useEffect(() => {
+  
+      const fetchUsers = async () => {
+        const token = await AsyncStorage.getItem("authToken");
+        const decodedToken = jwt_decode(token);
+        const userId = decodedToken.userId;
+        setUserId(userId);
+      };
+  
+      fetchUsers();
+      }, []);
+      useEffect(() => {
+      fetchPosts();
+      }, []);
+  
+      useFocusEffect(
+      useCallback(() => {
+          fetchPosts();
+      }, [])
+      );
+      const fetchPosts = async () => {
+          try {
+            const response = await axios.get("http://localhost:8000/api/getposts");
+            setPosts(response.data);
+          } catch (error) {
+            console.log("error fetching posts", error);
+          }
+        };
+      
+  
     return (
-        <ScrollView style={{backgroundColor:"#EBEFF4"}}>
+        <ScrollView style={styles.ScrollView}>
 
-            <View style={{ flex: 1, padding: 20, }}>
-                <Cardd/>
+            <View style={styles.mainview}>
+            
+         <Cardd/>
              
             </View>
 
@@ -36,6 +62,17 @@ const Home = () => {
 
     )
 }
+const styles = StyleSheet.create({
+    ScrollView:{
+    backgroundColor:"#EBEFF4",
+    },
+    mainview:{
+        flex:1,
+        padding:20,
+
+    },
+})
+
 export default Home;
 
 

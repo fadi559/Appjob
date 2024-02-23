@@ -21,14 +21,15 @@ const ShareScreen = () => {
   const {userId,setuserId}=useContext(UserContext);
 
 
-
   const handlepost =async () => {
     
     const jobPostData = {
+      
       location,
       skills,
       jobType,
       notes,
+      Phonenumber
       
     };
     try {

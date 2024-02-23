@@ -1,50 +1,71 @@
-import { Alert, Image, StyleSheet, Text, View } from 'react-native'
+import {StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Home from '../Screens/home'
-import Mapp from './Map';
-import { BackgroundImage, Button } from '@rneui/base';
 import { Avatar } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native';
- import { TouchableOpacity } from 'react-native'
-import { homeData } from '../res/data/data';
-import Ionicons from "react-native-vector-icons/Ionicons"
-import Mapbutton from './Mapbutton';
 import Phonebutton from './Phonebutton';
 import Conbutton from './Conbutton';
-import { users } from '../res/data/data';
-import Searchbox from '../Screens/Searchbox';
 import RatingComponent from './RatingComponent';
+import { useContext,useCallback,useState,useEffect } from 'react';
+import { UserContext } from '../compoments/usercontext';
+import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import ShareScreen from '../Screens/share';
 
 
-const Card = (props,data) => {
+
+
+const Card = (props,data,jobType,notes,item) => {
   const navigation = useNavigation()
-  const userID ='4'
-  
-  const getCompnyname =()=>{
-    return users[userID].compnayName
-  }
-  const getJoptype=()=>{
-    return users[userID].Joptype
-  }
-  const getnots =()=>{
-    return users[userID].nots
-  }
-  const getjobLocation=()=>{
-    return users[userID].jobLocation
-  }
-  return (
+  const { userId, setUserId } = useContext(UserContext);
+  const [posts, setPosts] = useState([]);
 
+  useEffect(() => {
+
+    const fetchUsers = async () => {
+      const token = await AsyncStorage.getItem("authToken");
+      const decodedToken = jwt_decode(token);
+      const userId = decodedToken.userId;
+      setUserId(userId);
+    };
+
+    fetchUsers();
+    }, []);
+    useEffect(() => {
+    fetchPosts();
+    }, []);
+
+    useFocusEffect(
+    useCallback(() => {
+        fetchPosts();
+    }, [])
+    );
+    const fetchPosts = async () => {
+        try {
+          const response = await axios.get("http://localhost:8000/api/getposts");
+          setPosts(response.data);
+        } catch (error) {
+          console.log("error fetching posts", error);
+        }
+      };
+    
+
+  return (
+    
     <View style={styles.container}>
 
+     
+  
       <View style={styles.box}>
         
-      <Text style={styles.cityName}> {getjobLocation()} </Text>
-
+      
+      <Text style={styles.cityName}>getjobLocation</Text>
+      
       <RatingComponent style={styles.RatingComponent}/>
        
      
         <View style={styles.Avatar}>
-       {/* <Text> {users[4].avatar}  </Text> */}
+      
              <Avatar
             onPress={()=>
               navigation.navigate('Profile')}
@@ -54,11 +75,11 @@ const Card = (props,data) => {
               icon={{ name: 'rowing' }}
               containerStyle={{ backgroundColor: '#3d4db7' }}/>
          
-          <Text style={styles.text}> {getCompnyname()} </Text>
+          <Text style={styles.text}>getname</Text>
           
         </View>
-        <Text style={styles.text2} key={homeData}> {getJoptype()} </Text>
-        <Text style={styles.text2} key={homeData} > Nots: {getnots()} </Text>
+        <Text style={styles.text2} >{jobType}</Text>
+        <Text style={styles.text2}  > Nots:getnots </Text>
 
         <View style={styles.ViewRowButten}>
          
@@ -66,17 +87,13 @@ const Card = (props,data) => {
               navigation.navigate('stack',
                 { screen: 'Chat' })} />
 
-          <Phonebutton userID={userID} />
-          
-    
-
+          <Phonebutton />
         </View>
-        
       </View>
     </View>
+ 
   )
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -130,6 +147,7 @@ const styles = StyleSheet.create({
     
     
   },
+  
   
 })
 

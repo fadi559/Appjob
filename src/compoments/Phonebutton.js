@@ -44,7 +44,7 @@ const Phonebutton = (props) => {
               </View >
               <View  style={{ width:130,height:34}}> 
   
-              <Text > number: {getUserPhoneNumber()} </Text>
+              <Text > number: getUserPhoneNumber </Text>
   
               </View>
   

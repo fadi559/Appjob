@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity,Alert} from 'react-
 import { useNavigation } from '@react-navigation/native';
 import { Button,Input } from '@rneui/base';
 import jwt_decode from "jwt-decode";
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {UserType } from '../compoments/usercontext';
 import { UserContext } from '../compoments/usercontext';
@@ -14,24 +14,23 @@ import { Api } from '../res/api';
 const ShareScreen = () => {
   const navigation = useNavigation();
   const [jobType, setJobType] = useState('');
-  const [skills, setSkills] = useState('');
   const [location, setLocation] = useState('');
   const [notes, setNotes] = useState('');
   const [Phonenumber,setPhonenumber]=useState('');
-  const {userId,setuserId}=useContext(UserContext);
+  const {user,setUser}=useContext(UserContext);
+  const [textInputValue, setTextInputValue] = useState('');
 
 
   const handlepost =async () => {
     
     const jobPostData = {
-      
+      User:user.name,
       location,
-      skills,
       jobType,
       notes,
-      Phonenumber
-      
+      Phonenumber,
     };
+    console.log(jobPostData);
     try {
       const response = await fetch(Api.share, {
         method: 'POST',
@@ -46,6 +45,14 @@ const ShareScreen = () => {
   
       const responseData = await response.json();
       console.log('Job posted successfully:', responseData);
+      setJobType('');
+      setLocation('');
+      setNotes('');
+      setPhonenumber('');
+      setTimeout(() => {
+      }, 1000);
+      
+      navigation.navigate("tab",{screen:'home'})
       // Optionally, refresh your job posts list to include the new post
     } catch (error) {
       console.log('Error posting job:', error);
@@ -54,19 +61,18 @@ const ShareScreen = () => {
 
 
   return (
+
     <View style={styles.container}>
+      <View>
+        
+      </View>
       <Input
         placeholder="Job"
         value={jobType}
         onChangeText={(text) => setJobType(text)}
         containerStyle={styles.inputContainer}
       />
-      <Input
-        placeholder="Skills"
-        value={skills}
-        onChangeText={(text) => setSkills(text)}
-        containerStyle={styles.inputContainer}
-      />
+      
       <Input
         placeholder="Location"
         value={location}
@@ -97,6 +103,8 @@ const ShareScreen = () => {
         containerStyle={styles.shareButtonContainer}
       />
     </View>
+   
+
   );
 };
 

@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View } from 'react-native'
+import {StyleSheet, Text, View,FlatList, ScrollView } from 'react-native'
 import React from 'react'
 import { Avatar } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native';
@@ -6,18 +6,20 @@ import Phonebutton from './Phonebutton';
 import Conbutton from './Conbutton';
 import RatingComponent from './RatingComponent';
 import { useContext,useCallback,useState,useEffect } from 'react';
-import { UserContext } from '../compoments/usercontext';
+import { UserContext } from './usercontext';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import ShareScreen from '../Screens/share';
+import jwt_decode from "jwt-decode";
+import CardItem from './CardItem';
+import { Api } from '../res/api';
 
 
 
-
-const Card = (props,data,jobType,notes,item) => {
+const Card = ({item}) => {
   const navigation = useNavigation()
-  const { userId, setUserId } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -25,8 +27,8 @@ const Card = (props,data,jobType,notes,item) => {
     const fetchUsers = async () => {
       const token = await AsyncStorage.getItem("authToken");
       const decodedToken = jwt_decode(token);
-      const userId = decodedToken.userId;
-      setUserId(userId);
+      const user = decodedToken.user;
+      setUser(user);
     };
 
     fetchUsers();
@@ -42,7 +44,7 @@ const Card = (props,data,jobType,notes,item) => {
     );
     const fetchPosts = async () => {
         try {
-          const response = await axios.get("http://localhost:8000/api/getposts");
+          const response = await axios.get(Api.RenderCard);
           setPosts(response.data);
         } catch (error) {
           console.log("error fetching posts", error);
@@ -53,48 +55,14 @@ const Card = (props,data,jobType,notes,item) => {
   return (
     
     <View style={styles.container}>
-
-     
-  
-      <View style={styles.box}>
-        
+    {posts?.map((post) => (
+      <CardItem post={post}/>
       
-      <Text style={styles.cityName}>getjobLocation</Text>
-      
-      <RatingComponent style={styles.RatingComponent}/>
-       
-     
-        <View style={styles.Avatar}>
-      
-             <Avatar
-            onPress={()=>
-              navigation.navigate('Profile')}
-          
-              size={45}
-              rounded
-              icon={{ name: 'rowing' }}
-              containerStyle={{ backgroundColor: '#3d4db7' }}/>
-         
-          <Text style={styles.text}>getname</Text>
-          
-        </View>
-        <Text style={styles.text2} >{jobType}</Text>
-        <Text style={styles.text2}  > Nots:getnots </Text>
-
-        <View style={styles.ViewRowButten}>
-         
-            <Conbutton onPress={() =>
-              navigation.navigate('stack',
-                { screen: 'Chat' })} />
-
-          <Phonebutton />
-        </View>
-      </View>
-    </View>
- 
+    ))}
+    </View> 
   )
+  
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -126,6 +94,7 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     flex: 1,
     borderWidth:0.3,
+    marginTop:30,
   },
   text: {
     marginTop:1,
@@ -139,7 +108,7 @@ const styles = StyleSheet.create({
     color:'#E9ECEF',
   },
   cityName: {
-    borderWidth:0.2,
+    
     borderColor:"#141727",
     borderRadius:7,
     alignSelf: 'center',

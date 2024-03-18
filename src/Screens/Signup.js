@@ -6,7 +6,8 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import SignIn from './SignIn';
 import { Api } from '../res/api';
-
+import { UserContext } from '../compoments/usercontext';
+import { useContext } from 'react';
 
 const SignupScreen = ({navigtion},props) => {
     const navigation = useNavigation(props);
@@ -15,7 +16,7 @@ const SignupScreen = ({navigtion},props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const[loading,setloading]=useState(false);
-  
+  const {setUser}=useContext(UserContext);
 
 
   const handleSignup = async () => {
@@ -39,6 +40,7 @@ const SignupScreen = ({navigtion},props) => {
       else {
         setloading(false);
         console. log ("SIGN up SUCCESS »> ", data); 
+        setUser(data.user)
         Alert.alert ("Sign up successful");
         navigation.navigate('stack',{screen:'SignIn'});
       }
@@ -48,15 +50,7 @@ const SignupScreen = ({navigtion},props) => {
         setloading(false);
       }
     };
-    // const handleSubmit = async () => {
-    //   try {
-    //     await axios.post('http://localhost:8000/api/phoneNumber', { PhoneNumber });
-    //     Alert.alert('Success', 'Phone number stored successfully');
-    //   } catch (error) {
-    //     Alert.alert('Error', 'Failed to store phone number');
-    //     console.error('Error storing phone number:', error);
-    //   }
-    // };
+    
   
 
   return (

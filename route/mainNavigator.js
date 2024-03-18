@@ -22,9 +22,7 @@ const MainNavigator = (props,route) => {
                 headerShown: false,
 
             }}>
-            
-                  {/* <Stack.Screen name='SignupScreen' component={SignupScreen}/>  */}
-                  {/* <Stack.Screen name='SignInScreen' component={SignIn}/>  */}
+        
                 <Stack.Screen name='tab' component={TabNavigtor} />
                 <Stack.Screen name='stack' component={Stacknav} />
                 <Stack.Screen name='drawer' component={Darwernav} />

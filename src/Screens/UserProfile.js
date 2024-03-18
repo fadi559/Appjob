@@ -1,17 +1,18 @@
-
-import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useEffect } from 'react';
+import React from 'react'
+import ProfilePage from './profile'
 import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
 
 
 
 
-const ProfilePage = () => {
-  const {user,setUser}=useContext(UserContext);
-  
+const UserProfile = (props) => {
 
+  const {User}=props
+
+  const {user,setUser}=useContext(UserContext);
+console.log("userr",user);
   const userProfile = {
     name: 'John Doe',
     avatarUrl: 'https://example.com/avatar.jpg', // Replace with actual avatar URL
@@ -23,55 +24,45 @@ const ProfilePage = () => {
     isElite: true,
   };
 
-
-  // useEffect(() => {
-  //   fetch(`http://your-nodejs-backend.com/api/userId`)
-  //     .then(response => response.json())
-  //     .then(data => setUser(data))
-  //     .catch(error => console.error(error));
-  // }, [user]);
-
-  // if (!user) return <Text>Loading...</Text>;
-
-
   return (
+    
     <ScrollView style={styles.container}>
 
-      <View style={styles.profileHeader}>
-        <Image source={require("../Images/Avatar.png")} style={styles.avatar} />
-        <View style={styles.headerTextContainer}>
+<View style={styles.profileHeader}>
+  <Image source={require("../Images/Avatar.png")} style={styles.avatar} />
+  <View style={styles.headerTextContainer}>
 
-          <Text style={styles.name}>{user.name}</Text>
+    <Text style={styles.name}>{User}</Text>
 
-        
-         
-        </View>
+  
+   
+  </View>
+</View>
+
+<View style={styles.section}>
+  <Text style={styles.sectionTitle}>Skills</Text>
+  <View style={styles.skillsContainer}>
+    {userProfile.skills.map((skill, index) => (
+      <View key={index} style={styles.skillBadge}>
+        <Text style={styles.skill}>{skill}</Text>
       </View>
+    ))}
+  </View>
+</View>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Skills</Text>
-        <View style={styles.skillsContainer}>
-          {userProfile.skills.map((skill, index) => (
-            <View key={index} style={styles.skillBadge}>
-              <Text style={styles.skill}>{skill}</Text>
-            </View>
-          ))}
-        </View>
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Experience</Text>
-        {userProfile.experience.map((exp, index) => (
-          <TouchableOpacity key={index} style={styles.experienceItem}>
-            <Text style={styles.experienceText}>{exp.company} - {exp.role}</Text>
-            <Text style={styles.experienceYears}>{exp.years} years</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </ScrollView>
-  );
-};
-
+<View style={styles.section}>
+  <Text style={styles.sectionTitle}>Experience</Text>
+  {userProfile.experience.map((exp, index) => (
+    <TouchableOpacity key={index} style={styles.experienceItem}>
+      <Text style={styles.experienceText}>{exp.company} - {exp.role}</Text>
+      <Text style={styles.experienceYears}>{exp.years} years</Text>
+    </TouchableOpacity>
+  ))}
+</View>
+</ScrollView>
+   
+  )
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -161,7 +152,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfilePage;
 
-
-
+export default UserProfile

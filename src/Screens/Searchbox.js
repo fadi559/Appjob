@@ -8,19 +8,18 @@ import { JobAplicant, homeData, users } from '../res/data/data'
 import { useNavigation } from '@react-navigation/native'
 import { FlatList } from 'react-native'
 import { searchData } from '../res/data/data'
-
-
-
+import { UserContext } from '../compoments/usercontext'
+import { useContext } from 'react'
 
 
 const Searchbox = ({ navigation },props) => {
 
   const [isExpanded, setIsExpanded] = useState(true);
   const [isModalVisible, setModalVisible] = useState(false);
- 
+  const {user,setUser}=useContext(UserContext);
   const animation =useSharedValue(0);
   const [value,setValue]= useState(0);
-
+// console.log('userr',user);
   const animatdStyle =useAnimatedStyle(() => {
     return{
       width:
@@ -33,28 +32,25 @@ const Searchbox = ({ navigation },props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    const filteredResults = searchData  .filter((result) =>
-      result.toLowerCase().includes(query.toLowerCase())
-    );
-    setSearchResults(filteredResults);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [users, setUsers] = useState([]);
+  
+  const handleSearch = async () => {
+    if (!searchTerm.trim()) {
+      setUser([]);
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/users/search?q=${searchTerm}`);
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error('Failed to fetch users:', error);
+      // Handle the error (e.g., show an alert)
+    }
   };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.resultItem} onPress={() => handleResultPress(item)}>
-      <Text>{item}</Text>
-    </TouchableOpacity>
-  );
-  
-
-  const handleResultPress = (result) => {
-    // Handle the selected result (e.g., navigate or perform an action)
-    console.log('Selected result:', result);
-    // For example, you can navigate to a details screen
-    // navigation.navigate('Details', { result });
-  };
-  
 
   return (
     <View style={styles.screen}>
@@ -81,19 +77,22 @@ const Searchbox = ({ navigation },props) => {
         <TextInput
           style={styles.textInput}
           placeholder="Search..."
-          onChangeText={handleSearch}
-          value={searchQuery}
+          onChangeText={setSearchTerm}
+          value={searchTerm}
+          onSubmitEditing={handleSearch}
         />
       </View>
-      {searchQuery !== '' && (
+      {searchTerm!== '' && (
         <FlatList
-          data={searchResults}
-          renderItem={renderItem}
-          keyExtractor={(item) => item}
+          data={user}
+          keyExtractor={item => item._user} 
           style={styles.resultList}
-          
+          renderItem={({ item }) => (
+            <Text style={styles.userItem}>{item.name}</Text> // Adjust to match your user schema
+          )}
         />
       )}
+      
       
     </View>
        
@@ -114,6 +113,7 @@ const Searchbox = ({ navigation },props) => {
       
       source={
         value==1
+       
       ?require('../Images/clear2.png') 
     
       :require('../Images/search-100.png' )}
@@ -167,3 +167,26 @@ const styles = StyleSheet.create({
   
 })
 export default Searchbox
+
+
+// const handleSearch = (query) => {
+//   setSearchQuery(query);
+//   const filteredResults = searchData  .filter((result) =>
+//     result.toLowerCase().includes(query.toLowerCase())
+//   );
+//   setSearchResults(filteredResults);
+// };
+
+// const renderItem = ({ item }) => (
+//   <TouchableOpacity style={styles.resultItem} onPress={() => handleResultPress(item)}>
+//     <Text>{item}</Text>
+//   </TouchableOpacity>
+// );
+
+
+// const handleResultPress = (result) => {
+//   // Handle the selected result (e.g., navigate or perform an action)
+//   console.log('Selected result:', result);
+//   // For example, you can navigate to a details screen
+//   // navigation.navigate('Details', { result });
+// };

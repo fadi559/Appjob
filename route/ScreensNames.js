@@ -6,4 +6,6 @@ export const ScreensNames = {
     Home:'Home',
     SignupScreen:'SignupScreen',
     SignInScreen:"SignInScreen",
+    UserProfile:"UserProfile",
+    
 }

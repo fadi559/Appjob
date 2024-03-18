@@ -1,34 +1,34 @@
 import { Alert, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { BackgroundImage, Button } from '@rneui/base';
+import { Button } from '@rneui/base';
 import { useNavigation } from '@react-navigation/native';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
 import { TouchableOpacity } from 'react-native'
-
 import { Modal } from 'react-native';
 import { useState } from 'react';
-import { homeData, users } from '../res/data/data';
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
-
+import { useContext } from 'react';
+import { UserContext } from './usercontext';
+import CardItem from './CardItem';
 
 
 const Phonebutton = (props) => {
     const navigation = useNavigation();
-    const {userID} = props
+    const {Phonenumber} =props
     const [modalVisible, setModalVisible] = useState(false);
+    const { user, setUser} = useContext(UserContext);
+    const [posts, setPosts] = useState([]);
+    
 
-    const getUserPhoneNumber = () => {
-      return users[userID].phoneNumber
-    }
-  
     return (
       <View>
+        
         <Modal
           animationType='slide'
           transparent={true}
           visible={modalVisible}
         >
           <View style={styles.centeredView}>
+        
             <View style={styles.modalView}>
   
               <View style={styles.IconButton}>
@@ -42,16 +42,18 @@ const Phonebutton = (props) => {
                 </TouchableOpacity>
   
               </View >
-              <View  style={{ width:130,height:34}}> 
+              
+              <View style={styles.text}> 
   
-              <Text > number: getUserPhoneNumber </Text>
+              <Text > number:{Phonenumber}</Text>
   
               </View>
-  
+             
             </View>
   
-  
+
           </View>
+          
         </Modal>
   
         <Button
@@ -62,22 +64,16 @@ const Phonebutton = (props) => {
             borderColor: '#627594',
             width:120,
             marginVertical:0,
-          
-           
-            
           }}
-         
           icon={{
             name: 'phone',
             type: 'FontAwesome',
             size: 30,
             color: '#E9ECEF',
-  
           }}
           iconRight
-  
           onPress={() => setModalVisible(true)}>
-  
+
         </Button>
   
   
@@ -99,13 +95,20 @@ const Phonebutton = (props) => {
       padding: 35,
       alignItems: 'center',
       shadowColor: '#000',
+      height:100,
     },
     IconButton:{
+      marginTop:-30,
       left: 82, 
       marginVertical: -20,
        height: 40
 
-    }
+    },
+    text:{
+      marginTop:15,
+      right:5,
+    },
+
   })
    
 export default Phonebutton;

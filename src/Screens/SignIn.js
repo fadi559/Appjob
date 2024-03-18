@@ -42,7 +42,7 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, Alert, Image } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import Biometrics from 'react-native-biometrics';
@@ -53,7 +53,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native'
 import { ImageBackground } from 'react-native';
 import { Api } from '../res/api';
-
+import TopNotification from '../compoments/AlertPro';
+import { UserContext } from '../compoments/usercontext';
 
 
   const SignIn = ({navigtion}) => {
@@ -62,6 +63,9 @@ import { Api } from '../res/api';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [authStatus, setAuthStatus] = useState('');
+  const [notificationVisible, setNotificationVisible] = useState(false);
+  const {setUser}=useContext(UserContext);
+
 
   const[loading,setloading]=useState(false);
 
@@ -86,10 +90,11 @@ import { Api } from '../res/api';
       }
       else {
         setloading(false);
-        console.log ("SIGNIN SUCCESS »> ", data); 
-
-        Alert.alert ("Sign in successful");
+        // console.log ("SIGNIN SUCCESS »> ", data.user); 
+        setUser(data.user)
+        // Alert.alert ("Sign in successful");
         navigation.navigate('tab',{screen:'home'});
+      
       }
 
       }  catch (error) {
@@ -143,8 +148,8 @@ import { Api } from '../res/api';
         title="Sign In"
         onPress={handleSignin}
         buttonStyle={styles.signInButton}
-        
       />
+       
       <Text style={styles.SmallSignupButton2}> not yet registered  <Text style={styles.SmallSignupButton} 
        onPress={()=>navigation.navigate('stack',{screen:'SignupScreen'})} >signup</Text>  </Text>
       

@@ -3,16 +3,54 @@ import React from 'react'
 import ProfilePage from './profile'
 import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
-
+import { Api } from '../res/api';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 
 
 const UserProfile = (props) => {
-
-  const {User}=props
-
+  
+  const{usershare,setusershare}=useContext(UserContext);
   const {user,setUser}=useContext(UserContext);
-console.log("userr",user);
+  const [posts, setPosts] = useState([]);
+  
+
+console.log("usershare:",usershare);
+console.log("setusershare:",setusershare);
+
+useEffect(() => {
+
+  const fetchUsers = async () => {
+    const token = await AsyncStorage.getItem("authToken");
+    const decodedToken = jwt_decode(token);
+    const user = decodedToken.user;
+    setUser(user);
+  };
+
+  fetchUsers();
+  }, []);
+  useEffect(() => {
+  fetchPosts();
+  }, []);
+
+  useFocusEffect(
+  useCallback(() => {
+      fetchPosts();
+  }, [])
+  );
+  const fetchPosts = async () => {
+      try {
+        const response = await axios.get(Api.RenderCard);
+        setPosts(response.data);
+      } catch (error) {
+        console.log("error fetching posts", error);
+      }
+    };
+     console.log("renderr:",posts);
+  
   const userProfile = {
     name: 'John Doe',
     avatarUrl: 'https://example.com/avatar.jpg', // Replace with actual avatar URL
@@ -28,15 +66,18 @@ console.log("userr",user);
     
     <ScrollView style={styles.container}>
 
+
 <View style={styles.profileHeader}>
   <Image source={require("../Images/Avatar.png")} style={styles.avatar} />
   <View style={styles.headerTextContainer}>
-
-    <Text style={styles.name}>{User}</Text>
-
   
-   
+  {posts?.map((post) => (
+    
+    <Text style={styles.name}>{post?.usershare}</Text>
+    ))}
+
   </View>
+ 
 </View>
 
 <View style={styles.section}>
@@ -63,6 +104,7 @@ console.log("userr",user);
    
   )
 }
+  
 const styles = StyleSheet.create({
   container: {
     flex: 1,

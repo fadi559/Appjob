@@ -4,9 +4,10 @@ const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [usershare, setuesershare] =useState();
 
     return (
-        <UserContext.Provider value={{ user, setUser}}>
+        <UserContext.Provider value={{ user, setUser,usershare,setuesershare}}>
             {children}
         </UserContext.Provider>
     );

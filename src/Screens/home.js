@@ -13,37 +13,7 @@ import Card from '../compoments/RenderCardd';
 
 const Home = () => {
     
-    const { userId, setUserId } = useContext(UserContext);
-    const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(false);
-    useEffect(() => {
-  
-      const fetchUsers = async () => {
-        const token = await AsyncStorage.getItem("authToken");
-        const decodedToken = jwt_decode(token);
-        const userId = decodedToken.userId;
-        setUserId(userId);
-      };
-  
-      fetchUsers();
-      }, []);
-      useEffect(() => {
-      fetchPosts();
-      }, []);
-  
-      useFocusEffect(
-      useCallback(() => {
-          fetchPosts();
-      }, [])
-      );
-      const fetchPosts = async () => {
-          try {
-            const response = await axios.get("http://localhost:8000/api/getposts");
-            setPosts(response.data);
-          } catch (error) {
-            console.log("error fetching posts", error);
-          }
-        };
+    
       
   
     return (

@@ -24,7 +24,8 @@ const CardItem = (props) => {
     const {notes}=props.post
     const {Phonenumber}=props.post
     
-     console.log(props.post);
+    //   console.log("props:",props.post);
+    
     const navigation = useNavigation()
     // const { userId, setUserId } = useContext(UserContext);
   
@@ -40,11 +41,9 @@ const CardItem = (props) => {
             <RatingComponent style={styles.RatingComponent} />
 
             <View style={styles.Avatar}>
-               
                 <Avatar
                     onPress={() =>
                         navigation.navigate('drawer',{screen:'UserProfile',User:User})}
-
                     size={45}
                     rounded
                     icon={{ name: 'rowing' }}
@@ -63,7 +62,8 @@ const CardItem = (props) => {
 
             </View>
         </View>
-        </View>
+        
+        </View>   
     )
 }
 

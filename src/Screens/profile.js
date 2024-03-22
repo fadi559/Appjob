@@ -4,6 +4,7 @@ import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'rea
 import { useEffect } from 'react';
 import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
+import { Avatar } from '@rneui/themed';
 
 
 
@@ -38,7 +39,9 @@ const ProfilePage = () => {
     <ScrollView style={styles.container}>
 
       <View style={styles.profileHeader}>
-        <Image source={require("../Images/Avatar.png")} style={styles.avatar} />
+       <Avatar size={120} rounded 
+       icon={{name:'rowing'}}  
+       containerStyle={{ backgroundColor: '#3d4db7' }}/>
         <View style={styles.headerTextContainer}>
 
           <Text style={styles.name}>{user.name}</Text>

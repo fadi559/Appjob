@@ -10,8 +10,10 @@ import axios from 'axios';
 import {UserType } from '../compoments/usercontext';
 import { UserContext } from '../compoments/usercontext';
 import { Api } from '../res/api';
+import UserProfile from './UserProfile';
 
-const ShareScreen = () => {
+
+const ShareScreen = (props) => {
   const navigation = useNavigation();
   const [jobType, setJobType] = useState('');
   const [location, setLocation] = useState('');
@@ -19,7 +21,7 @@ const ShareScreen = () => {
   const [Phonenumber,setPhonenumber]=useState('');
   const {user,setUser}=useContext(UserContext);
   const [textInputValue, setTextInputValue] = useState('');
-
+  const{usershare,setusershare}=useContext(UserContext);
 
   const handlepost =async () => {
     
@@ -30,7 +32,9 @@ const ShareScreen = () => {
       notes,
       Phonenumber,
     };
-    console.log(jobPostData);
+    if (Phonenumber.length === 10 && /^\d+$/.test(Phonenumber)) 
+    // console.log("jobpost:",jobPostData);
+   
     try {
       const response = await fetch(Api.share, {
         method: 'POST',
@@ -39,10 +43,11 @@ const ShareScreen = () => {
           // 'Authorization': `Bearer ${token}`, // Include the JWT token here if your endpoint requires authentication
         },
         body: JSON.stringify(jobPostData),
+        
       });
-
-      console.log("res.status: " , response.status);
-  
+      
+      // console.log("res.status: " , response.status);
+    
       const responseData = await response.json();
       console.log('Job posted successfully:', responseData);
       setJobType('');
@@ -51,11 +56,16 @@ const ShareScreen = () => {
       setPhonenumber('');
       setTimeout(() => {
       }, 1000);
-      
       navigation.navigate("tab",{screen:'home'})
       // Optionally, refresh your job posts list to include the new post
+      
+      
     } catch (error) {
       console.log('Error posting job:', error);
+      
+    }
+    else{
+    Alert.alert('Invalid Phone Number', 'Please enter a valid 10-digit phone number.');
     }
   };
 
@@ -103,8 +113,6 @@ const ShareScreen = () => {
         containerStyle={styles.shareButtonContainer}
       />
     </View>
-   
-
   );
 };
 

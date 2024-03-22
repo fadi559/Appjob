@@ -27,15 +27,13 @@ const Conbutton = (props) => {
             height:50,
             right:10,
           }}
-
           icon={{
             name: 'chat',
             type: 'FontAwesome',
             size: 30,
             color: '#E9ECEF',
           }}
-          
-       
+     onPress={()=>Alert.alert('the user didnt add information')}
        />
         
       </View>

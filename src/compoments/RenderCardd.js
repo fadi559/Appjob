@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View,FlatList, ScrollView } from 'react-native'
+import {StyleSheet, Text, View,FlatList, ScrollView, Share } from 'react-native'
 import React from 'react'
 import { Avatar } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native';
@@ -14,6 +14,7 @@ import ShareScreen from '../Screens/share';
 import jwt_decode from "jwt-decode";
 import CardItem from './CardItem';
 import { Api } from '../res/api';
+import UserProfile from '../Screens/UserProfile';
 
 
 
@@ -50,6 +51,7 @@ const Card = ({item}) => {
           console.log("error fetching posts", error);
         }
       };
+      // console.log("renderr:",posts);
     
 
   return (
@@ -57,6 +59,7 @@ const Card = ({item}) => {
     <View style={styles.container}>
     {posts?.map((post) => (
       <CardItem post={post}/>
+     
       
     ))}
     </View> 
@@ -66,20 +69,16 @@ const Card = ({item}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
   },
   Avatar:{
     marginTop:-50,
-
   },
-
   ViewRowButten: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent:'',
     marginVertical:100,
     marginLeft:20,
-    
   },
   viewconButten: {
     marginTop: -10,
@@ -113,8 +112,6 @@ const styles = StyleSheet.create({
     borderRadius:7,
     alignSelf: 'center',
     color:'#E9ECEF',
-    
-    
   },
   
   

@@ -15,7 +15,6 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons'
 const Drawer = createDrawerNavigator();
 const Darwernav = () => {
 
-
      return (
 
           <Drawer.Navigator>
@@ -28,8 +27,17 @@ const Darwernav = () => {
                )} /> */}
              
              <Drawer.Screen name='UserProfile' component={UserProfile} 
+             
              options={({ route, navigation, }) => ( {
-               headerLeft:()=>(<Button style={styles.Button} 
+               headerStyle:{
+                    backgroundColor:"white"
+
+               },
+               swipeEdgeWidth:0,
+               title:"",
+               drawerType:'front',
+               headerLeft:()=>( <Button style={styles.Button} 
+                    
                     icon={{name:'arrow-back',
                     type:'FontAwesome',
                     style:{color:'white', backgroundColor:"white"},

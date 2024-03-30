@@ -31,13 +31,11 @@ const Card = ({item}) => {
       const user = decodedToken.user;
       setUser(user);
     };
-
     fetchUsers();
     }, []);
     useEffect(() => {
     fetchPosts();
     }, []);
-
     useFocusEffect(
     useCallback(() => {
         fetchPosts();
@@ -51,20 +49,18 @@ const Card = ({item}) => {
           console.log("error fetching posts", error);
         }
       };
-      // console.log("renderr:",posts);
-    
-
+      //  console.log("renderr:",posts);
+  
   return (
-    
+  <UserProfile posts={posts} />,
+
     <View style={styles.container}>
     {posts?.map((post) => (
       <CardItem post={post}/>
-     
       
     ))}
     </View> 
   )
-  
 }
 const styles = StyleSheet.create({
   container: {
@@ -107,16 +103,13 @@ const styles = StyleSheet.create({
     color:'#E9ECEF',
   },
   cityName: {
-    
     borderColor:"#141727",
     borderRadius:7,
     alignSelf: 'center',
     color:'#E9ECEF',
   },
   
-  
 })
-
 
 export default Card;
 

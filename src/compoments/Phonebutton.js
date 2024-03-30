@@ -45,7 +45,7 @@ const Phonebutton = (props) => {
               
               <View style={styles.text}> 
   
-              <Text > number:{Phonenumber}</Text>
+              <Text > Number:{Phonenumber}</Text>
   
               </View>
              

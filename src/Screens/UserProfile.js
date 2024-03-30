@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
-
+import { Avatar } from '@rneui/themed';
 
 
 const UserProfile = (props) => {
@@ -16,41 +16,9 @@ const UserProfile = (props) => {
   const{usershare,setusershare}=useContext(UserContext);
   const {user,setUser}=useContext(UserContext);
   const [posts, setPosts] = useState([]);
-  
+  const {User}=props.route.params
 
-console.log("usershare:",usershare);
-console.log("setusershare:",setusershare);
 
-useEffect(() => {
-
-  const fetchUsers = async () => {
-    const token = await AsyncStorage.getItem("authToken");
-    const decodedToken = jwt_decode(token);
-    const user = decodedToken.user;
-    setUser(user);
-  };
-
-  fetchUsers();
-  }, []);
-  useEffect(() => {
-  fetchPosts();
-  }, []);
-
-  useFocusEffect(
-  useCallback(() => {
-      fetchPosts();
-  }, [])
-  );
-  const fetchPosts = async () => {
-      try {
-        const response = await axios.get(Api.RenderCard);
-        setPosts(response.data);
-      } catch (error) {
-        console.log("error fetching posts", error);
-      }
-    };
-     console.log("renderr:",posts);
-  
   const userProfile = {
     name: 'John Doe',
     avatarUrl: 'https://example.com/avatar.jpg', // Replace with actual avatar URL
@@ -61,23 +29,20 @@ useEffect(() => {
     ],
     isElite: true,
   };
-
   return (
     
     <ScrollView style={styles.container}>
-
-
 <View style={styles.profileHeader}>
-  <Image source={require("../Images/Avatar.png")} style={styles.avatar} />
+<Avatar
+        size={80}
+        rounded
+        icon={{ name: 'rowing' }}
+        containerStyle={{ backgroundColor: '#3d4db7' }} />
+            
+  {/* <Image source={require("../Images/Avatar.png")} style={styles.avatar} /> */}
   <View style={styles.headerTextContainer}>
-  
-  {posts?.map((post) => (
-    
-    <Text style={styles.name}>{post?.usershare}</Text>
-    ))}
-
+    <Text style={styles.name}>{User}</Text>
   </View>
- 
 </View>
 
 <View style={styles.section}>
@@ -101,21 +66,19 @@ useEffect(() => {
   ))}
 </View>
 </ScrollView>
-   
   )
 }
-  
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#f5f5f5', // Light grey background for contrast
+    marginTop:0,    
+    padding: 30,
+    backgroundColor: 'white', // Light grey background for contrast
   },
   profileHeader: {
-   
-
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom:20,
+    backgroundColor: 'white'
   },
   avatar: {
     width: 100,
@@ -143,7 +106,6 @@ const styles = StyleSheet.create({
   eliteText: {
     color: '#fff',
     fontWeight: 'bold',
-    
   },
   section: {
     marginBottom: 20,
@@ -193,6 +155,5 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
-
 
 export default UserProfile

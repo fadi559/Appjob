@@ -36,7 +36,7 @@ const ShareScreen = (props) => {
     // console.log("jobpost:",jobPostData);
    
     try {
-      const response = await fetch(Api.share, {
+      const response = await fetch(Api.share,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

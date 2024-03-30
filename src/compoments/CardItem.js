@@ -6,64 +6,55 @@ import { useNavigation } from '@react-navigation/native';
 import Phonebutton from './Phonebutton';
 import Conbutton from './Conbutton';
 import RatingComponent from './RatingComponent';
-import { useContext, useCallback, useState, useEffect } from 'react';
-import { UserContext } from '../compoments/usercontext';
-import { useFocusEffect } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import ShareScreen from '../Screens/share';
-import jwt_decode from "jwt-decode";
-import UserProfile from '../Screens/UserProfile';
-import user from './User';
+import { useContext, useState, useEffect } from 'react';
 
 
 const CardItem = (props) => {
-    const {User}=props.post
-    const {location}=props.post
-    const {jobType}=props.post
-    const {notes}=props.post
-    const {Phonenumber}=props.post
-    
+    const { User } = props.post
+    const { location } = props.post
+    const { jobType } = props.post
+    const { notes } = props.post
+    const { Phonenumber } = props.post
+
+
     //   console.log("props:",props.post);
-    
+
     const navigation = useNavigation()
-    // const { userId, setUserId } = useContext(UserContext);
-  
-  const [posts, setPosts] = useState([]);
-  
+    const [posts, setPosts] = useState([]);
+
 
     return (
+        <ScrollView>
         <View style={styles.container}>
-        <View style={styles.box}>
+            <View style={styles.box}>
 
-            <Text style={styles.cityName}>{location}</Text>
+                <Text style={styles.cityName}>{location}</Text>
+                <RatingComponent style={styles.RatingComponent} />
 
-            <RatingComponent style={styles.RatingComponent} />
+                <View style={styles.Avatar}>
+                    <Avatar
+                        onPress={() =>
+                            navigation.navigate('drawer', { screen: 'UserProfile', params: { User: User } })}
+                        size={45}
+                        rounded
+                        icon={{ name: 'rowing' }}
+                        containerStyle={{ backgroundColor: '#3d4db7' }} />
+                    <Text style={styles.text}>{User}</Text>
+                </View>
+                <Text style={styles.text2} > jobtype: {jobType}</Text>
+                <Text style={styles.text2} > Note:{notes} </Text>
 
-            <View style={styles.Avatar}>
-                <Avatar
-                    onPress={() =>
-                        navigation.navigate('drawer',{screen:'UserProfile',User:User})}
-                    size={45}
-                    rounded
-                    icon={{ name: 'rowing' }}
-                    containerStyle={{ backgroundColor: '#3d4db7' }} />
+                <View style={styles.ViewRowButten}>
 
-                <Text style={styles.text}>{User}</Text>
+                    <Conbutton />
+
+                    <Phonebutton Phonenumber={Phonenumber} />
+
+                </View>
             </View>
-            <Text style={styles.text2} > jobtype: {jobType}</Text>
-            <Text style={styles.text2} > Note:{notes} </Text>
 
-            <View style={styles.ViewRowButten}>
-
-                <Conbutton />
-
-                <Phonebutton Phonenumber={Phonenumber} />
-
-            </View>
         </View>
-        
-        </View>   
+        </ScrollView>
     )
 }
 
@@ -80,18 +71,25 @@ const styles = StyleSheet.create({
     ViewRowButten: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: '',
         marginVertical: 100,
-        marginLeft: 20,
+        marginLeft: 20, shadowColor: 'black',
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.4,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     viewconButten: {
         marginTop: -10,
         left: 350,
         width: 150,
+        
     },
     box: {
         width: "100%",
-        height: 330,
+        height:330,
         padding: 5,
         backgroundColor: '#3A416F',
         borderRadius: 22,
@@ -115,6 +113,7 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         alignSelf: 'center',
         color: '#E9ECEF',
+        
     },
 })
 

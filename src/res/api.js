@@ -1,6 +1,10 @@
+
+const baseUrl = 'http://localhost:8000'
 export const Api={
-    signup:"http://localhost:8000/api/signup",
-    signIn:"http://localhost:8000/api/signIn",
-    share:"http://localhost:8000/api/jobposts",
-    RenderCard:"http://localhost:8000/api/jobposts2",
+    signup:baseUrl + "/api/signup",
+    signIn:baseUrl +"/api/signIn",
+    share:baseUrl +  "/api/jobposts",
+    RenderCard:baseUrl + "/api/jobposts2",
 } 
+// localhost
+// 192.168.1.241

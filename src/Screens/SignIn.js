@@ -55,7 +55,7 @@ import { ImageBackground } from 'react-native';
 import { Api } from '../res/api';
 import TopNotification from '../compoments/AlertPro';
 import { UserContext } from '../compoments/usercontext';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
   const SignIn = ({navigtion}) => {
     const navigation = useNavigation();
@@ -78,14 +78,12 @@ import { UserContext } from '../compoments/usercontext';
       if (!email || !password) {
        Alert.alert('Please fill in all fields');
       }
-
       try {
         const { data } = await axios.post (Api.signIn,{
          email,
           password,
       });
       if(data.error){
-
         Alert.alert(data.error);
       }
       else {
@@ -94,14 +92,12 @@ import { UserContext } from '../compoments/usercontext';
         setUser(data.user)
         // Alert.alert ("Sign in successful");
         navigation.navigate('tab',{screen:'home'});
-      
-      }
 
+      }
       }  catch (error) {
         Alert.alert('SigninFailed', error);
         console.error('Signin Error:', error);
         setloading(false);
-       
       }
     };
     const authenticate = async () => {
@@ -126,7 +122,6 @@ import { UserContext } from '../compoments/usercontext';
     };
   
     
-    
   return (
     <View style={styles.container}>
       
@@ -149,30 +144,23 @@ import { UserContext } from '../compoments/usercontext';
         onPress={handleSignin}
         buttonStyle={styles.signInButton}
       />
-       
       <Text style={styles.SmallSignupButton2}> not yet registered  <Text style={styles.SmallSignupButton} 
        onPress={()=>navigation.navigate('stack',{screen:'SignupScreen'})} >signup</Text>  </Text>
       
-
-
       <TouchableOpacity onPress={authenticate} style={styles.button}>
         <Image 
-        source={require('../Images/faceidsmall.png')}
+        source={require('../Images/facidbig.png')}
         style={styles.faceid}
         />
        
       </TouchableOpacity>
 
-       
         {/* <Text>Biometrics not available on this device</Text> */}
       
-      
-
     </View>
   );
       }
       
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -212,7 +200,8 @@ const styles = StyleSheet.create({
   faceid:{
     justifyContent: 'center',
     width: 80, 
-    height: 80, 
+    height: 85, 
+    
     alignItems: 'center',
     
   },

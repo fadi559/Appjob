@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useEffect } from 'react';
 import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
@@ -8,12 +8,13 @@ import { Avatar } from '@rneui/themed';
 
 
 
-
 const ProfilePage = () => {
   const {user,setUser}=useContext(UserContext);
   
+console.log("uersrr:",user,);
 
   const userProfile = {
+  
     name: 'John Doe',
     avatarUrl: 'https://example.com/avatar.jpg', // Replace with actual avatar URL
     skills: ['React Native', 'Node.js', 'MongoDB'],
@@ -25,29 +26,17 @@ const ProfilePage = () => {
   };
 
 
-  // useEffect(() => {
-  //   fetch(`http://your-nodejs-backend.com/api/userId`)
-  //     .then(response => response.json())
-  //     .then(data => setUser(data))
-  //     .catch(error => console.error(error));
-  // }, [user]);
-
-  // if (!user) return <Text>Loading...</Text>;
-
-
   return (
     <ScrollView style={styles.container}>
 
       <View style={styles.profileHeader}>
-       <Avatar size={120} rounded 
+       <Avatar size={80} rounded 
        icon={{name:'rowing'}}  
        containerStyle={{ backgroundColor: '#3d4db7' }}/>
         <View style={styles.headerTextContainer}>
 
           <Text style={styles.name}>{user.name}</Text>
 
-        
-         
         </View>
       </View>
 
@@ -74,16 +63,14 @@ const ProfilePage = () => {
     </ScrollView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    marginTop:33,
     backgroundColor: '#f5f5f5', // Light grey background for contrast
   },
   profileHeader: {
-   
-
     alignItems: 'center',
     marginBottom: 20,
   },
@@ -113,7 +100,6 @@ const styles = StyleSheet.create({
   eliteText: {
     color: '#fff',
     fontWeight: 'bold',
-    
   },
   section: {
     marginBottom: 20,

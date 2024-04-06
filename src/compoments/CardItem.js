@@ -7,6 +7,7 @@ import Phonebutton from './Phonebutton';
 import Conbutton from './Conbutton';
 import RatingComponent from './RatingComponent';
 import { useContext, useState, useEffect } from 'react';
+import ExpandableBox from './ExpandableBox';
 
 
 const CardItem = (props) => {
@@ -15,9 +16,9 @@ const CardItem = (props) => {
     const { jobType } = props.post
     const { notes } = props.post
     const { Phonenumber } = props.post
+    
 
-
-    //   console.log("props:",props.post);
+      console.log("props:",props.post);
 
     const navigation = useNavigation()
     const [posts, setPosts] = useState([]);
@@ -42,8 +43,13 @@ const CardItem = (props) => {
                     <Text style={styles.text}>{User}</Text>
                 </View>
                 <Text style={styles.text2} > jobtype: {jobType}</Text>
-                <Text style={styles.text2} > Note:{notes} </Text>
 
+             <Text style={styles.text3} > Note:{notes}</Text> 
+
+                
+              
+                {/* <Text style={styles.text3} > Note:<ExpandableBox content={notes} /></Text>  */}
+                
                 <View style={styles.ViewRowButten}>
 
                     <Conbutton />
@@ -54,7 +60,7 @@ const CardItem = (props) => {
             </View>
 
         </View>
-        </ScrollView>
+        </ScrollView>        
     )
 }
 
@@ -71,7 +77,8 @@ const styles = StyleSheet.create({
     ViewRowButten: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 100,
+       marginTop:70,
+
         marginLeft: 20, shadowColor: 'black',
         shadowOffset: {
           width: 0,
@@ -80,12 +87,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.4,
         shadowRadius: 3.84,
         elevation: 5,
-    },
-    viewconButten: {
-        marginTop: -10,
-        left: 350,
-        width: 150,
-        
     },
     box: {
         width: "100%",
@@ -98,15 +99,24 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
     text: {
-        marginTop: 1,
-        marginVertical: 1,
-        marginBottom: 15,
+        
+        marginBottom: 40,
         color: '#E9ECEF',
     },
     text2: {
-        marginVertical: 30,
-        marginBottom: -8,
-        color: '#E9ECEF',
+        // 30 was 
+      
+        
+        color: '#E9ECEF', 
+        
+    },
+    text3:{
+       
+        marginTop:50,
+        marginBottom:0,
+        color: '#E9ECEF', 
+        marginVertical:0,
+       
     },
     cityName: {
         borderColor: "#141727",

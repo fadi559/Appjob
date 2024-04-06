@@ -13,10 +13,11 @@ import { Avatar } from '@rneui/themed';
 
 const UserProfile = (props) => {
   
-  const{usershare,setusershare}=useContext(UserContext);
+
   const {user,setUser}=useContext(UserContext);
   const [posts, setPosts] = useState([]);
   const {User}=props.route.params
+  
 
 
   const userProfile = {

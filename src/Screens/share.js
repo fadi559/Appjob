@@ -11,6 +11,7 @@ import {UserType } from '../compoments/usercontext';
 import { UserContext } from '../compoments/usercontext';
 import { Api } from '../res/api';
 import UserProfile from './UserProfile';
+import { ScrollView } from 'react-native';
 
 
 const ShareScreen = (props) => {
@@ -71,8 +72,10 @@ const ShareScreen = (props) => {
 
 
   return (
+    
 
     <View style={styles.container}>
+      <ScrollView>
       <View>
         
       </View>
@@ -93,7 +96,7 @@ const ShareScreen = (props) => {
         placeholder="Notes"
         value={notes}
         onChangeText={(text) => setNotes(text)}
-        multiline
+       
         containerStyle={styles.inputContainer}
       />
        <Input
@@ -112,8 +115,11 @@ const ShareScreen = (props) => {
         buttonStyle={styles.shareButton}
         containerStyle={styles.shareButtonContainer}
       />
+      </ScrollView>
     </View>
+    
   );
+  
 };
 
 const styles = StyleSheet.create({

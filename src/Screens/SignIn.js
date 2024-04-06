@@ -1,47 +1,4 @@
 
-// import React, { useEffect, useState } from 'react';
-// import { View, Text, Button } from 'react-native';
-// import Biometrics from 'react-native-biometrics';
-
-// const BiometricsCheckScreen = () => {
-//   const [biometricsAvailable, setBiometricsAvailable] = useState(null);
-
-//   useEffect(() => {
-//     checkBiometrics();
-//   }, []);
-
-//   const checkBiometrics = async () => {
-//     try {
-//       const { available, biometryType } = await Biometrics.isSensorAvailable();
-
-//       if (available) {
-//         console.log(`Biometrics is available, type: ${biometryType}`);
-//         setBiometricsAvailable(true);
-//       } else {
-//         console.log('Biometrics not available');
-//         setBiometricsAvailable(false);
-//       }
-//     } catch (error) {
-//       console.error('Biometrics check failed:', error);
-//       setBiometricsAvailable(false);
-//     }
-//   };
-
-//   return (
-//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//       <Text>Biometrics Check Screen</Text>
-//       {biometricsAvailable === null && <Text>Checking biometrics...</Text>}
-//       {biometricsAvailable === true && <Text>Biometrics is available on this device!</Text>}
-//       {biometricsAvailable === false && <Text>Biometrics is not available on this device.</Text>}
-//       <Button title="Check Biometrics Again" onPress={checkBiometrics} />
-//     </View>
-//   );
-// };
-
-// export default BiometricsCheckScreen;
-
-
-
 import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, Alert, Image } from 'react-native';
 import { Input, Button } from 'react-native-elements';
@@ -56,6 +13,10 @@ import { Api } from '../res/api';
 import TopNotification from '../compoments/AlertPro';
 import { UserContext } from '../compoments/usercontext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
+
+
+
 
   const SignIn = ({navigtion}) => {
     const navigation = useNavigation();
@@ -121,6 +82,61 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
       }
     };
   
+
+// const BiometricsCheckScreen = () => {
+//   const [biometricsAvailable, setBiometricsAvailable] = useState(null);
+
+//   useEffect(() => {
+//     checkBiometrics();
+//   }, []);
+
+//   const checkBiometrics = async () => {
+//     try {
+//       const { available, biometryType } = await Biometrics.isSensorAvailable();
+
+//       if (available) {
+//         console.log(`Biometrics is available, type: ${biometryType}`);
+//         setBiometricsAvailable(true);
+//       } else {
+//         console.log('Biometrics not available');
+//         setBiometricsAvailable(false);
+//       }
+//     } catch (error) {
+//       console.error('Biometrics check failed:', error);
+//       setBiometricsAvailable(false);
+//     }
+//   };
+// }
+const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Assuming this function checks for Face ID support
+    checkFaceIDSupport();
+  }, []);
+
+  const checkFaceIDSupport = async () => {
+    try {
+      const result = await Biometrics.isSensorAvailable();
+      if (result !== Biometrics.FaceID) {
+        Alert.alert('Face ID not available', 'This device does not support Face ID.');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleAuthenticate = () => {
+    Biometrics.simplePrompt('Confirm your identity')
+      .then(() => {
+        setIsAuthenticated(true);
+        Alert.alert('Authentication Successful', 'You have been granted access.');
+        // Here you can navigate to another screen or unlock features
+      })
+      .catch(() => {
+        Alert.alert('Authentication Failed', 'You could not be authenticated.');
+      });
+  };
+
     
   return (
     <View style={styles.container}>
@@ -146,20 +162,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
       />
       <Text style={styles.SmallSignupButton2}> not yet registered  <Text style={styles.SmallSignupButton} 
        onPress={()=>navigation.navigate('stack',{screen:'SignupScreen'})} >signup</Text>  </Text>
+
       
-      <TouchableOpacity onPress={authenticate} style={styles.button}>
+       
+      <TouchableOpacity onPress={handleAuthenticate} style={styles.button}>
         <Image 
         source={require('../Images/facidbig.png')}
         style={styles.faceid}
         />
        
       </TouchableOpacity>
-
+      
+      
         {/* <Text>Biometrics not available on this device</Text> */}
       
     </View>
   );
       }
+  
       
 const styles = StyleSheet.create({
   container: {

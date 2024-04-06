@@ -6,23 +6,28 @@ import { useAnimatedStyle } from 'react-native-reanimated'
 import { FlatList } from 'react-native'
 import { UserContext } from '../compoments/usercontext'
 import { useContext } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { Avatar } from '@rneui/themed';
+import { Api } from '../res/api'
 
 
-const Searchbox = ({ navigation },props) => {
-  
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [isModalVisible, setModalVisible] = useState(false);
+
+
+
+const Searchbox = (props) => {
+
+  // const {User}=props.route.params
+
   const {user,setUser}=useContext(UserContext);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm,setSearchTerm] = useState('');
   const [users, setUsers] = useState([]);
   const animation =useSharedValue(0);
   const [value,setValue]= useState(0);
+  const navigation = useNavigation();
 
-
-
- console.log('userrs2',users);
+  
+// console.log("name",users);
+//  console.log('userrs2',users);
 
   const animatdStyle =useAnimatedStyle(() => {
     return{
@@ -32,7 +37,6 @@ const Searchbox = ({ navigation },props) => {
       :withTiming(1, {duration: 500}),
     };
   });
-   
   const handleSearch = async (text) => {
     setSearchTerm(text)
     if (!text.trim()) {
@@ -41,7 +45,7 @@ const Searchbox = ({ navigation },props) => {
     }
     try {
       const body={"searchTerm":text}
-      const response = await fetch(`http://localhost:8000/api/search`,
+      const response = await fetch(Api.serach,
       {
         method:'POST',
         headers: {
@@ -55,13 +59,24 @@ const Searchbox = ({ navigation },props) => {
       setUsers(data);
     } catch (error) {
       console.error('Failed to fetch users:', error);
-      // Handle the error (e.g., show an alert)
+      
     }
   };
+  
+  
+  const renderUser = ({ item }) => (
+    // console.log("iitt.",item),
+    <TouchableOpacity
+    style={styles.userRueslt}
+      onPress={() => navigation.navigate('drawer', { screen: 'UserProfile', params: { User: item.name } })}>
+         <Avatar size={20} rounded 
+       icon={{name:'rowing'}}  
+       containerStyle={styles.Avtarstyle}/>
+      <Text style={styles.userItem}>{item.name}</Text>
+    </TouchableOpacity>
+  );
   return (
-    // console.log("user1:",searchTerm),
-    // console.log("setUsers:",users),
-
+    
     <View style={styles.screen}>
     <Animated.View
      style ={[
@@ -91,9 +106,7 @@ const Searchbox = ({ navigation },props) => {
           data={users}
           keyExtractor={item => item._users} 
           style={styles.resultList}
-          renderItem={({ item }) => (
-            <Text style={styles.userItem}>{item.name}</Text>
-          )}
+          renderItem={renderUser}
         />
       )}
     </View>
@@ -156,9 +169,24 @@ const styles = StyleSheet.create({
     borderRadius:10,
   },
   userItem:{
-    marginTop:20,
-    left:10,
+    marginTop:1,
+    left:7,
+    fontSize: 16,
   },
+  divider: {
+    height: 1,
+    backgroundColor: '#e0e0e0',
+    marginTop: 8,
+  },
+  Avtarstyle:{
+    backgroundColor: '#3d4db7',
+  },
+  userRueslt:{
+    flexDirection: 'row',
+     marginTop:25,
+     left:6,
+  },
+  
 })
 export default Searchbox
 

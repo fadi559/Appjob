@@ -1,12 +1,13 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, FlatList, Button } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, FlatList, Button ,Image} from 'react-native';
 import { useEffect } from 'react';
 import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
 import { Avatar } from '@rneui/themed';
 import { useState } from 'react';
-
+import { useNavigation } from '@react-navigation/native';
+import StackPro from '../../route/StackProfile';
 
 
 
@@ -20,7 +21,7 @@ const ProfilePage = ({ userId }) => {
    const [newSkill, setNewSkill] = useState('');
   const [newExperience, setNewExperience] = useState({ title: '', description: '' });
 
-
+  const navigation = useNavigation()
 
 
   const userProfile = {
@@ -36,20 +37,26 @@ const ProfilePage = ({ userId }) => {
   }; 
   
   const handleAddSkill = async (skills) => {
+
+    const body = JSON.stringify({ skill:newSkill , userId: user._id })
+
     try {
       await fetch('http://localhost:8000/api/skills', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          
         },
-        body: JSON.stringify({ skills }),
-      });
+        body: body,
+      })
+      .then( res => res?.json())
+      .then(resJson => setUser({...resJson?.user}))
       
     } catch (error) {
       console.error('Error adding skill:', error);
     }
   };
+
+
   const handleAddExperience = async (experiences) => {
     try {
       await fetch('http://localhost:8000/api/experiences', {
@@ -65,6 +72,8 @@ const ProfilePage = ({ userId }) => {
     }
   };
 
+  // const 
+
 
   return (
     <ScrollView style={styles.container}>
@@ -78,9 +87,19 @@ const ProfilePage = ({ userId }) => {
           <Text style={styles.name}>{user.name}</Text>
         </View>
       </View>
-
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Skills</Text>
+      <Text style={styles.sectionTitle}>Skills</Text>  
+      <TouchableOpacity onPress={()=>navigation.navigate('StackProfile',{screen:'AddSkills'})}>
+        <Image
+        source={require("../Images/plus-48.png")}
+        style={styles.Image}
+      
+        />
+        </TouchableOpacity>
+
+      
+
+
         <View style={styles.skillsContainer}>
           {userProfile.skills.map((skill, index) => (
             <View key={index} style={styles.skillBadge}>
@@ -92,6 +111,8 @@ const ProfilePage = ({ userId }) => {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Experience</Text>
+
+        
         {userProfile.experience.map((exp, index) => (
           <TouchableOpacity key={index} style={styles.experienceItem}>
             <Text style={styles.experienceText}>{exp.company} - {exp.role}</Text>
@@ -121,15 +142,12 @@ const ProfilePage = ({ userId }) => {
           onChangeText={(text) => setNewExperience(current => ({ ...current, description: text }))}
         />
         <Button title="Add Experience" onPress={handleAddExperience} /> 
-
        
         <FlatList
-          data={skills}
+          data={user.skills}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => <Text>{item}</Text>}
         />
-        
-       
          <FlatList
           data={experience}
           keyExtractor={(item, index) => index.toString()}
@@ -239,6 +257,11 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
   },
+  Image:{
+    width: 30, 
+    height: 35, 
+
+  }
 });
 
 

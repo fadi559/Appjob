@@ -29,8 +29,6 @@ const Stacknav = (props, route) => {
        
       )} /> */}
 
-     
-
        <Stack.Screen name='SignIn' component={SignIn}/> 
        <Stack.Screen name='SignupScreen' component={SignupScreen} />
 

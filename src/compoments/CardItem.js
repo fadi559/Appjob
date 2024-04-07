@@ -16,13 +16,10 @@ const CardItem = (props) => {
     const { jobType } = props.post
     const { notes } = props.post
     const { Phonenumber } = props.post
-    
-
-      console.log("props:",props.post);
-
     const navigation = useNavigation()
     const [posts, setPosts] = useState([]);
-
+    
+    console.log("props:",props.post);
 
     return (
         <ScrollView>
@@ -46,8 +43,6 @@ const CardItem = (props) => {
 
              <Text style={styles.text3} > Note:{notes}</Text> 
 
-                
-              
                 {/* <Text style={styles.text3} > Note:<ExpandableBox content={notes} /></Text>  */}
                 
                 <View style={styles.ViewRowButten}>
@@ -58,7 +53,6 @@ const CardItem = (props) => {
 
                 </View>
             </View>
-
         </View>
         </ScrollView>        
     )

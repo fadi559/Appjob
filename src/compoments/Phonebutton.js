@@ -50,7 +50,6 @@ const Phonebutton = (props) => {
               </View>
              
             </View>
-  
 
           </View>
           

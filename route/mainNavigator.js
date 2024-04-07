@@ -6,6 +6,7 @@ import Stacknav from "./stack";
 import Darwernav from "./drawer";
 import SignupScreen from "../src/Screens/Signup";
 import SignIn from "../src/Screens/SignIn";
+import StackPro from "./StackProfile";
 
 
 
@@ -22,7 +23,7 @@ const MainNavigator = (props,route) => {
                 headerShown: false,
 
             }}>
-        
+                <Stack.Screen name='StackProfile' component={StackPro} options={({presentation:"containedModal"})}/>
                 <Stack.Screen name='tab' component={TabNavigtor} />
                 <Stack.Screen name='stack' component={Stacknav} />
                 <Stack.Screen name='drawer' component={Darwernav} />

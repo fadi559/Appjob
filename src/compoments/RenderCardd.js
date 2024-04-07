@@ -1,10 +1,6 @@
 import {StyleSheet, Text, View,FlatList, ScrollView, Share } from 'react-native'
 import React from 'react'
-import { Avatar } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native';
-import Phonebutton from './Phonebutton';
-import Conbutton from './Conbutton';
-import RatingComponent from './RatingComponent';
 import { useContext,useCallback,useState,useEffect } from 'react';
 import { UserContext } from './usercontext';
 import { useFocusEffect } from '@react-navigation/native';
@@ -15,6 +11,7 @@ import jwt_decode from "jwt-decode";
 import CardItem from './CardItem';
 import { Api } from '../res/api';
 import UserProfile from '../Screens/UserProfile';
+
 
 
 

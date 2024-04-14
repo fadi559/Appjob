@@ -8,6 +8,11 @@ import SignIn from './SignIn';
 import { Api } from '../res/api';
 import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+
+
 
 const SignupScreen = ({navigtion},props) => {
     const navigation = useNavigation(props);
@@ -38,6 +43,7 @@ const SignupScreen = ({navigtion},props) => {
         Alert.alert(data.error);
       }
       else {
+        // await AsyncStorage.setItem ("@auth", JSON.stringify(data));
         setloading(false);
         console. log ("SIGN up SUCCESS »> ", data); 
         setUser(data.user)

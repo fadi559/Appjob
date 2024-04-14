@@ -19,6 +19,9 @@ const Card = ({item}) => {
   const navigation = useNavigation()
   const { user, setUser } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
+  console.log('USERFROMRENDERCARD',user),
+  console.log('WWWPOST33',posts)
+
 
   useEffect(() => {
 
@@ -46,7 +49,7 @@ const Card = ({item}) => {
           console.log("error fetching posts", error);
         }
       };
-      //  console.log("renderr:",posts);
+        // console.log("renderr55:",posts);
   
   return (
   <UserProfile posts={posts} />,

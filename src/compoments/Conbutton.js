@@ -3,8 +3,7 @@ import React from 'react'
 import { BackgroundImage, Button } from '@rneui/base';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import NotificationBanner from './AlertPro';
-import NotificationAlert from './AlertPro';
+
 
 const Conbutton = (props) => {
   const navigation = useNavigation()

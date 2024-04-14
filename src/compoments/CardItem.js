@@ -16,10 +16,11 @@ const CardItem = (props) => {
     const { jobType } = props.post
     const { notes } = props.post
     const { Phonenumber } = props.post
+    const{skills}=props.post
     const navigation = useNavigation()
     const [posts, setPosts] = useState([]);
     
-    console.log("props:",props.post);
+     console.log("CARDITEM",props.post);
 
     return (
         <ScrollView>
@@ -32,7 +33,7 @@ const CardItem = (props) => {
                 <View style={styles.Avatar}>
                     <Avatar
                         onPress={() =>
-                            navigation.navigate('drawer', { screen: 'UserProfile', params: { User: User } })}
+                            navigation.navigate('drawer', { screen: 'UserProfile', params: { User: User, skills:skills} })}
                         size={45}
                         rounded
                         icon={{ name: 'rowing' }}

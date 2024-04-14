@@ -22,7 +22,11 @@ const ShareScreen = (props) => {
   const [Phonenumber,setPhonenumber]=useState('');
   const {user,setUser}=useContext(UserContext);
   const [textInputValue, setTextInputValue] = useState('');
-  const{usershare,setusershare}=useContext(UserContext);
+  
+
+
+  console.log("user44",user);
+
 
   const handlepost =async () => {
     
@@ -48,7 +52,7 @@ const ShareScreen = (props) => {
       });
       
       // console.log("res.status: " , response.status);
-    
+      
       const responseData = await response.json();
       console.log('Job posted successfully:', responseData);
       setJobType('');
@@ -57,6 +61,7 @@ const ShareScreen = (props) => {
       setPhonenumber('');
       setTimeout(() => {
       }, 1000);
+     
       navigation.navigate("tab",{screen:'home'})
       // Optionally, refresh your job posts list to include the new post
       

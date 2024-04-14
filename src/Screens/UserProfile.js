@@ -17,19 +17,13 @@ const UserProfile = (props) => {
   const {user,setUser}=useContext(UserContext);
   const [posts, setPosts] = useState([]);
   const {User}=props.route.params
+  const{skills}=props.route.params
   
-
-
-  const userProfile = {
-    name: 'John Doe',
-    avatarUrl: 'https://example.com/avatar.jpg', // Replace with actual avatar URL
-    skills: ['React Native', 'Node.js', 'MongoDB'],
-    experience: [
-      { company: 'Company A', role: 'Software Engineer', years: 2 },
-      { company: 'Company B', role: 'Senior Developer', years: 3 },
-    ],
-    isElite: true,
-  };
+   console.log("Userr::",User)
+ 
+  // console.log("u2serr::",user)
+  
+   
   return (
     
     <ScrollView style={styles.container}>
@@ -40,32 +34,44 @@ const UserProfile = (props) => {
         icon={{ name: 'rowing' }}
         containerStyle={{ backgroundColor: '#3d4db7' }} />
             
-  {/* <Image source={require("../Images/Avatar.png")} style={styles.avatar} /> */}
-  <View style={styles.headerTextContainer}>
-    <Text style={styles.name}>{User}</Text>
-  </View>
-</View>
+        {/* <Image source={require("../Images/Avatar.png")} style={styles.avatar} /> */}
+        <View style={styles.headerTextContainer}>
+          <Text style={styles.name}>{User}</Text>
 
-<View style={styles.section}>
-  <Text style={styles.sectionTitle}>Skills</Text>
-  <View style={styles.skillsContainer}>
-    {userProfile.skills.map((skill, index) => (
-      <View key={index} style={styles.skillBadge}>
-        <Text style={styles.skill}>{skill}</Text>
+          {/* <Text style={styles.name}>{skills}</Text> */}
+          
+        </View>
+        
+        <View style={styles.section}>
+      <Text style={styles.sectionTitle}>Skills</Text>  
+     
+  
+         <View style={styles.skillsContainer}>
+          {user.skills.map((skill, index) => (
+
+             <TouchableOpacity>
+            <View key={index} style={styles.skillBadge}>
+              <Text style={styles.skill}>{skill}</Text>
+            </View>
+            </TouchableOpacity>
+          ))}
+        </View> 
+        
       </View>
-    ))}
-  </View>
-</View>
+      
 
-<View style={styles.section}>
-  <Text style={styles.sectionTitle}>Experience</Text>
-  {userProfile.experience.map((exp, index) => (
-    <TouchableOpacity key={index} style={styles.experienceItem}>
-      <Text style={styles.experienceText}>{exp.company} - {exp.role}</Text>
-      <Text style={styles.experienceYears}>{exp.years} years</Text>
-    </TouchableOpacity>
-  ))}
-</View>
+      <View style={{right:50,}}>
+ <Text style={styles.sectionTitle}>Experience</Text>
+
+       {user.experiences.map((experience, index) => (
+          <TouchableOpacity key={index} style={styles.experienceItem}>
+            <Text style={styles.experienceText}>{experience}</Text>
+            <Text style={styles.experienceYears}>{}</Text>
+          </TouchableOpacity>
+        ))} 
+     
+     </View>
+        </View>
 </ScrollView>
   )
 }
@@ -115,6 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    right:20,
   },
   skillsContainer: {
     flexDirection: 'row',

@@ -1,61 +1,49 @@
-// AddSkillPage.js
 import React, { useState } from 'react';
-import { View, TextInput, Image,StyleSheet, TouchableOpacity,Alert } from 'react-native';
+import { View, TextInput, Image,StyleSheet, TouchableOpacity, RefreshControlBase,Text } from 'react-native';
 import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
 import { Button } from '@rneui/base'; 
 
 import { useNavigation } from '@react-navigation/native';
-import SuccessAnimation from '../compoments/SuccessAnimation';
 import { Api } from '../res/api';
 
 
 
-const AddSkills = ({ route, navigation }) => {
+const AddExperience = ({ route, navigation }) => {
     const { user, setUser } = useContext(UserContext);
-    const [newSkill, setNewSkill] = useState('');
-    const [skill, setSkill] = useState('');
-    const [showSuccess, setShowSuccess] = useState(false);
-   
-
-        
-    // const [skills, setSkills] = useState([]);
-  //   console.log("newSkill:,",newSkill)
-  // console.log("skill:",skill)
-
+    const [newExperience, setNewExperience] = useState('');
+    const [experience, setExperience] = useState('');
     
+    console.log("newExperienceee:,",newExperience)
+  console.log("experience:",experience)
+  // console.log("userrr:",user)
 
-    const handleAddSkill = async (skills) => {
 
-        const body = JSON.stringify({ skill:newSkill , userId: user._id })
-    
+
+     
+
+    const handleAddExperience = async (experiences) => {
+      const body= JSON.stringify({ experience : newExperience , userId: user._id})
         try {
-          await fetch(Api.Addskils, {
+          await fetch(Api.AddExperince, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: body,
+            body:body,
           })
           .then( res => res?.json())
           .then(resJson => setUser({...resJson?.user}))
           
         } catch (error) {
-          console.error('Error adding skill:', error);
+          console.error('Error adding experience:', error);
         }
-        setShowSuccess(true);
-
-        setTimeout(() => {
-            setShowSuccess(false);
-        }, 2000); // Hide the GIF af
       };
 
-
-  return (
     
+  return (
     <View style={styles.MainVeiew}>
-        
-            <TouchableOpacity onPress={()=>navigation.goBack()}>
+     <TouchableOpacity onPress={()=>navigation.goBack()}>
         <Image
           source={require("../Images/clear2.png")}
           style={styles.skillsStyle}
@@ -64,30 +52,27 @@ const AddSkills = ({ route, navigation }) => {
       <View style={styles.inputpostion}>
       <TextInput
           style={styles.input}
-          placeholder="Enter a new skill"
-          value={newSkill}
-          onChangeText={setNewSkill}
+          placeholder="Experience Description"
+          value={newExperience}
+          onChangeText={setNewExperience}
         />
          <Button 
          buttonStyle={{backgroundColor:'#3A416F', width:130,
          left:100,borderRadius:30,}}
             title='Add'
-            onPress={handleAddSkill} />
+            onPress={handleAddExperience}
             
-            <SuccessAnimation isVisible={showSuccess} />
-           
+            />
+       
         </View>
             
            
     </View>
   );
-};
-
-export default AddSkills;
-
+}
+export default AddExperience;
 
 const styles = StyleSheet.create({
-
     MainVeiew:{
         flex: 1, 
         alignItems: 'center', 
@@ -118,7 +103,6 @@ const styles = StyleSheet.create({
         // marginTop:-320,
         top: -330, 
         right: 15,
-
       },
       addSkills:{
             color:'black', 

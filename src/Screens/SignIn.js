@@ -10,7 +10,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native'
 import { ImageBackground } from 'react-native';
 import { Api } from '../res/api';
-import TopNotification from '../compoments/AlertPro';
 import { UserContext } from '../compoments/usercontext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
@@ -45,13 +44,14 @@ import { useEffect } from 'react';
           password,
       });
       if(data.error){
-        Alert.alert(data.error);
+         Alert.alert(data.error);
       }
       else {
+        // await AsyncStorage.setItem ("@auth", JSON.stringify(data));
         setloading(false);
-        // console.log ("SIGNIN SUCCESS »> ", data.user); 
+         console.log ("SIGNIN SUCCESS »> ", data.user); 
         setUser(data.user)
-        // Alert.alert ("Sign in successful");
+        //  Alert.alert ("Sign in successful");
         navigation.navigate('tab',{screen:'home'});
 
       }
@@ -61,26 +61,37 @@ import { useEffect } from 'react';
         setloading(false);
       }
     };
-    const authenticate = async () => {
-      try {
-        const { available, biometryType } = await Biometrics.isSensorAvailable();
-        if (available && biometryType === Biometrics.BiometryType.FACE_ID) {
-          const { success, error } = await Biometrics.simplePrompt({ promptMessage: 'Authenticate with Face ID' });
-          if (success) {
-            // Face ID authentication successful
-            setAuthStatus('Authentication successful');
-            // Send authentication token to the backend
-            sendAuthTokenToBackend();
-          } else {
-            setAuthStatus('Authentication failed');
-          }
-        } else {
-          setAuthStatus('Face ID not available');
-        }
-      } catch (error) {
-        console.error('Biometrics error:', error);
-      }
-    };
+
+    // const loadFromAsyncStorage = async () =>
+    // {
+    // let data=await AsyncStorage.getItem("@auth");
+    // console.log ("FROM ASYNC STORAGE → ", data);
+    // };
+    // loadFromAsyncStorage();
+    
+    
+
+
+    // const authenticate = async () => {
+    //   try {
+    //     const { available, biometryType } = await Biometrics.isSensorAvailable();
+    //     if (available && biometryType === Biometrics.BiometryType.FACE_ID) {
+    //       const { success, error } = await Biometrics.simplePrompt({ promptMessage: 'Authenticate with Face ID' });
+    //       if (success) {
+    //         // Face ID authentication successful
+    //         setAuthStatus('Authentication successful');
+    //         // Send authentication token to the backend
+    //         sendAuthTokenToBackend();
+    //       } else {
+    //         setAuthStatus('Authentication failed');
+    //       }
+    //     } else {
+    //       setAuthStatus('Face ID not available');
+    //     }
+    //   } catch (error) {
+    //     console.error('Biometrics error:', error);
+    //   }
+    // };
   
 
 // const BiometricsCheckScreen = () => {
@@ -107,35 +118,35 @@ import { useEffect } from 'react';
 //     }
 //   };
 // }
-const [isAuthenticated, setIsAuthenticated] = useState(false);
+// const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-    // Assuming this function checks for Face ID support
-    checkFaceIDSupport();
-  }, []);
+//   useEffect(() => {
+//     // Assuming this function checks for Face ID support
+//     checkFaceIDSupport();
+//   }, []);
 
-  const checkFaceIDSupport = async () => {
-    try {
-      const result = await Biometrics.isSensorAvailable();
-      if (result !== Biometrics.FaceID) {
-        Alert.alert('Face ID not available', 'This device does not support Face ID.');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+//   const checkFaceIDSupport = async () => {
+//     try {
+//       const result = await Biometrics.isSensorAvailable();
+//       if (result !== Biometrics.FaceID) {
+//         Alert.alert('Face ID not available', 'This device does not support Face ID.');
+//       }
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
 
-  const handleAuthenticate = () => {
-    Biometrics.simplePrompt('Confirm your identity')
-      .then(() => {
-        setIsAuthenticated(true);
-        Alert.alert('Authentication Successful', 'You have been granted access.');
-        // Here you can navigate to another screen or unlock features
-      })
-      .catch(() => {
-        Alert.alert('Authentication Failed', 'You could not be authenticated.');
-      });
-  };
+//   const handleAuthenticate = () => {
+//     Biometrics.simplePrompt('Confirm your identity')
+//       .then(() => {
+//         setIsAuthenticated(true);
+//         Alert.alert('Authentication Successful', 'You have been granted access.');
+//         // Here you can navigate to another screen or unlock features
+//       })
+//       .catch(() => {
+//         Alert.alert('Authentication Failed', 'You could not be authenticated.');
+//       });
+//   };
 
     
   return (
@@ -165,7 +176,7 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
 
       
        
-      <TouchableOpacity onPress={handleAuthenticate} style={styles.button}>
+      <TouchableOpacity style={styles.button}>
         <Image 
         source={require('../Images/facidbig.png')}
         style={styles.faceid}

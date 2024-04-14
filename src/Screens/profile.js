@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, FlatList, Button ,Image} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, FlatList, Button ,Image,Alert} from 'react-native';
 import { useEffect } from 'react';
 import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
@@ -13,66 +13,55 @@ import StackPro from '../../route/StackProfile';
 
 const ProfilePage = ({ userId }) => {
   const { user, setUser } = useContext(UserContext);
-  console.log('userss', user);
-
+  // console.log('userss', user);
+  const [newSkill, setNewSkill] = useState('');
    const [skill, setSkill] = useState('');
-  const [skills, setSkills] = useState([]);
-  const [experience, setExperience] = useState([]);
-   const [newSkill, setNewSkill] = useState('');
-  const [newExperience, setNewExperience] = useState({ title: '', description: '' });
 
+  const [experience, setExperience] = useState('');
+  const [newExperience, setNewExperience] = useState('');
   const navigation = useNavigation()
 
+  console.log("newExperienceee:,",newExperience)
+  console.log("experience:",experience)
+  console.log("userrr:",user)
 
-  const userProfile = {
 
-    name: 'John Doe',
-    avatarUrl: 'https://example.com/avatar.jpg', 
-    skills: ['React Native', 'Node.js', 'MongoDB'],
-    experience: [
-      { company: 'Company A', role: 'Software Engineer', years: 2 },
-      { company: 'Company B', role: 'Senior Developer', years: 3 },
-    ],
-    isElite: true,
-  }; 
-  
-  const handleAddSkill = async (skills) => {
-
-    const body = JSON.stringify({ skill:newSkill , userId: user._id })
-
+  const deleteSkill = async (userId, skills,setSkills) => {
     try {
-      await fetch('http://localhost:8000/api/skills', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: body,
-      })
-      .then( res => res?.json())
-      .then(resJson => setUser({...resJson?.user}))
-      
-    } catch (error) {
-      console.error('Error adding skill:', error);
-    }
-  };
-
-
-  const handleAddExperience = async (experiences) => {
-    try {
-      await fetch('http://localhost:8000/api/experiences', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(experiences),
+        const response = await fetch(`http://localhost/api/SkillsDelete${userId}/${skill}`, {
+            method: 'DELETE',
       });
-      
-    } catch (error) {
-      console.error('Error adding experience:', error);
-    }
-  };
+      const updatedSkills = await response.json();
+      if (response.ok) {
+          // Update your local state to reflect the change
+          setSkills(updatedSkills);
+      } else {
+          throw new Error('Failed to delete the skill');
+      }
+  } catch (error) {
+      console.error('Error deleting skill:', error);
+  }
+};
 
-  // const 
+  
+  // Handler for pressing the skill item
+  const handlePress = ({ skill,  }) => {
+      Alert.alert(
+          "Delete Skill",
+          "Are you sure you want to delete this skill?",
+          [
+              {
+                  text: "Cancel",
+                  style: "cancel"
+              },
+              { 
+                  text: "OK", 
+                  onPress: () => deleteSkill()
+              }
+          ],
+          { cancelable: false }
+      );
+  };
 
 
   return (
@@ -87,79 +76,54 @@ const ProfilePage = ({ userId }) => {
           <Text style={styles.name}>{user.name}</Text>
         </View>
       </View>
+
       <View style={styles.section}>
       <Text style={styles.sectionTitle}>Skills</Text>  
       <TouchableOpacity onPress={()=>navigation.navigate('StackProfile',{screen:'AddSkills'})}>
         <Image
         source={require("../Images/plus-48.png")}
-        style={styles.Image}
+        style={styles.AddSkillImage}
       
         />
         </TouchableOpacity>
+   
+         <View style={styles.skillsContainer}>
+          {user.skills.map((skill, index) => (
+            
 
-      
-
-
-        <View style={styles.skillsContainer}>
-          {userProfile.skills.map((skill, index) => (
+             <TouchableOpacity  style={styles.skillItem} onPress={() => handlePress(skill)}>
             <View key={index} style={styles.skillBadge}>
+              
               <Text style={styles.skill}>{skill}</Text>
             </View>
+            </TouchableOpacity>
           ))}
-        </View>
+        </View> 
+        
       </View>
+
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Experience</Text>
 
-        
-        {userProfile.experience.map((exp, index) => (
+      <TouchableOpacity onPress={()=>navigation.navigate('StackProfile',{screen:'AddExperience'})}>
+      <Image
+        source={require("../Images/plus-48.png")}
+        style={styles.AddExperienceImage}
+        />
+
+      </TouchableOpacity>
+
+      
+       {user.experiences.map((experience, index) => (
           <TouchableOpacity key={index} style={styles.experienceItem}>
-            <Text style={styles.experienceText}>{exp.company} - {exp.role}</Text>
-            <Text style={styles.experienceYears}>{exp.years} years</Text>
+            <Text style={styles.experienceText}>{experience}</Text>
+            <Text style={styles.experienceYears}>{}</Text>
           </TouchableOpacity>
-        ))}
-      </View>
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter a new skill"
-          value={newSkill}
-          onChangeText={setNewSkill}
-        />
-        <Button title="Add Skill" onPress={handleAddSkill} />
-
-         <TextInput
-          style={styles.input}
-          placeholder="Experience Title"
-          value={newExperience.title}
-          onChangeText={(text) => setNewExperience(current => ({ ...current, title: text }))}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Experience Description"
-          value={newExperience.description}
-          onChangeText={(text) => setNewExperience(current => ({ ...current, description: text }))}
-        />
-        <Button title="Add Experience" onPress={handleAddExperience} /> 
-       
-        <FlatList
-          data={user.skills}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => <Text>{item}</Text>}
-        />
-         <FlatList
-          data={experience}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View>
-              <Text>{item.title}</Text>
-              <Text>{item.description}</Text>
-            </View>
-          )}
-        />
+        ))} 
       </View>
 
+      
     </ScrollView>
   );
 };
@@ -205,7 +169,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
   },
@@ -257,9 +221,18 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
   },
-  Image:{
-    width: 30, 
-    height: 35, 
+  AddSkillImage:{
+    width: 29, 
+    height: 29, 
+   left:70,
+   top:-37,
+
+  },
+  AddExperienceImage:{
+    width: 29, 
+    height: 29, 
+    left:136,
+    top:-38,
 
   }
 });

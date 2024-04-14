@@ -8,6 +8,7 @@ import ChatScreen from "../src/Screens/ChatScreen";
 import SignupScreen from "../src/Screens/Signup";
 import SignIn from "../src/Screens/SignIn"
 import AddSkills from "../src/Screens/AddSkills";
+import AddExperience from "../src/Screens/AddExperience";
 
 
 
@@ -24,8 +25,11 @@ const StackPro = (props, route) => {
        <Stack.Screen name='AddSkills' component={AddSkills}
        options={({route,navigation})=>({
         
-       
-          
+        })} /> 
+
+        <Stack.Screen name='AddExperience' component={AddExperience}
+       options={({route,navigation})=>({
+        
         })} /> 
         
       

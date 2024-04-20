@@ -4,6 +4,9 @@
 <dict>
 
 <key>NSFaceIDUsageDescription</key>
+<string>We need access to Face ID for secure authentication.</string>
+
+<key>NSFaceIDUsageDescription</key>
 <string>We use Face ID to authenticate you and provide a secure experience.</string>
 
 	<key>CFBundleDevelopmentRegion</key>

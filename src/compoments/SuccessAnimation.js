@@ -46,12 +46,14 @@ overlay: {
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent overlay
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent:'center'
+    
+    
        
 },
     image: {
-        width: 90,
-        height: 90,
+        width: 70,
+        height:70,
         
     },
 });

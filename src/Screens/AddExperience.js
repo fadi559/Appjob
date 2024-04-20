@@ -3,16 +3,18 @@ import { View, TextInput, Image,StyleSheet, TouchableOpacity, RefreshControlBase
 import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
 import { Button } from '@rneui/base'; 
-
+import SuccessAnimation from '../compoments/SuccessAnimation';
 import { useNavigation } from '@react-navigation/native';
 import { Api } from '../res/api';
-
+import { Alert } from 'react-native';
 
 
 const AddExperience = ({ route, navigation }) => {
     const { user, setUser } = useContext(UserContext);
     const [newExperience, setNewExperience] = useState('');
     const [experience, setExperience] = useState('');
+    const [showSuccess, setShowSuccess] = useState(false);
+
     
     console.log("newExperienceee:,",newExperience)
   console.log("experience:",experience)
@@ -23,6 +25,16 @@ const AddExperience = ({ route, navigation }) => {
      
 
     const handleAddExperience = async (experiences) => {
+      if (newExperience.trim() === '') {
+        // Alert the user if the input is empty
+        Alert.alert("Invalid Input", "Please type your experience before adding.");
+      } else {
+        setNewExperience('');
+        setShowSuccess(true);
+
+      setTimeout(() => {
+          setShowSuccess(false);
+      }, 2000); // Hide the GIF af
       const body= JSON.stringify({ experience : newExperience , userId: user._id})
         try {
           await fetch(Api.AddExperince, {
@@ -38,6 +50,11 @@ const AddExperience = ({ route, navigation }) => {
         } catch (error) {
           console.error('Error adding experience:', error);
         }
+      }
+      
+
+     
+    
       };
 
     
@@ -60,9 +77,8 @@ const AddExperience = ({ route, navigation }) => {
          buttonStyle={{backgroundColor:'#3A416F', width:130,
          left:100,borderRadius:30,}}
             title='Add'
-            onPress={handleAddExperience}
-            
-            />
+            onPress={handleAddExperience}/>
+            <SuccessAnimation isVisible={showSuccess} />
        
         </View>
             

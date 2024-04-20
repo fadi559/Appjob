@@ -19,8 +19,8 @@ const Card = ({item}) => {
   const navigation = useNavigation()
   const { user, setUser } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
-  console.log('USERFROMRENDERCARD',user),
-  console.log('WWWPOST33',posts)
+  // console.log('USERFROMRENDERCARD',user),
+   console.log('SETPost',posts)
 
 
   useEffect(() => {
@@ -43,13 +43,14 @@ const Card = ({item}) => {
     );
     const fetchPosts = async () => {
         try {
-          const response = await axios.get(Api.RenderCard);
-          setPosts(response.data);
+          const response = await fetch(Api.jobposts2).then(res=> res?.json())
+          console.log("jobs: " , response);
+          setPosts(response);
         } catch (error) {
-          console.log("error fetching posts", error);
+          console.log("error fetching posts", error); 
         }
       };
-        // console.log("renderr55:",posts);
+        //  console.log("renderr55:",posts);
   
   return (
   <UserProfile posts={posts} />,

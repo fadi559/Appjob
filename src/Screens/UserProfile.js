@@ -18,6 +18,7 @@ const UserProfile = (props) => {
   const [posts, setPosts] = useState([]);
   const {User}=props.route.params
   const{skills}=props.route.params
+  const{experiences}=props.route.params
   
    console.log("Userr::",User)
  
@@ -36,7 +37,7 @@ const UserProfile = (props) => {
             
         {/* <Image source={require("../Images/Avatar.png")} style={styles.avatar} /> */}
         <View style={styles.headerTextContainer}>
-          <Text style={styles.name}>{User}</Text>
+          <Text style={styles.name}>{User.name}</Text>
 
           {/* <Text style={styles.name}>{skills}</Text> */}
           
@@ -47,11 +48,11 @@ const UserProfile = (props) => {
      
   
          <View style={styles.skillsContainer}>
-          {user.skills.map((skill, index) => (
+          {User.skills.map((skills, index) => (
 
              <TouchableOpacity>
             <View key={index} style={styles.skillBadge}>
-              <Text style={styles.skill}>{skill}</Text>
+              <Text style={styles.skill}>{skills}</Text>
             </View>
             </TouchableOpacity>
           ))}
@@ -63,9 +64,9 @@ const UserProfile = (props) => {
       <View style={{right:50,}}>
  <Text style={styles.sectionTitle}>Experience</Text>
 
-       {user.experiences.map((experience, index) => (
+       {User.experiences.map((experiences, index) => (
           <TouchableOpacity key={index} style={styles.experienceItem}>
-            <Text style={styles.experienceText}>{experience}</Text>
+            <Text style={styles.experienceText}>{experiences}</Text>
             <Text style={styles.experienceYears}>{}</Text>
           </TouchableOpacity>
         ))} 

@@ -26,7 +26,17 @@ const AddSkills = ({ route, navigation }) => {
     
 
     const handleAddSkill = async (skills) => {
+      if (newSkill.trim() === '') {
+        // Alert the user if the input is empty
+        Alert.alert("Invalid Input", "Please type your skill before adding.");
+      } else {
+        setNewSkill('');
+        setShowSuccess(true);
 
+      setTimeout(() => {
+          setShowSuccess(false);
+      }, 1000); // Hide the GIF af
+      
         const body = JSON.stringify({ skill:newSkill , userId: user._id })
     
         try {
@@ -43,12 +53,14 @@ const AddSkills = ({ route, navigation }) => {
         } catch (error) {
           console.error('Error adding skill:', error);
         }
+        setNewSkill('');
         setShowSuccess(true);
 
         setTimeout(() => {
             setShowSuccess(false);
         }, 2000); // Hide the GIF af
       };
+    }
 
 
   return (

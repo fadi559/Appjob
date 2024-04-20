@@ -23,25 +23,28 @@ const ShareScreen = (props) => {
   const {user,setUser}=useContext(UserContext);
   const [textInputValue, setTextInputValue] = useState('');
   
+  
 
-
-  console.log("user44",user);
+  // console.log("user44",user);
 
 
   const handlepost =async () => {
     
     const jobPostData = {
-      User:user.name,
+     
+      User:user,
       location,
       jobType,
       notes,
       Phonenumber,
+      
     };
+    console.log("JOBPOST33:",jobPostData);
     if (Phonenumber.length === 10 && /^\d+$/.test(Phonenumber)) 
-    // console.log("jobpost:",jobPostData);
+     
    
     try {
-      const response = await fetch(Api.share,{
+      const response = await fetch(Api.jobposts,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,15 +68,15 @@ const ShareScreen = (props) => {
       navigation.navigate("tab",{screen:'home'})
       // Optionally, refresh your job posts list to include the new post
       
-      
+
     } catch (error) {
       console.log('Error posting job:', error);
-      
     }
     else{
     Alert.alert('Invalid Phone Number', 'Please enter a valid 10-digit phone number.');
     }
   };
+
 
 
   return (
@@ -122,10 +125,9 @@ const ShareScreen = (props) => {
       />
       </ScrollView>
     </View>
-    
   );
-  
 };
+
 
 const styles = StyleSheet.create({
   container: {

@@ -1,67 +1,127 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, FlatList, Button ,Image,Alert} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, FlatList, Button, Image, Alert } from 'react-native';
 import { useEffect } from 'react';
 import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
 import { Avatar } from '@rneui/themed';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import StackPro from '../../route/StackProfile';
+import { Api, baseUrl } from '../res/api';
 
 
 
 const ProfilePage = ({ userId }) => {
   const { user, setUser } = useContext(UserContext);
-  // console.log('userss', user);
+  console.log('Userss', user);
   const [newSkill, setNewSkill] = useState('');
-   const [skill, setSkill] = useState('');
-
-  const [experience, setExperience] = useState('');
   const [newExperience, setNewExperience] = useState('');
   const navigation = useNavigation()
 
-  console.log("newExperienceee:,",newExperience)
-  console.log("experience:",experience)
-  console.log("userrr:",user)
-
-
-  const deleteSkill = async (userId, skills,setSkills) => {
-    try {
-        const response = await fetch(`http://localhost/api/SkillsDelete${userId}/${skill}`, {
-            method: 'DELETE',
-      });
-      const updatedSkills = await response.json();
-      if (response.ok) {
-          // Update your local state to reflect the change
-          setSkills(updatedSkills);
-      } else {
-          throw new Error('Failed to delete the skill');
-      }
-  } catch (error) {
-      console.error('Error deleting skill:', error);
-  }
-};
 
   
-  // Handler for pressing the skill item
-  const handlePress = ({ skill,  }) => {
-      Alert.alert(
-          "Delete Skill",
-          "Are you sure you want to delete this skill?",
-          [
-              {
-                  text: "Cancel",
-                  style: "cancel"
-              },
-              { 
-                  text: "OK", 
-                  onPress: () => deleteSkill()
-              }
-          ],
-          { cancelable: false }
-      );
+
+
+  const deleteSkill = async (skill) => {
+    
+    console.log("delete skill url: ", url);
+    try {
+      const response = await fetch(Api.deleteSkill, {
+        method: 'delete',
+      });
+      const updatedSkills = await response.json();
+
+      setUser({ ...user, skills: updatedSkills })
+
+      console.log("sk: ", updatedSkills);
+      // }
+    } catch (error) {
+      console.warn('Error deleting skill:', error);
+    }
   };
+  // Handler for pressing the skill item
+  const handlePressdeleteSkill = (skill) => {
+    Alert.alert(
+      "Delete Skill",
+      "Are you sure you want to delete this skill?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => deleteSkill(skill)
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
+
+
+  const ExperiencesDelete = async (experience) => {
+   
+    
+    console.log("delete experience url: ", url);
+    try {
+      const response = await fetch(Api.deleteExperince, {
+        method: 'delete',
+      });
+      const updatedexperience = await response.json();
+
+      setUser({ ...user, experiences: updatedexperience })
+
+      console.log("sk2: ", updatedexperience);
+      
+    } catch (error) {
+      console.warn('Error deleting experience:', error);
+    }
+  };
+
+  // Handler for pressing the skill item
+  const handlePressExperiences = (experience) => {
+    Alert.alert(
+      "Delete Skill",
+      "Are you sure you want to delete this experience?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => ExperiencesDelete(experience)
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
+
+  const renderSkills = () => {
+    return user.skills.map((skill, index) => (
+
+
+      <TouchableOpacity style={styles.skillItem} onPress={() => handlePressdeleteSkill(skill)}>
+        <View key={index} style={styles.skillBadge}>
+
+          <Text style={styles.skill}>{skill}</Text>
+        </View>
+      </TouchableOpacity>
+    ))
+  };
+  const renderExperince=()=>{
+    return user.experiences.map((experience, index) => (
+
+      <TouchableOpacity key={index} style={styles.experienceItem} onPress={() => handlePressExperiences(experience)}>
+        <Text style={styles.experienceText}>{experience}</Text>
+        <Text style={styles.experienceYears}>{}</Text>
+      </TouchableOpacity>
+    ))
+  };
+
+
 
 
   return (
@@ -78,61 +138,47 @@ const ProfilePage = ({ userId }) => {
       </View>
 
       <View style={styles.section}>
-      <Text style={styles.sectionTitle}>Skills</Text>  
-      <TouchableOpacity onPress={()=>navigation.navigate('StackProfile',{screen:'AddSkills'})}>
-        <Image
-        source={require("../Images/plus-48.png")}
-        style={styles.AddSkillImage}
-      
-        />
+        <Text style={styles.sectionTitle}>Skills</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('StackProfile', { screen: 'AddSkills' })}>
+          <Image
+            source={require("../Images/plus-48.png")}
+            style={styles.AddSkillImage}
+          />
         </TouchableOpacity>
-   
-         <View style={styles.skillsContainer}>
-          {user.skills.map((skill, index) => (
-            
 
-             <TouchableOpacity  style={styles.skillItem} onPress={() => handlePress(skill)}>
-            <View key={index} style={styles.skillBadge}>
-              
-              <Text style={styles.skill}>{skill}</Text>
-            </View>
-            </TouchableOpacity>
-          ))}
-        </View> 
-        
+        <View style={styles.skillsContainer}>
+          {renderSkills()}
+        </View>
+
       </View>
 
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Experience</Text>
 
-      <TouchableOpacity onPress={()=>navigation.navigate('StackProfile',{screen:'AddExperience'})}>
-      <Image
-        source={require("../Images/plus-48.png")}
-        style={styles.AddExperienceImage}
-        />
+        <TouchableOpacity onPress={() => navigation.navigate('StackProfile', { screen: 'AddExperience' })}>
+          <Image
+            source={require("../Images/plus-48.png")}
+            style={styles.AddExperienceImage}
+          />
 
-      </TouchableOpacity>
+        </TouchableOpacity>
 
-      
-       {user.experiences.map((experience, index) => (
-          <TouchableOpacity key={index} style={styles.experienceItem}>
-            <Text style={styles.experienceText}>{experience}</Text>
-            <Text style={styles.experienceYears}>{}</Text>
-          </TouchableOpacity>
-        ))} 
+        {renderExperince()}
+        
       </View>
 
-      
+
     </ScrollView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
     marginTop: 33,
-    backgroundColor: '#f5f5f5', 
+    backgroundColor: '#f5f5f5',
   },
   profileHeader: {
     alignItems: 'center',
@@ -221,18 +267,18 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
   },
-  AddSkillImage:{
-    width: 29, 
-    height: 29, 
-   left:70,
-   top:-37,
+  AddSkillImage: {
+    width: 29,
+    height: 29,
+    left: 70,
+    top: -37,
 
   },
-  AddExperienceImage:{
-    width: 29, 
-    height: 29, 
-    left:136,
-    top:-38,
+  AddExperienceImage: {
+    width: 29,
+    height: 29,
+    left: 136,
+    top: -38,
 
   }
 });

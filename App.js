@@ -13,12 +13,15 @@ import Stacknav from './route/stack';
 import MainNavigator from './route/mainNavigator';
 import { useContext } from 'react';
 import {  UserProvider } from './src/compoments/usercontext';
+import { LoadingProvider } from './src/compoments/LoadingContext';
 
 const App = () => {
       return (
             <View style={{ flex: 1 }}>
                   <UserProvider>
+                  <LoadingProvider>
                         <MainNavigator />
+                        </LoadingProvider>
                   </UserProvider>
             </View>
       )

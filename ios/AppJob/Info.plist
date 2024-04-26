@@ -4,10 +4,12 @@
 <dict>
 
 <key>NSFaceIDUsageDescription</key>
-<string>We need access to Face ID for secure authentication.</string>
+<string>Enabling Face ID allows you quick access to RealApp</string>
 
-<key>NSFaceIDUsageDescription</key>
-<string>We use Face ID to authenticate you and provide a secure experience.</string>
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <string>whatsapp</string>
+</array>
 
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>

@@ -1,7 +1,7 @@
   
     
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, StyleSheet,TextInput } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import SignIn from './SignIn';
@@ -10,7 +10,8 @@ import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
+import { Input } from 'react-native-elements';
+import { color } from '@rneui/base';
 
 
 
@@ -70,6 +71,7 @@ const SignupScreen = ({navigtion},props) => {
         value={name}
         onChangeText={(text) => setName(text)}
         placeholder="Your Name"
+        placeholderTextColor="#888"
       />
 
       <TextInput
@@ -78,6 +80,7 @@ const SignupScreen = ({navigtion},props) => {
         onChangeText={(text) => setEmail(text)}
         placeholder="Your Email"
         keyboardType="email-address"
+        placeholderTextColor="#888"
       />
 
       <TextInput
@@ -86,6 +89,7 @@ const SignupScreen = ({navigtion},props) => {
         onChangeText={(text) => setPassword(text)}
         placeholder="Your Password"
         secureTextEntry
+        placeholderTextColor="#888"
       />
      <TextInput
         style={styles.input}
@@ -94,6 +98,7 @@ const SignupScreen = ({navigtion},props) => {
         placeholder="Your PhoneNumber "
         keyboardType="numeric"
         maxLength={10}
+        placeholderTextColor="#888"
     
       /> 
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
@@ -130,7 +135,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     padding: 10,
     fontSize: 16,
-    color: '#333',
+    color: 'black',
+    
   },
   button: {
     width: '100%',

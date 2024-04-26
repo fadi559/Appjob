@@ -9,6 +9,8 @@ import { useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Avatar } from '@rneui/themed';
 import { Api } from '../res/api'
+import CustomLoadingSpinner from '../compoments/Loading'
+import { useLoading } from '../compoments/LoadingContext'
 
 
 
@@ -24,6 +26,8 @@ const Searchbox = (props) => {
   const animation =useSharedValue(0);
   const [value,setValue]= useState(0);
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
+  const { showLoader, hideLoader } = useLoading();
 
   
 // console.log("name",users);
@@ -38,6 +42,8 @@ const Searchbox = (props) => {
     };
   });
   const handleSearch = async (text) => {
+    showLoader(true)
+
     setSearchTerm(text)
     if (!text.trim()) {
       setUsers([]);
@@ -60,15 +66,19 @@ const Searchbox = (props) => {
     } catch (error) {
       console.error('Failed to fetch users:', error);
       
-    }
+    
+  } finally {
+    hideLoader(false)
+
+  }
   };
   
   
   const renderUser = ({ item }) => (
-    // console.log("iitt.",item),
+     console.log("iitt.",item),
     <TouchableOpacity
     style={styles.userRueslt}
-      onPress={() => navigation.navigate('drawer', { screen: 'UserProfile', params: { User: item.name } })}>
+      onPress={() => navigation.navigate('drawer', { screen: 'UserProfile', params: { User:item } })}>
          <Avatar size={20} rounded 
        icon={{name:'rowing'}}  
        containerStyle={styles.Avtarstyle}/>
@@ -101,14 +111,23 @@ const Searchbox = (props) => {
           onSubmitEditing={handleSearch}
         />
       </View>
+      
+      
       {searchTerm!== '' && (
+        
         <FlatList
           data={users}
           keyExtractor={item => item._users} 
           style={styles.resultList}
           renderItem={renderUser}
+         ListFooterComponent={<CustomLoadingSpinner />}
+          ListEmptyComponent={
+          <Text style={styles.SerachResaultEmpty}>No users found </Text>}
+          
         />
+       
       )}
+      
     </View>
         <TouchableOpacity onPress={()=>{ 
           setSearchTerm('')
@@ -186,6 +205,13 @@ const styles = StyleSheet.create({
      marginTop:25,
      left:6,
   },
+  SerachResaultEmpty:{
+    alignSelf:'center',
+    top:70,
+    fontSize:20,
+    
+
+  }
   
 })
 export default Searchbox

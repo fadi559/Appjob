@@ -5,16 +5,12 @@ import { Input, Button } from 'react-native-elements';
 import Biometrics from 'react-native-biometrics';
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios';
-import Home from './home';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native'
-import { ImageBackground } from 'react-native';
 import { Api } from '../res/api';
 import { UserContext } from '../compoments/usercontext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
-import ReactNativeBiometrics from 'react-native-biometrics';
-
+import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
 
 
   const SignIn = ({navigtion}) => {
@@ -25,19 +21,22 @@ import ReactNativeBiometrics from 'react-native-biometrics';
   const [authStatus, setAuthStatus] = useState('');
   const [notificationVisible, setNotificationVisible] = useState(false);
   const {setUser}=useContext(UserContext);
-
-
   const[loading,setloading]=useState(false);
 
 
 
-  const handleSignin= async () => {
+
+  const handleSignin= async (data) => {
 
     setloading(true);
+    if(data){
+      navigation.navigate('tab',{screen:'home'});
+    }
       // Validate input fields (you can add more validation as needed)
       if (!email || !password) {
+        
        Alert.alert('Please fill in all fields');
-      }
+      }else
       try {
         const { data } = await axios.post (Api.signIn,{
          email,
@@ -47,12 +46,14 @@ import ReactNativeBiometrics from 'react-native-biometrics';
          Alert.alert(data.error);
       }
       else {
-        // await AsyncStorage.setItem ("@auth", JSON.stringify(data));
+         await AsyncStorage.setItem ("@auth", JSON.stringify(data));
         setloading(false);
          console.log ("SIGNIN SUCCESS »> ", data.user); 
         setUser(data.user)
         //  Alert.alert ("Sign in successful");
+        
         navigation.navigate('tab',{screen:'home'});
+
 
       }
       }  catch (error) {
@@ -60,88 +61,67 @@ import ReactNativeBiometrics from 'react-native-biometrics';
         console.error('Signin Error:', error);
         setloading(false);
       }
-    };
-
-    // const loadFromAsyncStorage = async () =>
-    // {
-    // let data=await AsyncStorage.getItem("@auth");
-    // console.log ("FROM ASYNC STORAGE → ", data);
-    // };
-    // loadFromAsyncStorage();
-    
-    
-    const checkBiometrics = async () => {
-      const { available, biometryType } = await ReactNativeBiometrics.isSensorAvailable();
-    
-      return available && biometryType === ReactNativeBiometrics.FaceID;
-    };
-
-    const authenticateUser = async () => {
-      const isAvailable = await checkBiometrics();
+     
       
-      if (isAvailable) {
-        ReactNativeBiometrics.simplePrompt({ promptMessage: 'Confirm your identity' })
-          .then(async (result) => {
-            if (result.success) {
-              const userId = 'user123'; // Normally, you would have this stored or in a state
-              try {
-                const response = await fetch(Api.signIn, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({ userId })
-                });
-    
-                if (response.ok) {
-                  console.log('Logged in successfully!');
-                  // Navigate to your main application
-                } else {
-                  throw new Error('Failed to login');
-                }
-              } catch (error) {
-                console.error('Error:', error);
-              }
-            } else {
-              console.log('Authentication failed');
-            }
-          })
-          .catch(() => {
-            console.error('Prompt failed');
-          });
-      } else {
-        console.log('Face ID not available');
-      }
     };
+
+    const loadFromAsyncStorage = async () =>
+    {
+    let data=await AsyncStorage.getItem("@auth");
+    console.log ("FROM ASYNC STORAGE → ", data);
+    };
+    loadFromAsyncStorage();
+    
+    
+    const authenticateUser = async () => {
+      ReactNativeBiometrics.isSensorAvailable()
+        .then((result) => {
+          const { available, biometryType } = result;
+    
+          if (available && biometryType === ReactNativeBiometrics.FaceID) {
+            ReactNativeBiometrics.simplePrompt({ promptMessage: 'Confirm your identity' })
+              .then((result) => {
+                const { success } = result;
+    
+                if (success) {
+                  console.log('Face ID authentication successful');
+                  // Now fetch a token from the backend
+                  fetchTokenFromBackend();
+                } else {
+                  console.log('Face ID authentication failed');
+                }
+              })
+              .catch(() => console.log('Face ID prompt failed'));
+          } else {
+            console.log('Face ID is not available');
+          }
+        })
+        .catch(error => console.log('isSensorAvailable error', error));
+    
     
 
+    const fetchTokenFromBackend = async () => {
+      // Example API call to the Node.js backend
+      try {
+        const response = await fetch(Api.signIn, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: 'unique-user-id' }) // Assuming you have a way to identify the user
+        });
+        const data = await response.json();
+        if (data.token) {
+          console.log('Received token:', data.token);
+          // Handle the session token here (e.g., store it securely)
+        }
+      } catch (error) {
+        console.error('Error fetching token:', error);
+      }
+    }
+  };
 
 
 
-  // const handleAuthentication = async () => {
-  //   // Check if sensor and Face ID are available
-  //   const { available, biometryType } = await ReactNativeBiometrics.isSensorAvailable();
-
-  //   if (available && biometryType === ReactNativeBiometrics.FaceID) {
-  //     // Sensor is available and is specifically Face ID
-  //     ReactNativeBiometrics.simplePrompt({ promptMessage: 'Confirm your identity' })
-  //       .then((result) => {
-  //         if (result.success) {
-  //           // Face ID authentication was successful
-  //           Alert.alert('Authentication Successful', 'You have been authenticated successfully.');
-  //         } else {
-  //           // User cancelled or failed authentication
-  //           Alert.alert('Authentication Failed', 'Failed to authenticate.');
-  //         }
-  //       })
-  //       .catch(() => {
-  //         Alert.alert('Authentication Error', 'An error occurred during authentication.');
-  //       });
-  //   } else {
-  //     // Face ID not available
-  //     Alert.alert('Unavailable', 'Face ID is not available on this device.');
-  //   }
-  // }
+ 
 
     
   return (
@@ -186,7 +166,7 @@ import ReactNativeBiometrics from 'react-native-biometrics';
       
     </View>
   );
-      }
+  }
   
       
 const styles = StyleSheet.create({

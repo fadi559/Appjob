@@ -8,6 +8,8 @@ import Conbutton from './Conbutton';
 import RatingComponent from './RatingComponent';
 import { useContext, useState, useEffect } from 'react';
 import ExpandableBox from './ExpandableBox';
+import CustomLoadingSpinner from './Loading';
+import { useLoading } from './LoadingContext';
 
 
 const CardItem = (props) => {
@@ -19,16 +21,18 @@ const CardItem = (props) => {
     const { skills } = props.post
     const navigation = useNavigation()
     const [posts, setPosts] = useState([]);
+    const { showLoader, hideLoader } = useLoading();
 
 
-    console.log("User",User)
+
+    console.log("Usersss2",User)
 
     //  console.log("CARDITEM",props.post);
 
     return (
 
         <View style={styles.box}>
-            {/* <ScrollView style={{borderRadius:40,}}> */}
+           
 
             <Text style={styles.cityName}>{location}</Text>
             {/* <RatingComponent style={styles.RatingComponent} /> */}
@@ -36,7 +40,7 @@ const CardItem = (props) => {
             <View style={styles.Avatar}>
                 <Avatar
                     onPress={() =>
-                        navigation.navigate('drawer', { screen: 'UserProfile', params: { User: User, skills: skills } })}
+                        navigation.navigate('drawer', { screen: 'UserProfile', params: { User: User } })}
                     size={45}
                     rounded
                     icon={{ name: 'rowing' }}
@@ -45,7 +49,7 @@ const CardItem = (props) => {
             </View>
             <Text style={styles.text2} > jobtype: {jobType}</Text>
 
-            {/* <Text style={styles.text3} > Note:{notes}</Text>  */}
+           
 
             <View style={{ flexDirection: 'row'}}>
                 <Text style={styles.text3} > Note:</Text>
@@ -54,12 +58,13 @@ const CardItem = (props) => {
 
             <View style={styles.ViewRowButten}>
 
-                <Conbutton />
+                <Conbutton Phonenumber={Phonenumber} />
 
                 <Phonebutton Phonenumber={Phonenumber} />
 
             </View>
-            {/* </ScrollView>    */}
+
+            
         </View>
     )
 }
@@ -79,8 +84,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 70,
-
-        marginLeft: 20,
+top:-9,
+        marginLeft: -2,
         shadowColor: 'black',
 
         shadowOffset: {
@@ -92,14 +97,16 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     box: {
-        width: "97%",
+        left:17,
+        alignContent:"center",
+        width:"90%",
         // minHeight:330,
         padding: 5,
         backgroundColor: '#3A416F',
         borderRadius: 60,
-        // flex: 1,
         borderWidth: 0.3,
         marginTop: 30,
+       
 
         shadowColor: 'black',
         shadowOffset: {
@@ -124,9 +131,10 @@ const styles = StyleSheet.create({
 
     },
     text3: {
-        marginBottom: 0,
+     top:9,
+        
         color: '#E9ECEF',
-        marginVertical: 0,
+        
 
     },
     cityName: {

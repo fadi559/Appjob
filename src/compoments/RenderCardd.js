@@ -11,6 +11,8 @@ import jwt_decode from "jwt-decode";
 import CardItem from './CardItem';
 import { Api } from '../res/api';
 import UserProfile from '../Screens/UserProfile';
+import { useLoading } from './LoadingContext';
+import CustomLoadingSpinner from './Loading';
 
 
 
@@ -19,8 +21,11 @@ const Card = ({item}) => {
   const navigation = useNavigation()
   const { user, setUser } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
+  const { showLoader, hideLoader } = useLoading();
+
+
   // console.log('USERFROMRENDERCARD',user),
-   console.log('SETPost',posts)
+  //  console.log('SETPost',posts)
 
 
   useEffect(() => {
@@ -31,7 +36,7 @@ const Card = ({item}) => {
       const user = decodedToken.user;
       setUser(user);
     };
-    fetchUsers();
+    fetchUsers(true);
     }, []);
     useEffect(() => {
     fetchPosts();
@@ -42,20 +47,27 @@ const Card = ({item}) => {
     }, [])
     );
     const fetchPosts = async () => {
+      showLoader();
         try {
           const response = await fetch(Api.jobposts2).then(res=> res?.json())
-          console.log("jobs: " , response);
+          // console.log("jobs: " , response);
           setPosts(response);
         } catch (error) {
           console.log("error fetching posts", error); 
-        }
+        
+      } finally {
+        
+        hideLoader(false);
+      }
       };
-        //  console.log("renderr55:",posts);
+        
   
   return (
   <UserProfile posts={posts} />,
 
     <View style={styles.container}>
+      <CustomLoadingSpinner />
+
     {posts?.map((post) => (
       <CardItem post={post}/>
       

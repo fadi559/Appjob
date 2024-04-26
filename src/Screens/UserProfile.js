@@ -17,14 +17,41 @@ const UserProfile = (props) => {
   const {user,setUser}=useContext(UserContext);
   const [posts, setPosts] = useState([]);
   const {User}=props.route.params
-  const{skills}=props.route.params
-  const{experiences}=props.route.params
   
-   console.log("Userr::",User)
+  
+  //  console.log("Userr::",User)
  
-  // console.log("u2serr::",user)
   
+  
+   const RenderSkills=()=>{
+    if (!User.skills || User.skills.length === 0) {
+      return <Text style={styles.noSkills}>No skills added.</Text>;
+  }
+
+
+    return User.skills.map((skills, index,item) => (
+     <View key={index} style={styles.skillBadge}>
+      
+      <Text style={styles.skill}>{skills}</Text>
+     </View>
+    ))}
    
+      
+
+   const RenderExperiences=()=>{ 
+    if (!User.experiences || User.experiences.length === 0) {
+      return <Text style={styles.noSkills}>No experiences added</Text>;
+  }
+     return User.experiences.map((experiences, index,item) => (
+    <TouchableOpacity key={index} style={styles.experienceItem}>
+      <Text style={styles.experienceText}>{experiences}</Text>
+      <Text style={styles.experienceYears}>{}</Text>
+    </TouchableOpacity>
+  ))
+
+};
+
+
   return (
     
     <ScrollView style={styles.container}>
@@ -38,39 +65,23 @@ const UserProfile = (props) => {
         {/* <Image source={require("../Images/Avatar.png")} style={styles.avatar} /> */}
         <View style={styles.headerTextContainer}>
           <Text style={styles.name}>{User.name}</Text>
-
-          {/* <Text style={styles.name}>{skills}</Text> */}
           
         </View>
         
         <View style={styles.section}>
       <Text style={styles.sectionTitle}>Skills</Text>  
-     
-  
          <View style={styles.skillsContainer}>
-          {User.skills.map((skills, index) => (
-
-             <TouchableOpacity>
-            <View key={index} style={styles.skillBadge}>
-              <Text style={styles.skill}>{skills}</Text>
-            </View>
-            </TouchableOpacity>
-          ))}
-        </View> 
         
+         {RenderSkills()}
+        
+        </View> 
       </View>
+
+      <View style={styles.section}>
+ <Text style={styles.sectionTitle2}>Experience</Text>
+ 
+      {RenderExperiences()}
       
-
-      <View style={{right:50,}}>
- <Text style={styles.sectionTitle}>Experience</Text>
-
-       {User.experiences.map((experiences, index) => (
-          <TouchableOpacity key={index} style={styles.experienceItem}>
-            <Text style={styles.experienceText}>{experiences}</Text>
-            <Text style={styles.experienceYears}>{}</Text>
-          </TouchableOpacity>
-        ))} 
-     
      </View>
         </View>
 </ScrollView>
@@ -96,6 +107,7 @@ const styles = StyleSheet.create({
   },
   headerTextContainer: {
     flex: 1,
+    marginBottom:50,
   },
   name: {
     fontSize: 24,
@@ -117,16 +129,44 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 20,
+    alignItems:"baseline",
+    
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
     right:20,
+
+    paddingHorizontal: 20,  
+    paddingVertical: 5,    
+    backgroundColor: 'white',  
+    borderRadius: 20,     
+    margin: 5,
+    borderWidth: 1,         
+    borderColor: 'gray',
+    
+  },
+  sectionTitle2: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    right:85,
+    marginTop:40,
+
+    paddingHorizontal: 20,  
+    paddingVertical: 5,    
+    backgroundColor: 'white',  
+    borderRadius: 20,     
+    margin: 5,
+    borderWidth: 1,         
+    borderColor: 'gray',
+    
   },
   skillsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    
   },
   skillBadge: {
     backgroundColor: '#007bff',
@@ -135,10 +175,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
+    
+        
+    
   },
   skill: {
     color: '#fff',
     fontSize: 16,
+    
   },
   experienceItem: {
     backgroundColor: '#fff',
@@ -162,6 +206,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     marginTop: 5,
+  },
+  noSkills:{
+    fontSize:20,
+        
+
+
   },
 });
 

@@ -8,7 +8,7 @@ import { Avatar } from '@rneui/themed';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Api, baseUrl } from '../res/api';
-
+import CustomLoadingSpinner from '../compoments/Loading';
 
 
 const ProfilePage = ({ userId }) => {
@@ -24,9 +24,9 @@ const ProfilePage = ({ userId }) => {
 
   const deleteSkill = async (skill) => {
     
-    console.log("delete skill url: ", url);
+    // console.log("delete skill url: ", url);
     try {
-      const response = await fetch(Api.deleteSkill, {
+      const response = await fetch(Api.deleteSkill(id,skill), {
         method: 'delete',
       });
       const updatedSkills = await response.json();
@@ -63,9 +63,9 @@ const ProfilePage = ({ userId }) => {
   const ExperiencesDelete = async (experience) => {
    
     
-    console.log("delete experience url: ", url);
+    // console.log("delete experience url: ", url);
     try {
-      const response = await fetch(Api.deleteExperince, {
+      const response = await fetch( `http://192.168.1.241:8000/api/ExperiencesDelete?id=${Id}&experience=${experience}`, {
         method: 'delete',
       });
       const updatedexperience = await response.json();
@@ -139,6 +139,7 @@ const ProfilePage = ({ userId }) => {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Skills</Text>
+       
         <TouchableOpacity onPress={() => navigation.navigate('StackProfile', { screen: 'AddSkills' })}>
           <Image
             source={require("../Images/plus-48.png")}

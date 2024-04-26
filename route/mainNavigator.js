@@ -7,7 +7,7 @@ import Darwernav from "./drawer";
 import SignupScreen from "../src/Screens/Signup";
 import SignIn from "../src/Screens/SignIn";
 import StackPro from "./StackProfile";
-
+import CustomLoadingSpinner from "../src/compoments/Loading";
 
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +19,7 @@ const MainNavigator = (props,route) => {
     return (
         
         <NavigationContainer>  
+             {/* <CustomLoadingSpinner /> */}
             <Stack.Navigator initialRouteName='stack' screenOptions={{
                 headerShown: false,
 

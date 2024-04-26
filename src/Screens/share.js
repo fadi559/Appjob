@@ -12,6 +12,8 @@ import { UserContext } from '../compoments/usercontext';
 import { Api } from '../res/api';
 import UserProfile from './UserProfile';
 import { ScrollView } from 'react-native';
+import SuccessAnimation from '../compoments/SuccessAnimation';
+
 
 
 const ShareScreen = (props) => {
@@ -22,11 +24,10 @@ const ShareScreen = (props) => {
   const [Phonenumber,setPhonenumber]=useState('');
   const {user,setUser}=useContext(UserContext);
   const [textInputValue, setTextInputValue] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
+   
   
-  
-
   // console.log("user44",user);
-
 
   const handlepost =async () => {
     
@@ -39,10 +40,29 @@ const ShareScreen = (props) => {
       Phonenumber,
       
     };
+    if (!jobType) {
+      Alert.alert('Error', 'Please enter a job');
+      return;
+    };
+    if (!location) {
+      Alert.alert('Error', 'Please enter a location');
+      return;
+    };
+    if (!notes) {
+      Alert.alert('Error', 'Please enter a notes');
+      return;
+    };
+    if (!Phonenumber) {
+      Alert.alert('Invalid Phone Number', 'Please enter a valid 10-digit phone number');
+      return;
+    }
+    
+
+
+    
+
     console.log("JOBPOST33:",jobPostData);
     if (Phonenumber.length === 10 && /^\d+$/.test(Phonenumber)) 
-     
-   
     try {
       const response = await fetch(Api.jobposts,{
         method: 'POST',
@@ -53,32 +73,27 @@ const ShareScreen = (props) => {
         body: JSON.stringify(jobPostData),
         
       });
-      
       // console.log("res.status: " , response.status);
-      
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+    }, 2000); // Hide the GIF af
+    setJobType('');
+    setLocation('');
+    setNotes('');
+    setPhonenumber('');
       const responseData = await response.json();
       console.log('Job posted successfully:', responseData);
-      setJobType('');
-      setLocation('');
-      setNotes('');
-      setPhonenumber('');
-      setTimeout(() => {
-      }, 1000);
-     
-      navigation.navigate("tab",{screen:'home'})
-      // Optionally, refresh your job posts list to include the new post
       
-
+  
+      // navigation.navigate("tab",{screen:'home'})
+    
     } catch (error) {
       console.log('Error posting job:', error);
     }
-    else{
-    Alert.alert('Invalid Phone Number', 'Please enter a valid 10-digit phone number.');
-    }
+      
+    
   };
-
-
-
   return (
     
 
@@ -123,6 +138,8 @@ const ShareScreen = (props) => {
         buttonStyle={styles.shareButton}
         containerStyle={styles.shareButtonContainer}
       />
+      <SuccessAnimation isVisible={showSuccess} />
+
       </ScrollView>
     </View>
   );

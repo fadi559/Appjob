@@ -4,10 +4,12 @@ import { View, TextInput, Image,StyleSheet, TouchableOpacity,Alert } from 'react
 import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
 import { Button } from '@rneui/base'; 
-
 import { useNavigation } from '@react-navigation/native';
 import SuccessAnimation from '../compoments/SuccessAnimation';
 import { Api } from '../res/api';
+import CustomLoadingSpinner from '../compoments/Loading';
+import { useLoading } from '../compoments/LoadingContext';
+
 
 
 
@@ -17,6 +19,7 @@ const AddSkills = ({ route, navigation }) => {
     const [skill, setSkill] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
    
+    const { showLoader, hideLoader } = useLoading();
 
         
     // const [skills, setSkills] = useState([]);
@@ -33,12 +36,12 @@ const AddSkills = ({ route, navigation }) => {
         setNewSkill('');
         setShowSuccess(true);
 
-      setTimeout(() => {
-          setShowSuccess(false);
-      }, 1000); // Hide the GIF af
+      // setTimeout(() => {
+      //     setShowSuccess(false);
+      // }, 1000); // Hide the GIF af
       
         const body = JSON.stringify({ skill:newSkill , userId: user._id })
-    
+        showLoader(true);
         try {
           await fetch(Api.Addskils, {
             method: 'POST',
@@ -52,13 +55,19 @@ const AddSkills = ({ route, navigation }) => {
           
         } catch (error) {
           console.error('Error adding skill:', error);
-        }
+        
+      } finally {
+        hideLoader(false);
         setNewSkill('');
-        setShowSuccess(true);
+    }
+  
+        
 
-        setTimeout(() => {
-            setShowSuccess(false);
-        }, 2000); // Hide the GIF af
+        
+        // setShowSuccess(true);
+        // setTimeout(() => {
+        //     setShowSuccess(false);
+        // }, 2000); // Hide the GIF af
       };
     }
 
@@ -73,24 +82,29 @@ const AddSkills = ({ route, navigation }) => {
           style={styles.skillsStyle}
           />
           </TouchableOpacity>
+          
+           
+                
+            
       <View style={styles.inputpostion}>
       <TextInput
           style={styles.input}
           placeholder="Enter a new skill"
           value={newSkill}
           onChangeText={setNewSkill}
+           placeholderTextColor="#888"
         />
          <Button 
          buttonStyle={{backgroundColor:'#3A416F', width:130,
          left:100,borderRadius:30,}}
             title='Add'
             onPress={handleAddSkill} />
-            
-            <SuccessAnimation isVisible={showSuccess} />
-           
+  <CustomLoadingSpinner/>
+           {/* <SuccessAnimation isVisible={showSuccess} />
+            */}
         </View>
             
-           
+            
     </View>
   );
 };

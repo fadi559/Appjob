@@ -57,7 +57,7 @@ const Phonebutton = (props) => {
   
         <Button
           buttonStyle={{
-            backgroundColor: '#53618A',
+            backgroundColor: '#CED4DA',
             borderRadius: 13,
             borderWidth: 0.2,
             borderColor: '#627594',
@@ -68,7 +68,7 @@ const Phonebutton = (props) => {
             name: 'phone',
             type: 'FontAwesome',
             size: 30,
-            color: '#E9ECEF',
+            color: '#252f40',
           }}
           iconRight
           onPress={() => setModalVisible(true)}>

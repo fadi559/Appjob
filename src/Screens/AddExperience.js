@@ -51,10 +51,6 @@ const AddExperience = ({ route, navigation }) => {
           console.error('Error adding experience:', error);
         }
       }
-      
-
-     
-    
       };
 
     
@@ -72,6 +68,7 @@ const AddExperience = ({ route, navigation }) => {
           placeholder="Experience Description"
           value={newExperience}
           onChangeText={setNewExperience}
+          placeholderTextColor="#888"
         />
          <Button 
          buttonStyle={{backgroundColor:'#3A416F', width:130,

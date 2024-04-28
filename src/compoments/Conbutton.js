@@ -10,7 +10,7 @@ import { Linking } from 'react-native';
 const Conbutton = (props) => {
   const {Phonenumber}=props
   const navigation = useNavigation()
-  console.log("Phonenumber777::",Phonenumber)
+  // console.log("Phonenumber777::",Phonenumber)
 
 
   const openWhatsApp = () => {
@@ -30,6 +30,7 @@ const Conbutton = (props) => {
             }
         })
         .catch((err) => console.error('An error occurred', err));
+       
 };
 
 

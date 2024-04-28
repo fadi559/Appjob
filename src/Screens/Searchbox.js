@@ -120,7 +120,8 @@ const Searchbox = (props) => {
           keyExtractor={item => item._users} 
           style={styles.resultList}
           renderItem={renderUser}
-         ListFooterComponent={<CustomLoadingSpinner />}
+          
+        //  ListFooterComponent={<CustomLoadingSpinner />}
           ListEmptyComponent={
           <Text style={styles.SerachResaultEmpty}>No users found </Text>}
           

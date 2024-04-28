@@ -333,7 +333,7 @@ PODS:
     - glog
   - react-native-biometrics (3.0.1):
     - React-Core
-  - react-native-document-picker (9.1.0):
+  - react-native-document-picker (9.1.2):
     - React-Core
   - react-native-geolocation (3.1.0):
     - React-Core
@@ -678,7 +678,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 9f7c9137605e72ca0343db4cea88006cb94856dd
   React-logger: 957e5dc96d9dbffc6e0f15e0ee4d2b42829ff207
   react-native-biometrics: 352e5a794bfffc46a0c86725ea7dc62deb085bdc
-  react-native-document-picker: b4f4a23b73f864ce17965b284c0757648993805b
+  react-native-document-picker: 86bcfb8e2c94cd587ca9feb0049831b806df590d
   react-native-geolocation: ef66fb798d96284c6043f0b16c15d9d1d4955db4
   react-native-image-picker: 5e076db26cd81660cfb6db5bcf517cfa12054d45
   react-native-ionicons: 7ce04a8e61c6de2fc3b6798e8b9621b865cb18b1

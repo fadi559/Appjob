@@ -1,5 +1,6 @@
 
 import React, { useContext, useState } from 'react';
+import ReactNativeBiometrics from 'react-native-biometrics';
 import { View, Text, StyleSheet, Alert, Image } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import Biometrics from 'react-native-biometrics';
@@ -10,7 +11,9 @@ import { Api } from '../res/api';
 import { UserContext } from '../compoments/usercontext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
-import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
+
+
+
 
 
   const SignIn = ({navigtion}) => {
@@ -22,17 +25,16 @@ import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
   const [notificationVisible, setNotificationVisible] = useState(false);
   const {setUser}=useContext(UserContext);
   const[loading,setloading]=useState(false);
-
-
+  const rnBiometrics = new ReactNativeBiometrics()
 
 
   const handleSignin= async (data) => {
 
     setloading(true);
-    if(data){
-      navigation.navigate('tab',{screen:'home'});
+     const sucsses = await loadFromAsyncStorage() 
+    if(sucsses){
+      return
     }
-      // Validate input fields (you can add more validation as needed)
       if (!email || !password) {
         
        Alert.alert('Please fill in all fields');
@@ -42,6 +44,7 @@ import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
          email,
           password,
       });
+
       if(data.error){
          Alert.alert(data.error);
       }
@@ -50,79 +53,70 @@ import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
         setloading(false);
          console.log ("SIGNIN SUCCESS »> ", data.user); 
         setUser(data.user)
-        //  Alert.alert ("Sign in successful");
         
         navigation.navigate('tab',{screen:'home'});
-
-
       }
       }  catch (error) {
         Alert.alert('SigninFailed', error);
         console.error('Signin Error:', error);
         setloading(false);
-      }
-     
-      
+      }  
     };
 
     const loadFromAsyncStorage = async () =>
     {
     let data=await AsyncStorage.getItem("@auth");
-    console.log ("FROM ASYNC STORAGE → ", data);
+      if(data){
+        const {user} = JSON.parse(data)
+        console.log ("FROM ASYNC STORAGE the get  → ", user);
+        setUser(user)
+        navigation.navigate('tab',{screen:'home'});
+        return true;
+      }
     };
-    loadFromAsyncStorage();
+
+
     
     
-    const authenticateUser = async () => {
-      ReactNativeBiometrics.isSensorAvailable()
-        .then((result) => {
-          const { available, biometryType } = result;
-    
-          if (available && biometryType === ReactNativeBiometrics.FaceID) {
-            ReactNativeBiometrics.simplePrompt({ promptMessage: 'Confirm your identity' })
-              .then((result) => {
-                const { success } = result;
-    
+    const handleBiometricLogin = () => {
+      rnBiometrics.isSensorAvailable()
+        .then((resultObject) => {
+          const { available, biometryType } = resultObject;
+  
+          if (available && biometryType === ReactNativeBiometrics.TouchID) {
+            console.log('TouchID is supported');
+          } else if (available && biometryType === ReactNativeBiometrics.FaceID) {
+            console.log('FaceID is supported');
+          } else if (available) {
+            console.log('Biometric sensor is supported');
+          } else {
+            console.log('Biometric sensor is not supported');
+          }
+
+          if (available) {
+            rnBiometrics.simplePrompt({promptMessage: 'Confirm fingerprint'})
+              .then((resultObject) => {
+                const { success } = resultObject;
+  
                 if (success) {
-                  console.log('Face ID authentication successful');
-                  // Now fetch a token from the backend
-                  fetchTokenFromBackend();
+                  console.log('successful biometrics provided');
+                    loadFromAsyncStorage();
+                  navigation.navigate('tab',{screen:'home'});
+
+                  // You can proceed with logging the user in or accessing secure content
                 } else {
-                  console.log('Face ID authentication failed');
+                  console.log('user cancelled biometric prompt');
+                  
                 }
               })
-              .catch(() => console.log('Face ID prompt failed'));
-          } else {
-            console.log('Face ID is not available');
+              .catch(() => {
+                console.log('biometrics failed');
+              });
           }
-        })
-        .catch(error => console.log('isSensorAvailable error', error));
-    
-    
-
-    const fetchTokenFromBackend = async () => {
-      // Example API call to the Node.js backend
-      try {
-        const response = await fetch(Api.signIn, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId: 'unique-user-id' }) // Assuming you have a way to identify the user
         });
-        const data = await response.json();
-        if (data.token) {
-          console.log('Received token:', data.token);
-          // Handle the session token here (e.g., store it securely)
-        }
-      } catch (error) {
-        console.error('Error fetching token:', error);
       }
-    }
-  };
 
-
-
- 
-
+      
     
   return (
     <View style={styles.container}>
@@ -149,14 +143,12 @@ import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
       <Text style={styles.SmallSignupButton2}> not yet registered  <Text style={styles.SmallSignupButton} 
        onPress={()=>navigation.navigate('stack',{screen:'SignupScreen'})} >signup</Text>  </Text>
 
-      
-       
-      <TouchableOpacity style={styles.button} onPress={authenticateUser}>
+    
+      <TouchableOpacity style={styles.button} onPress={handleBiometricLogin}>
         <Image 
         
         source={require('../Images/facidbig.png')}
         style={styles.faceid}
-        
         />
        
       </TouchableOpacity>

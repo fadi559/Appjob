@@ -9,22 +9,25 @@ import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Api, baseUrl } from '../res/api';
 import CustomLoadingSpinner from '../compoments/Loading';
+import { useLoading } from '../compoments/LoadingContext';
 
 
 const ProfilePage = ({ userId }) => {
   const { user, setUser } = useContext(UserContext);
-  console.log('Userss', user);
+  // console.log('Userss', user);
   const [newSkill, setNewSkill] = useState('');
   const [newExperience, setNewExperience] = useState('');
+  const { showLoader, hideLoader } = useLoading();
   const navigation = useNavigation()
 
 
   
 
 
-  const deleteSkill = async (skill) => {
+  const deleteSkill = async (skill,id) => {
     
     // console.log("delete skill url: ", url);
+    showLoader(true)
     try {
       const response = await fetch(Api.deleteSkill(id,skill), {
         method: 'delete',
@@ -34,10 +37,11 @@ const ProfilePage = ({ userId }) => {
       setUser({ ...user, skills: updatedSkills })
 
       console.log("sk: ", updatedSkills);
-      // }
+      
     } catch (error) {
       console.warn('Error deleting skill:', error);
     }
+    hideLoader(false)
   };
   // Handler for pressing the skill item
   const handlePressdeleteSkill = (skill) => {
@@ -64,8 +68,9 @@ const ProfilePage = ({ userId }) => {
    
     
     // console.log("delete experience url: ", url);
+    showLoader(true)
     try {
-      const response = await fetch( `http://192.168.1.241:8000/api/ExperiencesDelete?id=${Id}&experience=${experience}`, {
+      const response = await fetch(Api.deleteExperince, {
         method: 'delete',
       });
       const updatedexperience = await response.json();
@@ -77,6 +82,7 @@ const ProfilePage = ({ userId }) => {
     } catch (error) {
       console.warn('Error deleting experience:', error);
     }
+    hideLoader(false)
   };
 
   // Handler for pressing the skill item
@@ -126,6 +132,7 @@ const ProfilePage = ({ userId }) => {
 
   return (
     <ScrollView style={styles.container}>
+      <CustomLoadingSpinner/>
 
       <View style={styles.profileHeader}>
         <Avatar size={80} rounded

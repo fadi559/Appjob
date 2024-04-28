@@ -8,7 +8,6 @@ import { useState } from 'react';
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import { useContext } from 'react';
 import { UserContext } from './usercontext';
-import CardItem from './CardItem';
 
 
 const Phonebutton = (props) => {

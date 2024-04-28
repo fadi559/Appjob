@@ -17,11 +17,10 @@ const AddSkills = ({ route, navigation }) => {
     const { user, setUser } = useContext(UserContext);
     const [newSkill, setNewSkill] = useState('');
     const [skill, setSkill] = useState('');
-    const [showSuccess, setShowSuccess] = useState(false);
-   
     const { showLoader, hideLoader } = useLoading();
 
         
+    
     // const [skills, setSkills] = useState([]);
   //   console.log("newSkill:,",newSkill)
   // console.log("skill:",skill)
@@ -84,9 +83,10 @@ const AddSkills = ({ route, navigation }) => {
           </TouchableOpacity>
           
            
-                
+          <CustomLoadingSpinner/>
             
       <View style={styles.inputpostion}>
+      
       <TextInput
           style={styles.input}
           placeholder="Enter a new skill"
@@ -99,7 +99,7 @@ const AddSkills = ({ route, navigation }) => {
          left:100,borderRadius:30,}}
             title='Add'
             onPress={handleAddSkill} />
-  <CustomLoadingSpinner/>
+  
            {/* <SuccessAnimation isVisible={showSuccess} />
             */}
         </View>

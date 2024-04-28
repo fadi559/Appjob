@@ -13,6 +13,8 @@ import { Api } from '../res/api';
 import UserProfile from './UserProfile';
 import { ScrollView } from 'react-native';
 import SuccessAnimation from '../compoments/SuccessAnimation';
+import CustomLoadingSpinner from '../compoments/Loading';
+import { useLoading } from '../compoments/LoadingContext';
 
 
 
@@ -25,20 +27,18 @@ const ShareScreen = (props) => {
   const {user,setUser}=useContext(UserContext);
   const [textInputValue, setTextInputValue] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
-   
+  const { showLoader, hideLoader } = useLoading();
   
   // console.log("user44",user);
 
   const handlepost =async () => {
     
     const jobPostData = {
-     
       User:user,
       location,
       jobType,
       notes,
       Phonenumber,
-      
     };
     if (!jobType) {
       Alert.alert('Error', 'Please enter a job');
@@ -57,27 +57,21 @@ const ShareScreen = (props) => {
       return;
     }
     
+    // console.log("JOBPOST33:",jobPostData);
 
-
-    
-
-    console.log("JOBPOST33:",jobPostData);
     if (Phonenumber.length === 10 && /^\d+$/.test(Phonenumber)) 
+    showLoader()
     try {
       const response = await fetch(Api.jobposts,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': `Bearer ${token}`, // Include the JWT token here if your endpoint requires authentication
+          // 'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(jobPostData),
         
       });
       // console.log("res.status: " , response.status);
-      setShowSuccess(true);
-      setTimeout(() => {
-        setShowSuccess(false);
-    }, 2000); // Hide the GIF af
     setJobType('');
     setLocation('');
     setNotes('');
@@ -85,23 +79,22 @@ const ShareScreen = (props) => {
       const responseData = await response.json();
       console.log('Job posted successfully:', responseData);
       
-  
       // navigation.navigate("tab",{screen:'home'})
     
     } catch (error) {
       console.log('Error posting job:', error);
     }
-      
-    
+    hideLoader()
   };
   return (
     
 
     <View style={styles.container}>
       <ScrollView>
-      <View>
-        
+      <View style={{top:12,}}>
+      <CustomLoadingSpinner/>
       </View>
+     
       <Input
         placeholder="Job"
         value={jobType}
@@ -138,9 +131,10 @@ const ShareScreen = (props) => {
         buttonStyle={styles.shareButton}
         containerStyle={styles.shareButtonContainer}
       />
-      <SuccessAnimation isVisible={showSuccess} />
+     
 
       </ScrollView>
+      
     </View>
   );
 };

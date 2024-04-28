@@ -25,7 +25,7 @@ const CardItem = (props) => {
 
 
 
-    console.log("Usersss2",User)
+    // console.log("Usersss2",User)
 
     //  console.log("CARDITEM",props.post);
 

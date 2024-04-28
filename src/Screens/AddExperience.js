@@ -7,6 +7,10 @@ import SuccessAnimation from '../compoments/SuccessAnimation';
 import { useNavigation } from '@react-navigation/native';
 import { Api } from '../res/api';
 import { Alert } from 'react-native';
+import CustomLoadingSpinner from '../compoments/Loading';
+import { useLoading } from '../compoments/LoadingContext';
+
+
 
 
 const AddExperience = ({ route, navigation }) => {
@@ -14,7 +18,7 @@ const AddExperience = ({ route, navigation }) => {
     const [newExperience, setNewExperience] = useState('');
     const [experience, setExperience] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
-
+    const { showLoader, hideLoader } = useLoading();
     
     console.log("newExperienceee:,",newExperience)
   console.log("experience:",experience)
@@ -30,12 +34,13 @@ const AddExperience = ({ route, navigation }) => {
         Alert.alert("Invalid Input", "Please type your experience before adding.");
       } else {
         setNewExperience('');
-        setShowSuccess(true);
+       
 
       setTimeout(() => {
           setShowSuccess(false);
       }, 2000); // Hide the GIF af
       const body= JSON.stringify({ experience : newExperience , userId: user._id})
+      showLoader()
         try {
           await fetch(Api.AddExperince, {
             method: 'POST',
@@ -50,6 +55,7 @@ const AddExperience = ({ route, navigation }) => {
         } catch (error) {
           console.error('Error adding experience:', error);
         }
+        hideLoader()
       }
       };
 
@@ -61,6 +67,7 @@ const AddExperience = ({ route, navigation }) => {
           source={require("../Images/clear2.png")}
           style={styles.skillsStyle}
           />
+           <CustomLoadingSpinner/>
           </TouchableOpacity>
       <View style={styles.inputpostion}>
       <TextInput
@@ -75,7 +82,7 @@ const AddExperience = ({ route, navigation }) => {
          left:100,borderRadius:30,}}
             title='Add'
             onPress={handleAddExperience}/>
-            <SuccessAnimation isVisible={showSuccess} />
+            {/* <SuccessAnimation isVisible={showSuccess} /> */}
        
         </View>
             

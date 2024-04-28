@@ -68,8 +68,8 @@ const Card = ({item}) => {
     <View style={styles.container}>
       <CustomLoadingSpinner />
 
-    {posts?.map((post) => (
-      <CardItem post={post}/>
+    {posts?.map((post,index) => (
+      <CardItem post={post} key={index}/>
       
     ))}
     </View> 

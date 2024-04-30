@@ -119,9 +119,11 @@ top:-9,
 
     },
     text: {
-
+        left:13,
         marginBottom: 40,
         color: '#E9ECEF',
+        top:3,
+        fontSize:17,
     },
     text2: {
         // 30 was 

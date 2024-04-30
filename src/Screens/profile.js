@@ -26,7 +26,7 @@ const ProfilePage = ({ userId }) => {
 
   const deleteSkill = async (skill,id) => {
     
-    // console.log("delete skill url: ", url);
+    //  console.log("delete skill url: ", url);
     showLoader(true)
     try {
       const response = await fetch(Api.deleteSkill(id,skill), {
@@ -44,7 +44,7 @@ const ProfilePage = ({ userId }) => {
     hideLoader(false)
   };
   // Handler for pressing the skill item
-  const handlePressdeleteSkill = (skill) => {
+  const handlePressdeleteSkill = (skill,id) => {
     Alert.alert(
       "Delete Skill",
       "Are you sure you want to delete this skill?",
@@ -55,18 +55,15 @@ const ProfilePage = ({ userId }) => {
         },
         {
           text: "OK",
-          onPress: () => deleteSkill(skill)
+          onPress: () => deleteSkill(skill,id)
         }
       ],
       { cancelable: false }
     );
   };
 
-
-
   const ExperiencesDelete = async (experience) => {
    
-    
     // console.log("delete experience url: ", url);
     showLoader(true)
     try {
@@ -84,8 +81,7 @@ const ProfilePage = ({ userId }) => {
     }
     hideLoader(false)
   };
-
-  // Handler for pressing the skill item
+  
   const handlePressExperiences = (experience) => {
     Alert.alert(
       "Delete Skill",
@@ -103,13 +99,11 @@ const ProfilePage = ({ userId }) => {
       { cancelable: false }
     );
   };
-
-
   const renderSkills = () => {
-    return user.skills.map((skill, index) => (
+    return user.skills.map((skill, index,id) => (
 
 
-      <TouchableOpacity style={styles.skillItem} onPress={() => handlePressdeleteSkill(skill)}>
+      <TouchableOpacity style={styles.skillItem} onPress={() => handlePressdeleteSkill(skill,id)}>
         <View key={index} style={styles.skillBadge}>
 
           <Text style={styles.skill}>{skill}</Text>
@@ -126,9 +120,6 @@ const ProfilePage = ({ userId }) => {
       </TouchableOpacity>
     ))
   };
-
-
-
 
   return (
     <ScrollView style={styles.container}>

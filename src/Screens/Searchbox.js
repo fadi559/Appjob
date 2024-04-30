@@ -26,8 +26,8 @@ const Searchbox = (props) => {
   const animation =useSharedValue(0);
   const [value,setValue]= useState(0);
   const navigation = useNavigation();
-  const [loading, setLoading] = useState(false);
-  const { showLoader, hideLoader } = useLoading();
+  const { showLoader, hideLoader,isLoading } = useLoading();
+  
 
   
 // console.log("name",users);
@@ -42,13 +42,15 @@ const Searchbox = (props) => {
     };
   });
   const handleSearch = async (text) => {
-    showLoader(true)
+   
 
     setSearchTerm(text)
     if (!text.trim()) {
+       hideLoader(false);
       setUsers([]);
       return;
     }
+    showLoader(true)
     try {
       const body={"searchTerm":text}
       const response = await fetch(Api.serach,
@@ -73,15 +75,23 @@ const Searchbox = (props) => {
   }
   };
   
+  const Spinner =() =>{
+    <View>
+      <CustomLoadingSpinner/>
+    </View>
+
+  }
   
   const renderUser = ({ item }) => (
      console.log("iitt.",item),
+     console.log("nameee4:",item.name),
     <TouchableOpacity
     style={styles.userRueslt}
       onPress={() => navigation.navigate('drawer', { screen: 'UserProfile', params: { User:item } })}>
          <Avatar size={20} rounded 
        icon={{name:'rowing'}}  
        containerStyle={styles.Avtarstyle}/>
+      
       <Text style={styles.userItem}>{item.name}</Text>
     </TouchableOpacity>
   );
@@ -109,10 +119,11 @@ const Searchbox = (props) => {
           onChangeText={text => handleSearch(text)}
           value={searchTerm}
           onSubmitEditing={handleSearch}
+          
         />
-      </View>
-      
-      
+         
+        </View>
+    
       {searchTerm!== '' && (
         
         <FlatList
@@ -120,14 +131,20 @@ const Searchbox = (props) => {
           keyExtractor={item => item._users} 
           style={styles.resultList}
           renderItem={renderUser}
-          
-        //  ListFooterComponent={<CustomLoadingSpinner />}
-          ListEmptyComponent={
-          <Text style={styles.SerachResaultEmpty}>No users found </Text>}
-          
+         
+          ListEmptyComponent={() => 
+            isLoading ? (
+              <CustomLoadingSpinner style={styles.spinnerLoading}/>
+            ) : users.length === 0 && searchTerm ? (
+              <Text style={styles.SerachTermResultFalse}>No user found</Text>
+            ) : null
+          }
+         
         />
+        
        
       )}
+ 
       
     </View>
         <TouchableOpacity onPress={()=>{ 
@@ -210,10 +227,14 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     top:70,
     fontSize:20,
-    
-
+  },
+  spinnerLoading:{
+top:80,
+  },
+  SerachTermResultFalse:{
+    alignSelf:"center",
+top:80,    
   }
-  
 })
 export default Searchbox
 

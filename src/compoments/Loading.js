@@ -3,7 +3,7 @@ import { View, Animated, Easing, StyleSheet } from 'react-native';
 import { useLoading } from './LoadingContext';
 
 
-const CustomLoadingSpinner = () => {
+const CustomLoadingSpinner = ({style}) => {
     const { isLoading } = useLoading();
 
     if (!isLoading) return null;
@@ -54,7 +54,7 @@ const CustomLoadingSpinner = () => {
     });
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container,style]}>
             <Animated.View style={dotStyle(dot1)} />
             <Animated.View style={dotStyle(dot2)} />
             <Animated.View style={dotStyle(dot3)} />

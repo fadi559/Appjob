@@ -47,7 +47,7 @@ const CardItem = (props) => {
                     containerStyle={{ backgroundColor: '#3d4db7' }} />
                 <Text style={styles.text}>{User?.name}</Text>
             </View>
-            <Text style={styles.text2} > jobtype: {jobType}</Text>
+            <Text style={styles.text2} > <Text style={styles.BaseString}>jobtype:</Text> {jobType}</Text>
 
            
 
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 70,
-top:-9,
-        marginLeft: -2,
+        top:-9,
+        marginLeft: 30,
         shadowColor: 'black',
 
         shadowOffset: {
@@ -107,7 +107,6 @@ top:-9,
         borderWidth: 0.3,
         marginTop: 30,
        
-
         shadowColor: 'black',
         shadowOffset: {
             width: 0,
@@ -116,7 +115,6 @@ top:-9,
         shadowOpacity: 0.7,
         shadowRadius: 3.84,
         elevation: 5,
-
     },
     text: {
         left:13,
@@ -126,24 +124,21 @@ top:-9,
         fontSize:17,
     },
     text2: {
-        // 30 was 
-
-
         color: '#E9ECEF',
-
     },
     text3: {
-     top:9,
-        
+     top:10,
         color: '#E9ECEF',
-        
-
+        fontSize:17,
     },
     cityName: {
         borderColor: "#141727",
         borderRadius: 7,
         alignSelf: 'center',
         color: '#E9ECEF',
+    },
+    BaseString:{
+        fontSize:16,
 
     },
 })

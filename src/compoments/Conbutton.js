@@ -14,10 +14,10 @@ const Conbutton = (props) => {
 
 
   const openWhatsApp = () => {
-  //   if (!Phonenumber) {
-  //     Alert.alert('Phone number is undefined. Please check the number.');
-  //     return;
-  // }
+    if (!Phonenumber) {
+      Alert.alert('Phone number is undefined. Please check the number.');
+      return;
+  }
     let url = 'whatsapp://send?phone=' + "792"+Phonenumber;
 
     // Check if WhatsApp is installed
@@ -29,14 +29,9 @@ const Conbutton = (props) => {
                 Alert.alert('Please install WhatsApp to send a direct message.');
             }
         })
-        .catch((err) => console.error('An error occurred', err));
-       
+        .catch((err) => console.error('An error occurred', err));     
 };
-
-
     return (
-
-
       <View>
 
 {/* #53618A */}
@@ -52,37 +47,19 @@ const Conbutton = (props) => {
           }}
           onPress={() => openWhatsApp(Phonenumber)}
        />
-        
       </View>
     )
   }
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const styles = StyleSheet.create({
     buttonStyle:{
       backgroundColor: '#CED4DA',
             borderRadius: 13,
             borderWidth: 0.2,
             borderColor: '#627594',
-            width:120,
+            width:90,
             marginHorizontal:40,
             marginVertical:0,
-            height:50,
+            height:40,
             right:10,
     }
     

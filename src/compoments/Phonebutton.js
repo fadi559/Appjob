@@ -29,22 +29,17 @@ const Phonebutton = (props) => {
           <View style={styles.centeredView}>
         
             <View style={styles.modalView}>
-  
-              <View style={styles.IconButton}>
                 <TouchableOpacity onPress={() => setModalVisible(false)}>
                   <EvilIcons 
                    name="close"
-                   size={40}
+                   size={36}
                    color='black'
-                   style={{}}
+                   style={styles.IconButton}
                   />
                 </TouchableOpacity>
-  
-              </View >
-              
+                
               <View style={styles.text}> 
-  
-              <Text > Number:{Phonenumber}</Text>
+              <Text > {Phonenumber}</Text>
   
               </View>
              
@@ -55,21 +50,16 @@ const Phonebutton = (props) => {
         </Modal>
   
         <Button
-          buttonStyle={{
-            backgroundColor: '#CED4DA',
-            borderRadius: 13,
-            borderWidth: 0.2,
-            borderColor: '#627594',
-            width:120,
-            marginVertical:0,
-          }}
+          buttonStyle={styles.buttonStyle}
           icon={{
             name: 'phone',
             type: 'FontAwesome',
-            size: 30,
+            size: 28,
             color: '#252f40',
           }}
-          iconRight
+         
+          iconPosition='bottom'
+        
           onPress={() => setModalVisible(true)}>
 
         </Button>
@@ -86,6 +76,15 @@ const Phonebutton = (props) => {
       alignItems: 'center',
       marginTop: 22,
     },
+    buttonStyle:{
+      backgroundColor: '#CED4DA',
+      borderRadius: 13,
+      borderWidth: 0.2,
+      borderColor: '#627594',
+      width:90,
+      marginVertical:0,
+      height:40,
+    },
     modalView: {
       margin: 20,
       backgroundColor: 'white',
@@ -96,14 +95,12 @@ const Phonebutton = (props) => {
       height:100,
     },
     IconButton:{
-      marginTop:-30,
-      left: 82, 
-      marginVertical: -20,
-       height: 40
-
+           left:60,
+           top:-30,
     },
+    
     text:{
-      marginTop:15,
+      top:-18,
       right:5,
     },
 

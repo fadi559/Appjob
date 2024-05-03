@@ -24,27 +24,30 @@ const ProfilePage = ({ userId }) => {
   
 
 
-  const deleteSkill = async (skill,id) => {
+  const deleteSkill = async (skill) => {
     
     //  console.log("delete skill url: ", url);
     showLoader(true)
     try {
-      const response = await fetch(Api.deleteSkill(id,skill), {
+      const response = await fetch((`http://192.168.1.241/api/SkillsDelete${user}/${skill}`), {
+
         method: 'delete',
       });
+      
       const updatedSkills = await response.json();
 
       setUser({ ...user, skills: updatedSkills })
 
-      console.log("sk: ", updatedSkills);
+      console.log("SKK**: ", updatedSkills);
+      
       
     } catch (error) {
-      console.warn('Error deleting skill:', error);
+      console.warn('Error deleting skill:', error.message);
     }
     hideLoader(false)
   };
-  // Handler for pressing the skill item
-  const handlePressdeleteSkill = (skill,id) => {
+  
+  const handlePressdeleteSkill = (skill) => {
     Alert.alert(
       "Delete Skill",
       "Are you sure you want to delete this skill?",
@@ -55,19 +58,19 @@ const ProfilePage = ({ userId }) => {
         },
         {
           text: "OK",
-          onPress: () => deleteSkill(skill,id)
+          onPress: () => deleteSkill(skill)
         }
       ],
       { cancelable: false }
     );
   };
 
-  const ExperiencesDelete = async (experience) => {
+  const ExperiencesDelete = async (experience,id) => {
    
     // console.log("delete experience url: ", url);
     showLoader(true)
     try {
-      const response = await fetch(Api.deleteExperince, {
+      const response = await fetch(Api.deleteExperince(experience,id), {
         method: 'delete',
       });
       const updatedexperience = await response.json();
@@ -82,7 +85,7 @@ const ProfilePage = ({ userId }) => {
     hideLoader(false)
   };
   
-  const handlePressExperiences = (experience) => {
+  const handlePressExperiences = (experience,id) => {
     Alert.alert(
       "Delete Skill",
       "Are you sure you want to delete this experience?",
@@ -93,28 +96,27 @@ const ProfilePage = ({ userId }) => {
         },
         {
           text: "OK",
-          onPress: () => ExperiencesDelete(experience)
+          onPress: () => ExperiencesDelete(experience,id)
         }
       ],
       { cancelable: false }
     );
   };
   const renderSkills = () => {
-    return user.skills.map((skill, index,id) => (
+    return user.skills.map((skill, index,) => (
 
 
-      <TouchableOpacity style={styles.skillItem} onPress={() => handlePressdeleteSkill(skill,id)}>
+      <TouchableOpacity style={styles.skillItem} onPress={() => handlePressdeleteSkill(skill)}>
         <View key={index} style={styles.skillBadge}>
-
           <Text style={styles.skill}>{skill}</Text>
         </View>
       </TouchableOpacity>
     ))
   };
   const renderExperince=()=>{
-    return user.experiences.map((experience, index) => (
+    return user.experiences.map((experience, index,id) => (
 
-      <TouchableOpacity key={index} style={styles.experienceItem} onPress={() => handlePressExperiences(experience)}>
+      <TouchableOpacity key={index} style={styles.experienceItem} onPress={() => handlePressExperiences(experience,id)}>
         <Text style={styles.experienceText}>{experience}</Text>
         <Text style={styles.experienceYears}>{}</Text>
       </TouchableOpacity>

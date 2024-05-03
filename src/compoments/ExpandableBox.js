@@ -7,7 +7,7 @@ const ExpandableBox = ({ content }) => {
   // Limit for text to be shown in collapsed mode
   const previewLimit =40;
   return (
-    <View style={styles.container}>
+    <View>
       <Text style={styles.text}>
         {isExpanded ? content : `${content.substring(0, previewLimit)}`}
       </Text>
@@ -20,18 +20,14 @@ const ExpandableBox = ({ content }) => {
     </View>
   );
 };  
-
 const styles = StyleSheet.create({
-  container: {
-    
-  },
   showMore: {
-    top:9,
+    top:17,
     color: '#0066cc',    
   },
   text:{
     color: '#E9ECEF', 
-    top:9,
+    top:12,
     left:1,
     
     maxWidth:320,

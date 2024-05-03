@@ -31,10 +31,12 @@ import { useEffect } from 'react';
   const handleSignin= async (data) => {
 
     setloading(true);
-     const sucsses = await loadFromAsyncStorage() 
-    if(sucsses){
+     const sucsses = await loadFromAsyncStorage()
+
+     if(sucsses){
       return
-    }
+    }else
+  
       if (!email || !password) {
         
        Alert.alert('Please fill in all fields');
@@ -44,7 +46,7 @@ import { useEffect } from 'react';
          email,
           password,
       });
-
+      
       if(data.error){
          Alert.alert(data.error);
       }

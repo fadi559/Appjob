@@ -1,5 +1,5 @@
 
-export const baseUrl = 'http://192.168.1.241:8000'
+export const baseUrl = 'http://192.168.68.164:8000'
 
 export const Api={
     signup:baseUrl + "/api/signup",

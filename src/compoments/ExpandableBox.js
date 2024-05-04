@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   text:{
     color: '#E9ECEF', 
-    top:12,
+    top:14,
     left:1,
     
     maxWidth:320,

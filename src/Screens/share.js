@@ -180,10 +180,15 @@ const styles = StyleSheet.create({
   },
   shareButtonContainer: {
     marginTop: 16,
+    width: "40%",
+    left:120,
+    borderRadius: 20,
+
   },
   shareButton: {
     backgroundColor: '#3A416F',
     borderRadius: 20,
+   
   },
 });
 

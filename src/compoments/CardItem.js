@@ -52,7 +52,7 @@ const CardItem = (props) => {
            
 
             <View style={{ flexDirection: 'row'}}>
-                <Text style={styles.text3} > Note:</Text>
+                <Text style={styles.text3} > Note: </Text>
                 <ExpandableBox content={notes} />
             </View>
 

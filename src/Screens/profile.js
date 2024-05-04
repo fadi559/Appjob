@@ -21,32 +21,34 @@ const ProfilePage = ({ userId }) => {
   const navigation = useNavigation()
 
 
-  
-
 
   const deleteSkill = async (skill) => {
-    
-    //  console.log("delete skill url: ", url);
+
     showLoader(true)
     try {
-      const response = await fetch((`http://192.168.1.241/api/SkillsDelete${user}/${skill}`), {
 
-        method: 'delete',
+      const url = Api.deleteSkill(skill, user?._id)
+
+      console.log("url:", url);
+
+      const response = await fetch(url, {
+
+        method: 'DELETE',
       });
-      
-      const updatedSkills = await response.json();
 
-      setUser({ ...user, skills: updatedSkills })
+      const updatedSkills = await response?.json();
 
-      console.log("SKK**: ", updatedSkills);
-      
-      
+      !updatedSkills.message &&
+        setUser({ ...user, skills: updatedSkills })
+
+      console.log("SKK*: ", updatedSkills);
+
+
     } catch (error) {
       console.warn('Error deleting skill:', error.message);
     }
     hideLoader(false)
   };
-  
   const handlePressdeleteSkill = (skill) => {
     Alert.alert(
       "Delete Skill",
@@ -64,13 +66,12 @@ const ProfilePage = ({ userId }) => {
       { cancelable: false }
     );
   };
+  const ExperiencesDelete = async (experience, id) => {
 
-  const ExperiencesDelete = async (experience,id) => {
-   
     // console.log("delete experience url: ", url);
     showLoader(true)
     try {
-      const response = await fetch(Api.deleteExperince(experience,id), {
+      const response = await fetch(Api.deleteExperince(experience, id), {
         method: 'delete',
       });
       const updatedexperience = await response.json();
@@ -78,14 +79,13 @@ const ProfilePage = ({ userId }) => {
       setUser({ ...user, experiences: updatedexperience })
 
       console.log("sk2: ", updatedexperience);
-      
+
     } catch (error) {
       console.warn('Error deleting experience:', error);
     }
     hideLoader(false)
   };
-  
-  const handlePressExperiences = (experience,id) => {
+  const handlePressExperiences = (experience) => {
     Alert.alert(
       "Delete Skill",
       "Are you sure you want to delete this experience?",
@@ -96,14 +96,14 @@ const ProfilePage = ({ userId }) => {
         },
         {
           text: "OK",
-          onPress: () => ExperiencesDelete(experience,id)
+          onPress: () => ExperiencesDelete(experience)
         }
       ],
       { cancelable: false }
     );
   };
   const renderSkills = () => {
-    return user.skills.map((skill, index,) => (
+    return user?.skills?.map?.((skill, index,) => (
 
 
       <TouchableOpacity style={styles.skillItem} onPress={() => handlePressdeleteSkill(skill)}>
@@ -113,20 +113,18 @@ const ProfilePage = ({ userId }) => {
       </TouchableOpacity>
     ))
   };
-  const renderExperince=()=>{
-    return user.experiences.map((experience, index,id) => (
+  const renderExperince = () => {
+    return user.experiences.map((experience, index, id) => (
 
-      <TouchableOpacity key={index} style={styles.experienceItem} onPress={() => handlePressExperiences(experience,id)}>
+      <TouchableOpacity key={index} style={styles.experienceItem} onPress={() => handlePressExperiences(experience)}>
         <Text style={styles.experienceText}>{experience}</Text>
-        <Text style={styles.experienceYears}>{}</Text>
+        <Text style={styles.experienceYears}>{ }</Text>
       </TouchableOpacity>
     ))
   };
-
   return (
     <ScrollView style={styles.container}>
-      <CustomLoadingSpinner/>
-
+      <CustomLoadingSpinner />
       <View style={styles.profileHeader}>
         <Avatar size={80} rounded
           icon={{ name: 'rowing' }}
@@ -136,10 +134,9 @@ const ProfilePage = ({ userId }) => {
           <Text style={styles.name}>{user.name}</Text>
         </View>
       </View>
-
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Skills</Text>
-       
+
         <TouchableOpacity onPress={() => navigation.navigate('StackProfile', { screen: 'AddSkills' })}>
           <Image
             source={require("../Images/plus-48.png")}
@@ -153,7 +150,6 @@ const ProfilePage = ({ userId }) => {
 
       </View>
 
-
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Experience</Text>
 
@@ -166,7 +162,7 @@ const ProfilePage = ({ userId }) => {
         </TouchableOpacity>
 
         {renderExperince()}
-        
+
       </View>
 
 

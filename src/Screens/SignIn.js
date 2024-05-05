@@ -45,7 +45,7 @@ const SignIn = ({ navigtion }) => {
       Alert.alert('Please fill in all fields');
     } else
 
-      showLoader(true)
+      
     try {
       const { data } = await axios.post(Api.signIn, {
         email,
@@ -69,7 +69,7 @@ const SignIn = ({ navigtion }) => {
       console.error('Signin Error:', error);
       setloading(false);
     }
-    hideLoader(false)
+    
     // };
   };
 
@@ -130,7 +130,7 @@ const SignIn = ({ navigtion }) => {
   }
   // const  sucsses = loadFromAsyncStorage()
 
-  showLoader(true)
+  
   useEffect(() => {
     handleBiometricLogin(true)
     // if(loadFromAsyncStorage){
@@ -142,8 +142,7 @@ const SignIn = ({ navigtion }) => {
     // }
 
   }, []);
-  hideLoader(false)
-
+  
 
 
   return (
@@ -156,6 +155,7 @@ const SignIn = ({ navigtion }) => {
         onChangeText={(text) => setEmail(text)}
         style={styles.input}
       />
+      <CustomLoadingSpinner/>
       <Input
         placeholder="Password"
         value={password}

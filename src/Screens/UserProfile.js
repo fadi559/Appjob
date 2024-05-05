@@ -92,12 +92,12 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop:0,    
     padding: 30,
-    backgroundColor: 'white', // Light grey background for contrast
+    backgroundColor: '#f5f5f5', // Light grey background for contrast
   },
   profileHeader: {
     alignItems: 'center',
     marginBottom:20,
-    backgroundColor: 'white'
+    backgroundColor: '#f5f5f5'
   },
   avatar: {
     width: 100,
@@ -113,15 +113,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginTop:23,
-  },
-  eliteBadge: {
-    marginTop: 5,
-    backgroundColor: 'gold',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 15,
-    alignSelf:'center',
-    right:80,
   },
   eliteText: {
     color: '#fff',
@@ -140,7 +131,7 @@ const styles = StyleSheet.create({
 
     paddingHorizontal: 20,  
     paddingVertical: 5,    
-    backgroundColor: 'white',  
+    backgroundColor: '#f5f5f5',
     borderRadius: 20,     
     margin: 5,
     borderWidth: 1,         
@@ -185,7 +176,7 @@ const styles = StyleSheet.create({
     
   },
   experienceItem: {
-    backgroundColor: '#fff',
+    
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
@@ -194,6 +185,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
+    backgroundColor: '#fff',
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
     elevation: 5,

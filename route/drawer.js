@@ -30,7 +30,7 @@ const Darwernav = () => {
              
              options={({ route, navigation, }) => ( {
                headerStyle:{
-                    backgroundColor:"white"
+                    backgroundColor:"#3A416F"
 
                },
                swipeEdgeWidth:0,
@@ -40,8 +40,8 @@ const Darwernav = () => {
                     
                     icon={{name:'arrow-back',
                     type:'FontAwesome',
-                    style:{color:'white', backgroundColor:"white"},
-                    size:25,
+                    style:{backgroundColor:"#3A416F"},
+                    size:30,
                }}
                     
                onPress={()=>navigation.goBack()}/>),
@@ -56,7 +56,7 @@ const Darwernav = () => {
 
 const styles = StyleSheet.create({
      Button:{
-        backgroundColor:"white"
+        backgroundColor:"#3A416F"
        
           
      }

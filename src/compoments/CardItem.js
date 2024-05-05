@@ -102,11 +102,11 @@ const styles = StyleSheet.create({
         width:"90%",
         // minHeight:330,
         padding: 5,
-        backgroundColor: '#3A416F',
+       
         borderRadius: 60,
         borderWidth: 0.3,
         marginTop: 30,
-       
+        backgroundColor: '#3A416F',
         shadowColor: 'black',
         shadowOffset: {
             width: 0,

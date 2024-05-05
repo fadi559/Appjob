@@ -1,5 +1,5 @@
 
-export const baseUrl = 'http://192.168.68.164:8000'
+export const baseUrl = 'http://localhost:8000'
 
 export const Api={
     signup:baseUrl + "/api/signup",
@@ -10,7 +10,7 @@ export const Api={
     Addskils:baseUrl+"/api/skills",
     AddExperince:baseUrl+"/api/experiences",
     deleteSkill:(skill,id) => baseUrl+`/api/SkillsDelete?id=${id}&skill=${skill}`,
-    deleteExperince:(id,experience)=>baseUrl+ `api/ExperiencesDelete?id=${id}&experience=${experience}`,
+    deleteExperince:(experience,id)=> baseUrl+`api/ExperiencesDelete?id=${id}&experience=${experience}`,
   
  } 
 // localhost

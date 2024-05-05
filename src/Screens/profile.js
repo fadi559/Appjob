@@ -26,10 +26,13 @@ const ProfilePage = ({ userId }) => {
 
     showLoader(true)
     try {
+      console.log("Deleting skill URL:", Api.deleteSkill(skill, user._id));
+      console.log("URL delete skill:", url);
+      console.log("User ID:", user?._id);
+console.log("skill to delete:", skill);
 
       const url = Api.deleteSkill(skill, user?._id)
 
-      console.log("url:", url);
 
       const response = await fetch(url, {
 
@@ -41,7 +44,7 @@ const ProfilePage = ({ userId }) => {
       !updatedSkills.message &&
         setUser({ ...user, skills: updatedSkills })
 
-      console.log("SKK*: ", updatedSkills);
+       console.log("SKK*: ", updatedSkills);
 
 
     } catch (error) {
@@ -66,28 +69,48 @@ const ProfilePage = ({ userId }) => {
       { cancelable: false }
     );
   };
-  const ExperiencesDelete = async (experience, id) => {
 
-    // console.log("delete experience url: ", url);
+
+
+  const deleteExperince = async (experience) => {
+ 
     showLoader(true)
     try {
-      const response = await fetch(Api.deleteExperince(experience, id), {
-        method: 'delete',
+      console.log("Deleting Experience URL:", Api.deleteExperince(experience, user._id));
+
+      console.log("Attempting to delete experience URL:", urll);
+      console.log("User ID:", user?._id);
+console.log("Experience to delete(EXPIRNCE):", experience);
+
+      const urll = Api.deleteExperince(experience,user?._id)
+
+      const response = await fetch(urll, {
+
+        method:'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
-      const updatedexperience = await response.json();
 
-      setUser({ ...user, experiences: updatedexperience })
+      const updatedexperiences = await response?.json();
+     
 
-      console.log("sk2: ", updatedexperience);
+      !updatedexperiences.message &&
+      setUser({ ...user, experiences: updatedexperiences })
+
+       console.log("sk2E: ", updatedexperiences);
 
     } catch (error) {
-      console.warn('Error deleting experience:', error);
+      console.warn('Error deleting experience:', error.message);
+      
     }
     hideLoader(false)
   };
-  const handlePressExperiences = (experience) => {
+
+
+  const handlePressDeleteExperiences = (experience) => {
     Alert.alert(
-      "Delete Skill",
+      "Delete experience ",
       "Are you sure you want to delete this experience?",
       [
         {
@@ -96,15 +119,15 @@ const ProfilePage = ({ userId }) => {
         },
         {
           text: "OK",
-          onPress: () => ExperiencesDelete(experience)
+          onPress: () => deleteExperince(experience)
         }
       ],
       { cancelable: false }
     );
   };
+  
   const renderSkills = () => {
     return user?.skills?.map?.((skill, index,) => (
-
 
       <TouchableOpacity style={styles.skillItem} onPress={() => handlePressdeleteSkill(skill)}>
         <View key={index} style={styles.skillBadge}>
@@ -114,11 +137,11 @@ const ProfilePage = ({ userId }) => {
     ))
   };
   const renderExperince = () => {
-    return user.experiences.map((experience, index, id) => (
+    return user?.experiences?.map?.((experience,index) => (
 
-      <TouchableOpacity key={index} style={styles.experienceItem} onPress={() => handlePressExperiences(experience)}>
+      <TouchableOpacity key={index} style={styles.experienceItem} onPress={() => handlePressDeleteExperiences(experience)}>
         <Text style={styles.experienceText}>{experience}</Text>
-        <Text style={styles.experienceYears}>{ }</Text>
+        {/* <Text style={styles.experienceYears}>{ }</Text> */}
       </TouchableOpacity>
     ))
   };
@@ -130,41 +153,32 @@ const ProfilePage = ({ userId }) => {
           icon={{ name: 'rowing' }}
           containerStyle={{ backgroundColor: '#3d4db7' }} />
         <View style={styles.headerTextContainer}>
-
           <Text style={styles.name}>{user.name}</Text>
         </View>
       </View>
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Skills</Text>
-
         <TouchableOpacity onPress={() => navigation.navigate('StackProfile', { screen: 'AddSkills' })}>
           <Image
             source={require("../Images/plus-48.png")}
             style={styles.AddSkillImage}
           />
         </TouchableOpacity>
-
         <View style={styles.skillsContainer}>
           {renderSkills()}
         </View>
-
       </View>
-
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Experience</Text>
-
         <TouchableOpacity onPress={() => navigation.navigate('StackProfile', { screen: 'AddExperience' })}>
           <Image
             source={require("../Images/plus-48.png")}
             style={styles.AddExperienceImage}
           />
-
         </TouchableOpacity>
 
         {renderExperince()}
-
       </View>
-
 
     </ScrollView>
   );
@@ -195,15 +209,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 23,
   },
-  eliteBadge: {
-    marginTop: 5,
-    backgroundColor: 'gold',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 15,
-    alignSelf: 'center',
-    right: 80,
-  },
   eliteText: {
     color: '#fff',
     fontWeight: 'bold',
@@ -233,7 +238,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   experienceItem: {
-    backgroundColor: '#fff',
+    
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
@@ -242,6 +247,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
+    backgroundColor: '#fff',
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
     elevation: 5,
@@ -269,17 +275,14 @@ const styles = StyleSheet.create({
     height: 29,
     left: 70,
     top: -37,
-
   },
   AddExperienceImage: {
     width: 29,
     height: 29,
     left: 136,
     top: -38,
-
   }
 });
-
 
 export default ProfilePage;
 

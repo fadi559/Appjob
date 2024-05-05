@@ -20,8 +20,8 @@ const AddExperience = ({ route, navigation }) => {
     const [showSuccess, setShowSuccess] = useState(false);
     const { showLoader, hideLoader } = useLoading();
     
-    console.log("newExperienceee:,",newExperience)
-  console.log("experience:",experience)
+  //   console.log("newExperienceee:,",newExperience)
+  // console.log("experience:",experience)
   // console.log("userrr:",user)
 
 
@@ -40,7 +40,7 @@ const AddExperience = ({ route, navigation }) => {
           setShowSuccess(false);
       }, 2000); // Hide the GIF af
       const body= JSON.stringify({ experience : newExperience , userId: user._id})
-      showLoader()
+      showLoader(true)
         try {
           await fetch(Api.AddExperince, {
             method: 'POST',
@@ -55,7 +55,7 @@ const AddExperience = ({ route, navigation }) => {
         } catch (error) {
           console.error('Error adding experience:', error);
         }
-        hideLoader()
+        hideLoader(false)
       }
       };
 
@@ -82,7 +82,7 @@ const AddExperience = ({ route, navigation }) => {
          left:100,borderRadius:30,}}
             title='Add'
             onPress={handleAddExperience}/>
-            {/* <SuccessAnimation isVisible={showSuccess} /> */}
+           
        
         </View>
             

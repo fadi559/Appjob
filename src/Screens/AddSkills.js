@@ -33,7 +33,7 @@ const AddSkills = ({ route, navigation }) => {
         Alert.alert("Invalid Input", "Please type your skill before adding.");
       } else {
         setNewSkill('');
-        setShowSuccess(true);
+        
 
         const body = JSON.stringify({ skill:newSkill , userId: user._id })
         showLoader(true);

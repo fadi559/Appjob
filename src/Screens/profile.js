@@ -87,9 +87,7 @@ console.log("Experience to delete(EXPIRNCE):", experience);
       const response = await fetch(urll, {
 
         method:'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+       
       });
 
       const updatedexperiences = await response?.json();

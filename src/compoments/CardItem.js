@@ -32,6 +32,7 @@ const CardItem = (props) => {
     return (
 
         <View style={styles.box}>
+            <View style={styles.shadow}>
            
 
             <Text style={styles.cityName}>{location}</Text>
@@ -64,7 +65,7 @@ const CardItem = (props) => {
 
             </View>
 
-            
+            </View>
         </View>
     )
 }
@@ -88,13 +89,13 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         shadowColor: 'black',
 
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
-        shadowOpacity: 0.4,
-        shadowRadius: 3.84,
-        elevation: 5,
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 3,
+        // },
+        // shadowOpacity: 0.4,
+        // shadowRadius: 3.84,
+        // elevation: 5,
     },
     box: {
         left:17,
@@ -107,14 +108,18 @@ const styles = StyleSheet.create({
         borderWidth: 0.3,
         marginTop: 30,
         backgroundColor: '#3A416F',
-        shadowColor: 'black',
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
-        shadowOpacity: 0.7,
-        shadowRadius: 3.84,
-        elevation: 5,
+       
+    },
+    shadow:{
+        // shadowColor: 'black',
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 3,
+        // },
+        // shadowOpacity: 0.7,
+        // shadowRadius: 3.84,
+        // elevation: 5,
+
     },
     text: {
         left:13,

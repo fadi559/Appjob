@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     top:14,
     left:1,
     
-    maxWidth:320,
+    maxWidth:290,
   //
   },
   button: {

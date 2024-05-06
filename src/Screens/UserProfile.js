@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   section: {
     marginBottom: 20,
     alignItems:"baseline",
-    
+    borderRadius:40,
   },
   sectionTitle: {
     fontSize: 20,
@@ -131,33 +131,34 @@ const styles = StyleSheet.create({
 
     paddingHorizontal: 20,  
     paddingVertical: 5,    
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "white",
+    // '#f5f5f5',
     borderRadius: 20,     
     margin: 5,
     borderWidth: 1,         
-    borderColor: 'gray',
+    overflow: 'hidden' 
     
   },
   sectionTitle2: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
-    right:85,
+    right:60,
     marginTop:40,
-
     paddingHorizontal: 20,  
     paddingVertical: 5,    
     backgroundColor: 'white',  
     borderRadius: 20,     
     margin: 5,
-    borderWidth: 1,         
+     borderWidth: 1,         
     borderColor: 'gray',
+    overflow: 'hidden' ,
     
   },
+
   skillsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    
   },
   skillBadge: {
     backgroundColor: '#007bff',
@@ -166,17 +167,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    
-        
-    
   },
   skill: {
     color: '#fff',
     fontSize: 16,
-    
   },
   experienceItem: {
-    
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
@@ -201,9 +197,6 @@ const styles = StyleSheet.create({
   },
   noSkills:{
     fontSize:20,
-        
-
-
   },
 });
 

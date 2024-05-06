@@ -133,13 +133,7 @@ const SignIn = ({ navigtion }) => {
   
   useEffect(() => {
     handleBiometricLogin(true)
-    // if(loadFromAsyncStorage){
-    //   handleBiometricLogin();
-
-    // }else{
-    //   handleSignin
-
-    // }
+    
 
   }, []);
   
@@ -155,7 +149,7 @@ const SignIn = ({ navigtion }) => {
         onChangeText={(text) => setEmail(text)}
         style={styles.input}
       />
-      <CustomLoadingSpinner/>
+      
       <Input
         placeholder="Password"
         value={password}

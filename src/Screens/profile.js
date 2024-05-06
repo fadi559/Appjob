@@ -52,6 +52,7 @@ console.log("skill to delete:", skill);
     }
     hideLoader(false)
   };
+
   const handlePressdeleteSkill = (skill) => {
     Alert.alert(
       "Delete Skill",
@@ -70,29 +71,25 @@ console.log("skill to delete:", skill);
     );
   };
 
-
-
   const deleteExperince = async (experience) => {
  
     showLoader(true)
     try {
-      console.log("Deleting Experience URL:", Api.deleteExperince(experience, user._id));
 
+      console.log("Deleting Experience URL:", Api.deleteExperince(experience, user._id));
       console.log("Attempting to delete experience URL:", urll);
       console.log("User ID:", user?._id);
 console.log("Experience to delete(EXPIRNCE):", experience);
+
 
       const urll = Api.deleteExperince(experience,user?._id)
 
       const response = await fetch(urll, {
 
         method:'DELETE',
-       
       });
-
       const updatedexperiences = await response?.json();
      
-
       !updatedexperiences.message &&
       setUser({ ...user, experiences: updatedexperiences })
 
@@ -100,7 +97,6 @@ console.log("Experience to delete(EXPIRNCE):", experience);
 
     } catch (error) {
       console.warn('Error deleting experience:', error.message);
-      
     }
     hideLoader(false)
   };

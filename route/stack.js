@@ -30,7 +30,7 @@ const Stacknav = () => {
       )} /> */}
 
        <Stack.Screen name='SignIn' component={SignIn}/> 
-       <Stack.Screen name='SignupScreen' component={SignupScreen} />
+       <Stack.Screen name='SignupScreen' component={SignupScreen} />  
      </Stack.Navigator>
 
 

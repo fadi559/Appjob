@@ -29,13 +29,9 @@ const styles = StyleSheet.create({
     color: '#E9ECEF', 
     top:14,
     left:1,
-    
-    maxWidth:290,
-  //
+    maxWidth:280,
   },
   button: {
- 
-      
     // padding: 5,
 },
 });

@@ -31,6 +31,7 @@ const AddSkills = ({ route, navigation }) => {
       if (newSkill.trim() === '') {
         
         Alert.alert("Invalid Input", "Please type your skill before adding.");
+        return;
       } else {
         setNewSkill('');
         
@@ -88,8 +89,6 @@ const AddSkills = ({ route, navigation }) => {
             title='Add'
             onPress={handleAddSkill} />
   
-           {/* <SuccessAnimation isVisible={showSuccess} />
-            */}
         </View>
             
             
@@ -113,9 +112,6 @@ const styles = StyleSheet.create({
      left:180,
      position:'relative',
     top: -340, 
-    right: 0, 
-    padding: 0,
-     color:'black',
     },
     clearStlye:{
         position: 'relative',

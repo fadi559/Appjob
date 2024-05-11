@@ -20,32 +20,17 @@ const StackPro = (props, route) => {
     <Stack.Navigator screenOptions={{
       headerShown:false}}>
 
-
-
        <Stack.Screen name='AddSkills' component={AddSkills}
        options={({route,navigation})=>({
         
         })} /> 
-
         <Stack.Screen name='AddExperience' component={AddExperience}
        options={({route,navigation})=>({
         
         })} /> 
-        
-      
-
-
-       {/* <Stack.Screen name='f' component={f} /> */}
-
-
      </Stack.Navigator>
-
-
-
   );
 }
-
-
 export default StackPro;
 
 const styles = StyleSheet.create({
@@ -53,8 +38,5 @@ const styles = StyleSheet.create({
     width:40,
     height:40,
     color:'black',
-
-
    }
-    
 })

@@ -123,7 +123,7 @@ console.log("Experience to delete(EXPIRNCE):", experience);
   const renderSkills = () => {
     return user?.skills?.map?.((skill, index,) => (
 
-      <TouchableOpacity style={styles.skillItem} onPress={() => handlePressdeleteSkill(skill)}>
+      <TouchableOpacity key={index} style={styles.skillItem} onPress={() => handlePressdeleteSkill(skill)}>
         <View key={index} style={styles.skillBadge}>
           <Text style={styles.skill}>{skill}</Text>
         </View>

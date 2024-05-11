@@ -117,21 +117,12 @@ const tabsParams ={
       headerLeft: () => (
         <Searchbox/>
       ),
-      
       tabBarLabel: 'Home',
       tabBarIcon: ({ color, size }) => (
         <MaterialCommunityIcons name="home" size={size} />
       ),
-
-      
-      
-      
-     
     })
-    
-    
   },
-
 };
 
 export default TabNavigtor;

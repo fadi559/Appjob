@@ -27,11 +27,9 @@ const Darwernav = () => {
                )} /> */}
              
              <Drawer.Screen name='UserProfile' component={UserProfile} 
-             
              options={({ route, navigation, }) => ( {
                headerStyle:{
                     backgroundColor:"#3A416F"
-
                },
                swipeEdgeWidth:0,
                title:"",
@@ -43,12 +41,8 @@ const Darwernav = () => {
                     style:{backgroundColor:"#3A416F"},
                     size:30,
                }}
-                    
                onPress={()=>navigation.goBack()}/>),
-             }
-
-             )}
-     /> 
+             })}  /> 
           </Drawer.Navigator>
      );
 
@@ -56,10 +50,8 @@ const Darwernav = () => {
 
 const styles = StyleSheet.create({
      Button:{
-        backgroundColor:"#3A416F"
-       
-          
-     }
+        backgroundColor:"#3A416F"     
+     },
 })
 
 export default Darwernav;

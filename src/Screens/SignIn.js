@@ -23,7 +23,6 @@ const SignIn = ({ navigtion }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [authStatus, setAuthStatus] = useState('');
-  const [notificationVisible, setNotificationVisible] = useState(false);
   const { setUser } = useContext(UserContext);
   const [loading, setloading] = useState(false);
   const rnBiometrics = new ReactNativeBiometrics()
@@ -33,25 +32,19 @@ const SignIn = ({ navigtion }) => {
   const handleSignin = async () => {
 
 
-    const sucsses = await loadFromAsyncStorage()
-
-    //  if(sucsses){
-    //   handleBiometricLogin();
-
-    //  }else{
+    // const sucsses = await loadFromAsyncStorage()
 
     if (!email || !password) {
-
       Alert.alert('Please fill in all fields');
-    } else
+      return;
 
-      
+    } else
+    showLoader(true)
     try {
       const { data } = await axios.post(Api.signIn, {
         email,
         password,
       });
-
       if (data.error) {
         Alert.alert(data.error);
       }
@@ -60,19 +53,17 @@ const SignIn = ({ navigtion }) => {
         await AsyncStorage.setItem("@auth", JSON.stringify(data));
 
         console.log("SIGNIN SUCCESS »> ", data.user);
-        setUser(data.user)
+        setUser(data.user);
 
         navigation.navigate('tab', { screen: 'home' });
       }
     } catch (error) {
       Alert.alert('SigninFailed', error);
       console.error('Signin Error:', error);
-      setloading(false);
+      hideLoader(false)
     }
-    
     // };
   };
-
   const loadFromAsyncStorage = async () => {
     let data = await AsyncStorage.getItem("@auth");
     if (data) {
@@ -83,27 +74,22 @@ const SignIn = ({ navigtion }) => {
       return true;
     }
   };
-
   const handleBiometricLogin = async (isStart) => {
 
     const sucsses = await loadFromAsyncStorage()
-
-    console.log("sucsses: " , sucsses);
-    console.log("isStart: " , isStart);
+    // console.log("sucsses: " , sucsses);
+    // console.log("isStart: " , isStart);
 
     if (!sucsses) {
       !isStart && Alert.alert('No User Data signed')
       return ; 
     }
-
-    console.log("after if ");
-
+    // console.log("after if ");
+    
     rnBiometrics.isSensorAvailable()
       .then((resultObject) => {
         const { available, biometryType } = resultObject;
-
-        console.log("available: " , resultObject);
-
+        // console.log("available: " , resultObject);
         if (available) {
           rnBiometrics.simplePrompt({ promptMessage: 'Confirm fingerprint' })
             .then((resultObject) => {
@@ -113,43 +99,35 @@ const SignIn = ({ navigtion }) => {
                 console.log('successful biometrics provided');
                 loadFromAsyncStorage();
                 navigation.navigate('tab', { screen: 'home' });
-
               } else {
                 console.log('user cancelled biometric prompt');
-
               }
             })
-
             .catch(() => {
               console.log('biometrics failed');
             });
         }
-
       });
-
   }
   // const  sucsses = loadFromAsyncStorage()
 
-  
   useEffect(() => {
     handleBiometricLogin(true)
-    
-
   }, []);
-  
-
 
   return (
+  
+    
     <View style={styles.container}>
 
       <Text style={styles.header}>Sign In</Text>
+      <CustomLoadingSpinner/>
       <Input
         placeholder="Email"
         value={email}
         onChangeText={(text) => setEmail(text)}
         style={styles.input}
       />
-      
       <Input
         placeholder="Password"
         value={password}
@@ -157,6 +135,7 @@ const SignIn = ({ navigtion }) => {
         secureTextEntry
         style={styles.input}
       />
+     
       <Button
         title="Sign In"
         onPress={handleSignin}
@@ -176,7 +155,6 @@ const SignIn = ({ navigtion }) => {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -197,7 +175,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
     borderRadius: 12,
     marginTop: 13,
-
   },
   biometricButton: {
     backgroundColor: '#3498db',
@@ -207,7 +184,6 @@ const styles = StyleSheet.create({
   SmallSignupButton: {
     color: '#a52a2a',
     height: 9,
-
   },
   SmallSignupButton2: {
     marginTop: 10,
@@ -218,7 +194,6 @@ const styles = StyleSheet.create({
     width: 80,
     height: 85,
     alignItems: 'center',
-
   },
 });
 

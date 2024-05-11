@@ -18,10 +18,10 @@ const CardItem = (props) => {
     const { jobType } = props.post
     const { notes } = props.post
     const { Phonenumber } = props.post
-    const { skills } = props.post
+    // const { skills } = props.post
     const navigation = useNavigation()
-    const [posts, setPosts] = useState([]);
-    const { showLoader, hideLoader } = useLoading();
+    // const [posts, setPosts] = useState([]);
+    // const { showLoader, hideLoader } = useLoading();
 
 
 
@@ -50,17 +50,14 @@ const CardItem = (props) => {
             </View>
             <Text style={styles.text2} > <Text style={styles.BaseString}>jobtype:</Text> {jobType}</Text>
 
-           
 
-            <View style={{ flexDirection: 'row'}}>
+            <View style={styles.text4}>
                 <Text style={styles.text3} > Note: </Text>
                 <ExpandableBox content={notes} />
             </View>
 
             <View style={styles.ViewRowButten}>
-
                 <Conbutton Phonenumber={Phonenumber} />
-
                 <Phonebutton Phonenumber={Phonenumber} />
 
             </View>
@@ -81,6 +78,10 @@ const styles = StyleSheet.create({
         marginTop: -10,
         left: 9,
     },
+    text4:{
+        flexDirection: 'row'
+    },
+    
     ViewRowButten: {
         flexDirection: 'row',
         alignItems: 'center',

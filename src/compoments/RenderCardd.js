@@ -1,7 +1,7 @@
-import {StyleSheet, Text, View,FlatList, ScrollView, Share } from 'react-native'
+import { StyleSheet, Text, View, FlatList, ScrollView, Share } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { useContext,useCallback,useState,useEffect } from 'react';
+import { useContext, useCallback, useState, useEffect } from 'react';
 import { UserContext } from './usercontext';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,8 +16,7 @@ import CustomLoadingSpinner from './Loading';
 
 
 
-
-const Card = ({item}) => {
+const Card = ({ item }) => {
   const navigation = useNavigation()
   const { user, setUser } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
@@ -26,7 +25,6 @@ const Card = ({item}) => {
 
   // console.log('USERFROMRENDERCARD',user),
   //  console.log('SETPost',posts)
-
 
   useEffect(() => {
 
@@ -37,91 +35,88 @@ const Card = ({item}) => {
       setUser(user);
     };
     fetchUsers(true);
-    }, []);
-    useEffect(() => {
     fetchPosts();
-    }, []);
-    useFocusEffect(
+  }, []);
+
+
+  useFocusEffect(
     useCallback(() => {
-        fetchPosts();
+      fetchPosts();
     }, [])
-    );
-    const fetchPosts = async () => {
-      showLoader();
-        try {
-          const response = await fetch(Api.jobposts2).then(res=> res?.json())
-          // console.log("jobs: " , response);
-          setPosts(response);
-        } catch (error) {
-          console.log("error fetching posts", error); 
-        
-      } finally {
-        
-        hideLoader(false);
-      }
-      };
-        
-  
+  );
+
+  const fetchPosts = async () => {
+    showLoader(true);
+    try {
+      const response = await fetch(Api.jobposts2).then(res => res?.json())
+      // console.log("jobs: " , response);
+      setPosts(response);
+    } catch (error) {
+      console.log("error fetching posts", error);
+
+    } finally {
+
+      hideLoader(false);
+    }
+  };
+
   return (
-  <UserProfile posts={posts} />,
+      <View style={styles.container}>
+        <CustomLoadingSpinner />
 
-    <View style={styles.container}>
-      <CustomLoadingSpinner />
-
-    {posts?.map((post,index) => (
-      <CardItem post={post} key={index}/>
-      
-    ))}
-    </View> 
-  )
+        {posts?.map((post, index) => (
+          <CardItem post={post} key={index} />
+        ))}
+      </View>
+  );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  Avatar:{
-    marginTop:-50,
+  Avatar: {
+    marginTop: -50,
   },
   ViewRowButten: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:'',
-    marginVertical:100,
-    marginLeft:20,
+    justifyContent: '',
+    marginVertical: 100,
+    marginLeft: 20,
   },
   viewconButten: {
     marginTop: -10,
-    left:350,
-    width:150,
+    left: 350,
+    width: 150,
   },
   box: {
     width: "100%",
-    height:330,
+    height: 330,
     padding: 5,
     backgroundColor: '#3A416F',
     borderRadius: 22,
     flex: 1,
-    borderWidth:0.3,
-    marginTop:30,
+    borderWidth: 0.3,
+    marginTop: 30,
   },
   text: {
-    marginTop:1,
+    marginTop: 1,
     marginVertical: 1,
-    marginBottom:15,
-    color:'#E9ECEF',
+    marginBottom: 15,
+    color: '#E9ECEF',
   },
   text2: {
     marginVertical: 30,
-    marginBottom:-8,
-    color:'#E9ECEF',
+    marginBottom: -8,
+    color: '#E9ECEF',
   },
   cityName: {
-    borderColor:"#141727",
-    borderRadius:7,
+    borderColor: "#141727",
+    borderRadius: 7,
     alignSelf: 'center',
-    color:'#E9ECEF',
+    color: '#E9ECEF',
   },
-  
+
 })
 
 export default Card;

@@ -63,7 +63,7 @@ const Searchbox = (props) => {
         body:JSON.stringify(body)
       });
       const data = await response.json();
-      console.log("data",data);
+      // console.log("data",data);
       setUsers(data);
     } catch (error) {
       console.error('Failed to fetch users:', error);
@@ -119,19 +119,20 @@ const Searchbox = (props) => {
           onChangeText={text => handleSearch(text)}
           value={searchTerm}
           onSubmitEditing={handleSearch}
-          
         />
-         
         </View>
     
       {searchTerm!== '' && (
         
         <FlatList
           data={users}
-          keyExtractor={item => item._users} 
+          // keyExtractor={item => item._users} 
+          // keyExtractor={item => item.id}
+          keyExtractor={(item, index) => item.id ? item.id.toString() : index.toString()}
+
           style={styles.resultList}
-          renderItem={renderUser}
-         
+           renderItem={renderUser}
+          
           ListEmptyComponent={() => 
             isLoading ? (
               <CustomLoadingSpinner style={styles.spinnerLoading}/>
@@ -139,13 +140,9 @@ const Searchbox = (props) => {
               <Text style={styles.SerachTermResultFalse}>No user found</Text>
             ) : null
           }
-         
-        />
-        
-       
+        />      
       )}
  
-      
     </View>
         <TouchableOpacity onPress={()=>{ 
           setSearchTerm('')

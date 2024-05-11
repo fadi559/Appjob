@@ -12,7 +12,7 @@ import SignIn from "../src/Screens/SignIn";
 
 
 
-const Stacknav = (props, route) => {
+const Stacknav = () => {
   const Stack = createNativeStackNavigator();
 
 
@@ -31,8 +31,6 @@ const Stacknav = (props, route) => {
 
        <Stack.Screen name='SignIn' component={SignIn}/> 
        <Stack.Screen name='SignupScreen' component={SignupScreen} />
-
-
      </Stack.Navigator>
 
 

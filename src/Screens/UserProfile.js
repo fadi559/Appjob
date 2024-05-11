@@ -6,97 +6,99 @@ import { useContext } from 'react';
 import { Api } from '../res/api';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { Avatar } from '@rneui/themed';
 
 
 const UserProfile = (props) => {
-  
 
-  const {user,setUser}=useContext(UserContext);
+
+  const { user, setUser } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
-  const {User}=props.route.params
-  
-  
-  //  console.log("Userr::",User)
- 
-  
-  
-   const RenderSkills=()=>{
-    if (!User.skills || User.skills.length === 0) {
+  const route = useRoute()
+  const  User  = route.params?.User || user
+
+
+  console.log("Userr::", route.params)
+
+
+
+  const RenderSkills = () => {
+    if (!User?.skills || User?.skills.length === 0) {
       return <Text style={styles.noSkills}>No skills added.</Text>;
+    }
+
+
+    return User?.skills.map((skills, index, item) => (
+      <View key={index} style={styles.skillBadge}>
+
+        <Text style={styles.skill}>{skills}</Text>
+      </View>
+    ))
   }
 
 
-    return User.skills.map((skills, index,item) => (
-     <View key={index} style={styles.skillBadge}>
-      
-      <Text style={styles.skill}>{skills}</Text>
-     </View>
-    ))}
-   
-      
 
-   const RenderExperiences=()=>{ 
-    if (!User.experiences || User.experiences.length === 0) {
+  const RenderExperiences = () => {
+    if (!User?.experiences || User?.experiences.length === 0) {
       return <Text style={styles.noSkills}>No experiences added</Text>;
-  }
-     return User.experiences.map((experiences, index,item) => (
-    <TouchableOpacity key={index} style={styles.experienceItem}>
-      <Text style={styles.experienceText}>{experiences}</Text>
-      <Text style={styles.experienceYears}>{}</Text>
-    </TouchableOpacity>
-  ))
+    }
+    return User?.experiences.map((experiences, index, item) => (
+      <TouchableOpacity key={index} style={styles.experienceItem}>
+        <Text style={styles.experienceText}>{experiences}</Text>
+        <Text style={styles.experienceYears}>{ }</Text>
+      </TouchableOpacity>
+    ))
 
-};
+  };
 
 
   return (
-    
+
     <ScrollView style={styles.container}>
-<View style={styles.profileHeader}>
-<Avatar
-        size={80}
-        rounded
-        icon={{ name: 'rowing' }}
-        containerStyle={{ backgroundColor: '#3d4db7' }} />
-            
+      <View style={styles.profileHeader}>
+        <Avatar
+          size={80}
+          rounded
+          icon={{ name: 'rowing' }}
+          containerStyle={{ backgroundColor: '#3d4db7' }} />
+
         {/* <Image source={require("../Images/Avatar.png")} style={styles.avatar} /> */}
         <View style={styles.headerTextContainer}>
-          <Text style={styles.name}>{User.name}</Text>
-          
-        </View>
-        
-        <View style={styles.section}>
-      <Text style={styles.sectionTitle}>Skills</Text>  
-         <View style={styles.skillsContainer}>
-        
-         {RenderSkills()}
-        
-        </View> 
-      </View>
+          <Text style={styles.name}>{User?.name}</Text>
 
-      <View style={styles.section}>
- <Text style={styles.sectionTitle2}>Experience</Text>
- 
-      {RenderExperiences()}
-      
-     </View>
         </View>
-</ScrollView>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Skills</Text>
+          <View style={styles.skillsContainer}>
+
+            {RenderSkills()}
+
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle2}>Experience</Text>
+
+          {RenderExperiences()}
+
+        </View>
+      </View>
+    </ScrollView>
   )
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:0,    
+    marginTop: 0,
     padding: 30,
     backgroundColor: '#f5f5f5', // Light grey background for contrast
   },
   profileHeader: {
     alignItems: 'center',
-    marginBottom:20,
+    marginBottom: 20,
     backgroundColor: '#f5f5f5'
   },
   avatar: {
@@ -107,12 +109,12 @@ const styles = StyleSheet.create({
   },
   headerTextContainer: {
     flex: 1,
-    marginBottom:50,
+    marginBottom: 50,
   },
   name: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop:23,
+    marginTop: 23,
   },
   eliteText: {
     color: '#fff',
@@ -120,40 +122,40 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 20,
-    alignItems:"baseline",
-    borderRadius:40,
+    alignItems: "baseline",
+    borderRadius: 40,
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
-    right:20,
+    right: 20,
 
-    paddingHorizontal: 20,  
-    paddingVertical: 5,    
+    paddingHorizontal: 20,
+    paddingVertical: 5,
     backgroundColor: "white",
     // '#f5f5f5',
-    borderRadius: 20,     
+    borderRadius: 20,
     margin: 5,
-    borderWidth: 1,         
-    overflow: 'hidden' 
-    
+    borderWidth: 1,
+    overflow: 'hidden'
+
   },
   sectionTitle2: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
-    right:60,
-    marginTop:40,
-    paddingHorizontal: 20,  
-    paddingVertical: 5,    
-    backgroundColor: 'white',  
-    borderRadius: 20,     
+    right: 60,
+    marginTop: 40,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    backgroundColor: 'white',
+    borderRadius: 20,
     margin: 5,
-     borderWidth: 1,         
+    borderWidth: 1,
     borderColor: 'gray',
-    overflow: 'hidden' ,
-    
+    overflow: 'hidden',
+
   },
 
   skillsContainer: {
@@ -195,8 +197,8 @@ const styles = StyleSheet.create({
     color: '#666',
     marginTop: 5,
   },
-  noSkills:{
-    fontSize:20,
+  noSkills: {
+    fontSize: 20,
   },
 });
 

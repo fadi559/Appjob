@@ -22,12 +22,10 @@ const Card = ({ item }) => {
   const [posts, setPosts] = useState([]);
   const { showLoader, hideLoader } = useLoading();
 
-
   // console.log('USERFROMRENDERCARD',user),
   //  console.log('SETPost',posts)
 
   useEffect(() => {
-
     const fetchUsers = async () => {
       const token = await AsyncStorage.getItem("authToken");
       const decodedToken = jwt_decode(token);
@@ -38,13 +36,11 @@ const Card = ({ item }) => {
     fetchPosts();
   }, []);
 
-
   useFocusEffect(
     useCallback(() => {
       fetchPosts();
     }, [])
   );
-
   const fetchPosts = async () => {
     showLoader(true);
     try {
@@ -55,12 +51,11 @@ const Card = ({ item }) => {
       console.log("error fetching posts", error);
 
     } finally {
-
       hideLoader(false);
     }
   };
-
   return (
+
       <View style={styles.container}>
         <CustomLoadingSpinner />
 
@@ -116,7 +111,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: '#E9ECEF',
   },
-
 })
 
 export default Card;

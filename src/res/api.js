@@ -1,5 +1,5 @@
 
-export const baseUrl = 'http://192.168.68.164:8000'
+export const baseUrl = 'https://fadinodejss.onrender.com'
 
 export const Api={
     signup:baseUrl + "/api/signup",

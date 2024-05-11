@@ -26,6 +26,8 @@ const Stacknav = () => {
         options={({ route, navigation }) => ({ 
           headerLeft: () => (<Button title="Back" onPress={() => navigation.goBack()} />),
         }
+
+        we are done
        
       )} /> */}
 

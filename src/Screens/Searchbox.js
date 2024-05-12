@@ -83,8 +83,8 @@ const Searchbox = (props) => {
   }
   
   const renderUser = ({ item }) => (
-    //  console.log("iitt.",item),
-    //  console.log("nameee4:",item.name),
+      console.log("iitt.",item),
+      console.log("nameee4:",item.name),
     <TouchableOpacity
     style={styles.userRueslt}
       onPress={() => navigation.navigate('drawer', { screen: 'UserProfile', params: { User:item } })}>

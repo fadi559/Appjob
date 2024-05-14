@@ -21,8 +21,7 @@ import { useEffect } from 'react';
       useEffect(() => {
             // Perform any async tasks, and then hide the splash screen
             const performAsyncTasks = async () => {
-                // Simulate an async task (e.g., loading resources, verifying user, etc.)
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Simulating a delay
+                
                 SplashScreen.hide(); // Hide splash after tasks are done
             };
     

@@ -25,16 +25,17 @@ const Card = ({ item }) => {
   // console.log('USERFROMRENDERCARD',user),
   //  console.log('SETPost',posts)
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const token = await AsyncStorage.getItem("authToken");
-      const decodedToken = jwt_decode(token);
-      const user = decodedToken.user;
-      setUser(user);
-    };
-    fetchUsers(true);
-    fetchPosts();
-  }, []);
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     const token = await AsyncStorage.getItem("authToken");
+  //     const decodedToken = jwt_decode(token);
+  //     const user = decodedToken.user;
+  //     setUser(user);
+  //   };
+  //   fetchUsers(true);
+  //   fetchPosts();
+  // }, []);
+  
 
   useFocusEffect(
     useCallback(() => {

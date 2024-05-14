@@ -35,10 +35,6 @@ const AddExperience = ({ route, navigation }) => {
       } else {
         setNewExperience('');
        
-
-      setTimeout(() => {
-          setShowSuccess(false);
-      }, 2000); // Hide the GIF af
       const body= JSON.stringify({ experience : newExperience , userId: user._id})
       showLoader(true)
         try {
@@ -75,7 +71,7 @@ const AddExperience = ({ route, navigation }) => {
           placeholder="Experience Description"
           value={newExperience}
           onChangeText={setNewExperience}
-          placeholderTextColor="#888"
+          placeholderTextColor='#888'
         />
          <Button 
          buttonStyle={{backgroundColor:'#3A416F', width:130,
@@ -104,9 +100,7 @@ const styles = StyleSheet.create({
      left:180,
      position:'relative',
     top: -340, 
-    right: 0, 
-    padding: 0,
-     color:'black',
+     
     },
     clearStlye:{
         position: 'relative',

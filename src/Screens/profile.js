@@ -123,7 +123,7 @@ console.log("Experience to delete(EXPIRNCE):", experience);
   const renderSkills = () => {
     return user?.skills?.map?.((skill, index,) => (
 
-      <TouchableOpacity key={index} style={styles.skillItem} onPress={() => handlePressdeleteSkill(skill)}>
+      <TouchableOpacity key={index} style={styles.skillItem} onLongPress={() => handlePressdeleteSkill(skill)}>
         <View key={index} style={styles.skillBadge}>
           <Text style={styles.skill}>{skill}</Text>
         </View>
@@ -133,7 +133,7 @@ console.log("Experience to delete(EXPIRNCE):", experience);
   const renderExperince = () => {
     return user?.experiences?.map?.((experience,index) => (
 
-      <TouchableOpacity key={index} style={styles.experienceItem} onPress={() => handlePressDeleteExperiences(experience)}>
+      <TouchableOpacity key={index} style={styles.experienceItem} onLongPress={() => handlePressDeleteExperiences(experience)}>
         <Text style={styles.experienceText}>{experience}</Text>
         {/* <Text style={styles.experienceYears}>{ }</Text> */}
       </TouchableOpacity>

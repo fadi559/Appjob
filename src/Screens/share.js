@@ -57,7 +57,7 @@ const ShareScreen = (props) => {
       return;
     }
     
-    // console.log("JOBPOST33:",jobPostData);
+    console.log("JOBPOST33:",jobPostData);
 
     if (Phonenumber.length === 10 && /^\d+$/.test(Phonenumber)) 
     showLoader()

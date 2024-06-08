@@ -32,10 +32,13 @@ const SignIn = ({ navigtion }) => {
   const handleSignin = async () => {
 
 
-    // const sucsses = await loadFromAsyncStorage()
+    //  const sucsses = await loadFromAsyncStorage()
+
 
     if (!email || !password) {
-      Alert.alert('Please fill in all fields');
+      navigation.navigate('tab', { screen: 'home' });
+      // neeed to delet the navgition 
+      // Alert.alert('Please fill in all fields');
       return;
 
     } else

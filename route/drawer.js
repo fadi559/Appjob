@@ -4,13 +4,13 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/native';
 import UserProfile from "../src/Screens/UserProfile";
-
+import JobProfile from "../src/Screens/JobProfile";
 import { Image, StyleSheet } from "react-native";
 import { Button } from "react-native-elements/dist/buttons/Button";
 import { Images } from "../src/Images/images";
 import Icon from "react-native-ionicons";
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
-
+import Home from "../src/Screens/home";
 
 const Drawer = createDrawerNavigator();
 const Darwernav = () => {
@@ -43,6 +43,29 @@ const Darwernav = () => {
                }}
                onPress={()=>navigation.goBack()}/>),
              })}  /> 
+
+             <Drawer.Screen name='JobProfile' component={JobProfile} 
+             options={({ route, navigation, }) => ( {
+               headerStyle:{
+                    backgroundColor:"#3A416F"
+               },
+               swipeEdgeWidth:0,
+               title:"",
+               drawerType:'front',
+               headerLeft:()=>( <Button style={styles.Button} 
+                    
+                    icon={{name:'arrow-back',
+                    type:'FontAwesome',
+                    style:{backgroundColor:"#3A416F"},
+                    size:30,
+               }}
+               onPress={()=> navigation.navigate('tab', {screen: 'Home' })}
+               
+               />),
+
+             })}  /> 
+
+
           </Drawer.Navigator>
      );
 

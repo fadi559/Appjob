@@ -17,19 +17,17 @@ const UserProfile = (props) => {
   const { user, setUser } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   const route = useRoute()
-  const  User  = route.params?.User || user
+  const  User  = route.params?.User
 
 
   console.log("Userr::", route.params)
-
+  
 
 
   const RenderSkills = () => {
     if (!User?.skills || User?.skills.length === 0) {
       return <Text style={styles.noSkills}>No skills added.</Text>;
     }
-
-
     return User?.skills.map((skills, index, item) => (
       <View key={index} style={styles.skillBadge}>
 
@@ -37,8 +35,6 @@ const UserProfile = (props) => {
       </View>
     ))
   }
-
-
 
   const RenderExperiences = () => {
     if (!User?.experiences || User?.experiences.length === 0) {
@@ -52,8 +48,6 @@ const UserProfile = (props) => {
     ))
 
   };
-
-
   return (
 
     <ScrollView style={styles.container}>

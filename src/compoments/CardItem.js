@@ -12,21 +12,18 @@ import CustomLoadingSpinner from './Loading';
 import { useLoading } from './LoadingContext';
 
 
-const CardItem = (props) => {
+const CardItem = (props,post) => {
     const { User } = props.post
     const { location } = props.post
     const { jobType } = props.post
     const { notes } = props.post
     const { Phonenumber } = props.post
     // const { skills } = props.post
+    // const { User, location, jobType, notes, Phonenumber } = job;
     const navigation = useNavigation()
     // const [posts, setPosts] = useState([]);
     // const { showLoader, hideLoader } = useLoading();
-
-
-
     // console.log("Usersss2",User)
-
     //  console.log("CARDITEM",props.post);
 
     return (
@@ -49,8 +46,6 @@ const CardItem = (props) => {
                 <Text style={styles.text}>{User?.name}</Text>
             </View>
             <Text style={styles.text2} > <Text style={styles.BaseString}>jobtype:</Text> {jobType}</Text>
-
-
             <View style={styles.text4}>
                 <Text style={styles.text3} > Note: </Text>
                 <ExpandableBox content={notes} />
@@ -59,7 +54,6 @@ const CardItem = (props) => {
             <View style={styles.ViewRowButten}>
                 <Conbutton Phonenumber={Phonenumber} />
                 <Phonebutton Phonenumber={Phonenumber} />
-
             </View>
 
             </View>

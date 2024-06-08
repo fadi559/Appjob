@@ -70,8 +70,6 @@ const AddSkills = ({ route, navigation }) => {
           style={styles.skillsStyle}
           />
           </TouchableOpacity>
-          
-           
           <CustomLoadingSpinner/>
             
       <View style={styles.inputpostion}>
@@ -88,10 +86,7 @@ const AddSkills = ({ route, navigation }) => {
          left:100,borderRadius:30,}}
             title='Add'
             onPress={handleAddSkill} />
-  
         </View>
-            
-            
     </View>
   );
 };

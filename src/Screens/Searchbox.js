@@ -13,7 +13,7 @@ import CustomLoadingSpinner from '../compoments/Loading'
 import { useLoading } from '../compoments/LoadingContext'
 // import { Icon } from 'react-native-vector-icons/Icon'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
+import JobProfile from './JobProfile'
 
 
 
@@ -66,7 +66,7 @@ const Searchbox = (props) => {
         body:JSON.stringify(body)
       });
       const data = await response.json();
-       console.log("DATA",data);
+      //  console.log("DATA",data);
        if (searchMode === 'users') {
         setUsers(data);
         setJobs([]);
@@ -86,15 +86,16 @@ const Searchbox = (props) => {
   };
 
   const renderUser = ({ item }) => (
-      //  console.log("iitt.",item),
+          //  console.log("i)tt.",item),
       //   console.log("nameee4:",item.jobType),
+      console.log("nameee4:",jobs),
     <TouchableOpacity
     style={styles.userRueslt}
     onPress={() =>{
     if (searchMode === 'users') {
        navigation.navigate('drawer', { screen: 'UserProfile', params: { User:item } })
     } else {
-      navigation.navigate('drawer', { screen: 'JobProfile', params: { Job: item } });
+      navigation.navigate('drawer', { screen: 'JobProfile', params: { jobs:jobs ,selectedJob: item } })
     }
     }}
       >
@@ -105,7 +106,7 @@ const Searchbox = (props) => {
        icon={{name:'rowing'}}  
        containerStyle={styles.Avtarstyle}/>
       ) : (
-        <MaterialIcons name="work"  size={20} rounded 
+        <MaterialIcons name="work" size={20} rounded 
         
         containerStyle={styles.Avtarstyle2}
       />
@@ -165,14 +166,15 @@ const Searchbox = (props) => {
 
   
       {searchTerm!== '' && (
-      
+      // console.log("users,",users),
+      // console.log("jobs,",jobs),
         <FlatList
         data={searchMode === 'users' ? users : jobs}
           // data={users}
           // keyExtractor={item => item._users} 
           // keyExtractor={item => item.id}
-          keyExtractor={(item, index) => item.id ? item.id.toString() : index.toString()}
-
+          // keyExtractor={(item, index) => item.id ? item.id.toString() : index.toString()}
+          keyExtractor={(item) => item.id ? item.id.toString() : item._id ? item._id.toString() : Math.random().toString()} 
           style={styles.resultList}
            renderItem={renderUser}
           

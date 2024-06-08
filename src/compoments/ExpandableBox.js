@@ -4,14 +4,15 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 const ExpandableBox = ({ content }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const hasContent = content && content.length > 0;
   // Limit for text to be shown in collapsed mode
   const previewLimit =40;
   return (
     <View>
       <Text style={styles.text}>
-        {isExpanded ? content : `${content.substring(0, previewLimit)}`}
+        {isExpanded ? content : hasContent ?`${content.substring(0, previewLimit)}` : ''}
       </Text>
-      {content.length > previewLimit && (
+      {hasContent && content.length > previewLimit && (
         <TouchableOpacity onPress={() => setIsExpanded(!isExpanded)} style={styles.button}>
           <Text style={styles.showMore}>{isExpanded ? 'Show Less' : 'Show More...'}</Text>
         </TouchableOpacity>

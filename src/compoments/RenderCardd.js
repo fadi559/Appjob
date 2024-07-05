@@ -23,8 +23,8 @@ const Card = ({ item }) => {
   const [posts, setPosts] = useState([]);
   const { showLoader, hideLoader } = useLoading();
 
-  // console.log('USERFROMRENDERCARD',user),
-  //  console.log('SETPost',posts)
+  //  console.log('USERFROMRENDERCARD',user),
+  //   console.log('SETPost',posts)
 
   // useEffect(() => {
   //   const fetchUsers = async () => {

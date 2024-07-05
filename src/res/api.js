@@ -10,7 +10,7 @@ export const Api={
     AddExperince:baseUrl+"/api/experiences",
     deleteSkill:(skill,id) => baseUrl+`/api/SkillsDelete?id=${id}&skill=${skill}`,
     deleteExperince:(experience,id)=> baseUrl+`/api/ExperiencesDelete?id=${id}&experience=${experience}`,
-  
+    updateProfileImage:baseUrl + "/api/updateProfileImage",
  } 
 // localhost
 // 192.168.1.241

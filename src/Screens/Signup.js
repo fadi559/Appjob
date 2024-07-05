@@ -9,7 +9,6 @@ import { Api } from '../res/api';
 import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { Input } from 'react-native-elements';
 import { color } from '@rneui/base';
 
@@ -39,6 +38,7 @@ const SignupScreen = ({navigtion},props) => {
           password,
           
       });
+      
       if(data.error){
 
         Alert.alert(data.error);
@@ -48,21 +48,19 @@ const SignupScreen = ({navigtion},props) => {
         setloading(false);
         console. log ("SIGN up SUCCESS »> ", data); 
         setUser(data.user)
-        Alert.alert ("Sign up successful");
-        navigation.navigate('stack',{screen:'SignIn'});
+      Alert.alert ("Sign up successful");
+        // navigation.navigate('UpdateProfileImage', { userData });
+        navigation.navigate('stack', { screen: 'UpdateProfileImage', params: { userId: data.user._id} })
       }
+      //   navigation.navigate('stack',{screen:'SignIn'});
+      // }
       }  catch (error) {
         Alert.alert('Signup Failed', error);
         console.error('Signup Error:', error);
         setloading(false);
       }
     };
-    
-  
-
-  return (
-   
-    
+  return (  
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
 
@@ -105,9 +103,9 @@ const SignupScreen = ({navigtion},props) => {
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
       <Text style={{marginTop:15}}>Already Joined  <Text style={styles.SmallSignInButton} 
-       onPress={()=>navigation.navigate('stack',{screen:'SignIn'})} >signIn</Text>  </Text>
-      
-      
+       onPress={()=>navigation.navigate('stack',{screen:'ChooseProfileImage'})
+      } >signIn</Text>  </Text>
+                    
     </View>
   );
 };

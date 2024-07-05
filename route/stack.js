@@ -7,6 +7,7 @@ import { StyleSheet, Button } from "react-native";
 import ChatScreen from "../src/Screens/ChatScreen";
 import SignupScreen from "../src/Screens/Signup";
 import SignIn from "../src/Screens/SignIn";
+import UpdateProfileImage from "../src/Screens/UpdateProfileImage";
 
 
 
@@ -20,17 +21,8 @@ const Stacknav = () => {
 
     <Stack.Navigator initialRouteName="SignIn" screenOptions={{headerShown:false,}} >
 
-         {/* <Stack.Screen 
-        name="Chat" 
-        component={Chat} 
-        options={({ route, navigation }) => ({ 
-          headerLeft: () => (<Button title="Back" onPress={() => navigation.goBack()} />),
-        }
 
-        we are done
-       
-      )} /> */}
-
+       <Stack.Screen name="UpdateProfileImage" component={UpdateProfileImage} />
        <Stack.Screen name='SignIn' component={SignIn}/> 
        <Stack.Screen name='SignupScreen' component={SignupScreen} />  
      </Stack.Navigator>

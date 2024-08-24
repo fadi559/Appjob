@@ -50,7 +50,7 @@ const SignupScreen = ({navigtion},props) => {
         setUser(data.user)
       Alert.alert ("Sign up successful");
         // navigation.navigate('UpdateProfileImage', { userData });
-        navigation.navigate('stack', { screen: 'UpdateProfileImage', params: { userId: data.user._id} })
+        navigation.navigate('stack', { screen: 'Page1', params: { userId: data.user._id} })
       }
       //   navigation.navigate('stack',{screen:'SignIn'});
       // }

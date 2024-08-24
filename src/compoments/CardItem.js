@@ -8,7 +8,7 @@ import ExpandableBox from './ExpandableBox';
 
 const CardItem = (props) => {
   const { User, location, jobType, notes, Phonenumber,image} = props.post;
-  // console.log("avtareee:",props.post)
+    // console.log("avtareee:",props.post)
   const navigation = useNavigation();
 
   return (
@@ -21,7 +21,7 @@ const CardItem = (props) => {
           onPress={() => navigation.navigate('drawer', { screen: 'UserProfile', params: { User: User } })}
           size={70}
           rounded
-          source={{ uri: User?.avatarUrl }}
+          source={{ uri: User?.image }}
           containerStyle={styles.avatar}
         />
         <View style={styles.userDetails}>
@@ -46,7 +46,7 @@ export default CardItem;
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#f0f4f8',  // Modern light background color
+    backgroundColor: '#f0f4f8',  
     borderRadius: 20,
     marginVertical: 10,
     padding: 20,

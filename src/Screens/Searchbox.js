@@ -61,7 +61,7 @@ const Searchbox = (props) => {
         method:'POST',
         headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': `Bearer ${token}`, // Include the JWT token here if your endpoint requires authentication
+        
         },
         body:JSON.stringify(body)
       });

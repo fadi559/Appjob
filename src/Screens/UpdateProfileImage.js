@@ -60,7 +60,7 @@ const UpdateProfileImage = ({ route, navigation }) => {
     }
   };
   const handleSkip = () => {
-    navigation.navigate('SignIn');
+    navigation.navigate('page1');
   };
 
   return (
@@ -68,7 +68,7 @@ const UpdateProfileImage = ({ route, navigation }) => {
       <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
         <Text style={styles.skipButtonText}>Skip</Text>
       </TouchableOpacity>
-      <Text style={styles.title}>Update Profile Image</Text>
+      <Text style={styles.title}>Add Profile Image</Text>
       <TouchableOpacity style={styles.choosePhotoButton} onPress={handleChoosePhoto}>
         <Text style={styles.choosePhotoButtonText}>Choose Photo</Text>
       </TouchableOpacity>

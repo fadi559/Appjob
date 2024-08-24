@@ -65,7 +65,7 @@
   
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView >
           <View style={styles.spinnerContainer}>
             <CustomLoadingSpinner />
           </View>
@@ -122,7 +122,8 @@
       backgroundColor: '#f0f4f8',
     },
     spinnerContainer: {
-      marginBottom: 20,
+      marginBottom: 10,
+      top:10,
     },
     inputContainer: {
       marginBottom: 20,

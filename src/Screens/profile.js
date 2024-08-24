@@ -10,63 +10,211 @@ import { Api } from '../res/api';
 import CustomLoadingSpinner from '../compoments/Loading';
 import { useLoading } from '../compoments/LoadingContext';
 import { UserContext } from '../compoments/usercontext';
+import  ImagePicker from 'react-native-image-picker';
+
+
+
+
+// const createFormData = (photo, body) => {
+//   const data = new FormData();
+
+//   if (photo && photo.uri) {
+//     const photoUri = Platform.OS === 'android' ? photo.uri : photo.uri.replace('file://', '');
+//     data.append('photo', {
+//       name: photo.fileName,
+//       type: photo.type,
+//       uri: photoUri,
+//     });
+//   } else {
+//     console.log('Photo or photo.uri is undefined');
+//   }
+
+//   Object.keys(body).forEach((key) => {
+//     data.append(key, body[key]);
+//   });
+
+//   return data;
+// };
+
+
+
 
 const ProfilePage = () => {
   const { user, setUser } = useContext(UserContext);
   const { showLoader, hideLoader } = useLoading();
   const navigation = useNavigation();
-  // console.log("user%%%:",user)
+  const [avatar, setAvatar] = useState(user.image?.url);
+  const [title, setTitle] = useState('Profile Photo');
+  const [photo, setPhoto] = useState(null);
+  
+console.log("avatar::",avatar)
+  console.log("user::",user)
 
   const handleChoosePhoto = () => {
     const options = {
       mediaType: 'photo',
+      includeBase64: false,
     };
+  
     launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.errorCode) {
-        console.log('ImagePicker Error: ', response.errorCode);
-      } else {
-        const source = { uri: response.assets[0].uri };
-        handleUploadPhoto(source);
-      }
+        console.log('ImagePicker Error: ', response.errorMessage);
+      } else if (response.assets && response.assets.length > 0) {
+        const selectedPhoto = response.assets[0];
+        console.log('ImagePicker Response: ', selectedPhoto);
+  
       
-    });
-  };
+        const fileUri = Platform.OS === 'ios'
+          ? selectedPhoto.uri.replace('file://', '') 
+          : selectedPhoto.uri;
+  
+        console.log('Formatted File URI: ', fileUri);
+  
+       
+        const formData = new FormData();
+        formData.append('file', {
+          name: selectedPhoto.fileName,
+          type: selectedPhoto.type,
+          uri: fileUri, 
+        });
+        formData.append('userId', user._id); 
 
-  const handleUploadPhoto = async (image) => {
-    showLoader(true);
-    const data = new FormData();
-    data.append('userId', user._id);
-    data.append('image', {
-      uri: image.uri,
-      name: 'profile.jpg',
-      type: 'image/jpeg',
-    });
-console.log('picker resauLLT',image.uri)
-    try {
-      console.log("datares",data)
-      console.log('user44',user)
-      const response = await axios.post(Api.updateProfileImage,data,user, {
-        user:user,
-        image:image.uri,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      if (response.data.user) {
-        setUser(response.data.user);
-        Alert.alert('Profile image updated successfully');
-        console.log("REspnse44:",response)
+        axios.post(Api.SavePhotoUrl, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+       
+        .then(response => {
+          setAvatar(response.data.secure_url);
+          setUser({...user ,image: { url: response.data.secure_url } });
+          console.log('Photo uploaded and URL received:', response.data.secure_url);
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log('Failed to upload photo:', error.response.data);
+          } else if (error.request) {
+            console.log('No response from server:', error.request);
+          } else {
+            console.log('Error setting up request:', error.message);
+          }
+        });
       }
-    } catch (error) {
+      });
+    };
+    
+        
+  //       .then(response => {
+  //         console.log('Photo uploaded and URL received:', response.data.secure_url);
+  //         setAvatar(response.data.secure_url);
+  //         setUser({ ...user, image: { url: response.data.secure_url } });
+  //         setTitle('Profile Photo');
+  //       })
+  //       .catch(error => {
+  //         console.log('Failed to upload photo:', error.response ? error.response.data : error.message);
+  //       });
+  //     } else {
+  //       console.log('No assets found in response');
+  //     }
+  //   });
+  // };
+  
+
+  
+
+  
+  //  const handleChoosePhoto = () => {
+
+    
+  //     const options = {
+  //       noData: true,
+  //     };
+  //     launchImageLibrary (options, response => {
+  //       if (response.uri) {
+  //         this.setState({ photo: response })
+  //       }
+  //  })
+    
+    
+  //   const createFormData = (photo, body) => {
+  //     const data = new FormData();
+    
+  //     data.append("photo", {
+  //       name: photo.fileName,
+  //       type: photo.type,
+  //       uri:
+  //         Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+  //     });
+    
+  //     Object.keys(body).forEach(key => {
+  //       data.append(key, body[key]);
+  //     });
+    
+  //     return data;
+  //   };
+  //   handleChoosePhoto = () => {
+
+  //     fetch(Api.updateProfileImage2, {
+  //       method: "POST",
+  //       body: createFormData(this.state.photo, { userId: "123" })
+  //     })
+  //       .then(response => response.json())
+  //       .then(response => {
+  //         console.log("upload succes", response);
+  //         alert("Upload success!");
+  //         this.setState({ photo: null });
+  //       })
+  //       .catch(error => {
+  //         console.log("upload error", error);
+  //         alert("Upload failed!");
+  //       });
+  //   };
+  
+    
+
+  
+  //  }
+
+//   const handleUploadPhoto = async (image) => {
+//     showLoader(true);
+//     const data = new FormData();
+//     data.append('userId', user._id);
+//     data.append('image', {
+//       uri: image.uri,
+//       name: 'profile.jpg',
+//       type: 'image/jpeg',
+//     });
+// console.log('picker resauLLT',image.uri)
+//     try {
+//       console.log("datares",data)
+//       console.log('user44',user)
+//       const response = await axios.post(Api.updateProfileImage, {
+        
+        
+//         headers: {
+//           'Content-Type': 'multipart/form-data',
+//         },
+//         body: JSON.stringify({
+//           data,
+//           user,
+          
+//         }),
+//       });
+//       if (response.data.user) {
+//         setUser(response.data.user);
+//         Alert.alert('Profile image updated successfully');
+//         console.log("REspnse44:",response)
+//       }
+//     } catch (error) {
       
-      console.log('Error updating profile image:', error);
-      Alert.alert('Error updating profile image: ' + error.message);
-    } finally {
-      hideLoader(false);
-    }
-  };
+//       console.log('Error updating profile image88:', error);
+//       Alert.alert('Error updating profile image88: ' + error.message);
+//     } finally {
+//       hideLoader(false);
+//     }
+//   };
 
   const deleteSkill = async (skill) => {
     showLoader(true);
@@ -152,7 +300,7 @@ console.log('picker resauLLT',image.uri)
           <Avatar
             size={120}
             rounded
-            source={{ uri: user.image?.url }}
+            source={{ uri:avatar}}
             containerStyle={styles.avatar}
           />
           <TouchableOpacity onPress={handleChoosePhoto} style={styles.addPhotoButton}>
@@ -317,6 +465,84 @@ const styles = StyleSheet.create({
 });
 
 export default ProfilePage;
+
+
+// const handleChoosePhoto = () => {
+//   const options = {
+//     mediaType: 'photo',
+//     includeBase64: false,
+//   };
+//   launchImageLibrary(options, (response) => {
+//     if (response.didCancel) {
+//       console.log('User cancelled image picker');
+//     } else if (response.errorCode) {
+//       console.log('ImagePicker Error: ', response.errorMessage);
+//     } else if (response.assets && response.assets.length > 0) {
+//       const selectedPhoto = response.assets[0];
+//       console.log('ImagePicker Response: ', selectedPhoto);
+
+      
+//       const formData = new FormData();
+//       formData.append('file', {
+//         name: selectedPhoto.fileName,
+//         type: selectedPhoto.type,
+//         uri: Platform.OS === 'ios' ? selectedPhoto.uri.replace('file://', '') : selectedPhoto.uri,
+//       });
+
+//       axios.post(Api.SavePhotoUrl, formData, {
+//         headers: {
+//           'Content-Type': 'multipart/form-data',
+//         },
+//       })
+//       .then(response => {
+//         console.log('Photo uploaded and URL received:', response.data.secure_url);
+       
+//         setAvatar(response.data.secure_url);
+//         setUser({ ...user, image: { url: response.data.secure_url } });
+//         setTitle('Profile Photo');
+//       })
+//       .catch(error => {
+//         console.log('Failed to upload photo:', error.response ? error.response.data : error.message);
+//       });
+//     } else {
+//       console.log('No assets found in response');
+//     }
+//   });
+// };
+
+
+
+
+
+
+
+
+
+// const handleChoosePhoto = () => {
+//   const options = {
+//     mediaType: 'photo',
+//     includeBase64: false,
+//   };
+//   launchImageLibrary(options, (response) => {
+//     if (response.didCancel) {
+//       console.log('User cancelled image picker');
+//     } else if (response.errorCode) {
+//       console.log('ImagePicker Error: ', response.errorMessage);
+//     } else if (response.assets && response.assets.length > 0) {
+//       const selectedPhoto = response.assets[0];
+//       console.log('ImagePicker Response: ', selectedPhoto);
+//       setAvatar(selectedPhoto.uri);
+//       setUser({ ...user, image: { url: selectedPhoto.uri } });
+//       setTitle('Profile Photo');
+//     } else {
+//       console.log('No assets found in response');
+//     }
+//   });
+// };
+
+
+
+
 
 
 

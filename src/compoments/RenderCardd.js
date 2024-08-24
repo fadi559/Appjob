@@ -23,21 +23,7 @@ const Card = ({ item }) => {
   const [posts, setPosts] = useState([]);
   const { showLoader, hideLoader } = useLoading();
 
-  //  console.log('USERFROMRENDERCARD',user),
-  //   console.log('SETPost',posts)
-
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     const token = await AsyncStorage.getItem("authToken");
-  //     const decodedToken = jwt_decode(token);
-  //     const user = decodedToken.user;
-  //     setUser(user);
-  //   };
-  //   fetchUsers(true);
-  //   fetchPosts();
-  // }, []);
   
-
   useFocusEffect(
     useCallback(() => {
       fetchPosts();
@@ -58,15 +44,19 @@ const Card = ({ item }) => {
   };
   return (
 
-      <View style={styles.container}>
-        <CustomLoadingSpinner />
-
-        {posts?.map((post, index) => (
-          <CardItem post={post} key={index} />
-        ))}
-      </View>
-  );
-}
+    
+        <View style={styles.container}>
+          <CustomLoadingSpinner />
+    
+          {posts?.map((post, index) => (
+            <CardItem post={post} key={index} />
+          ))}
+        </View>
+    );
+    }
+    
+    
+  
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -122,7 +112,55 @@ export default Card;
 
 
 
+// useFocusEffect(
+//   useCallback(() => {
+//     fetchPosts();
+//   }, [])
+// );
+// const fetchPosts = async () => {
+//   showLoader(true);
+//   try {
+//     const response = await fetch(`${Api.jobposts2}?interests=${user.interests}&jobType=${user.jobType}`).then(res => res?.json())
+//     // console.log("jobs: " , response);
+//     setPosts(response);
+//   } catch (error) {
+//     console.log("error fetching posts", error);
+
+//   } finally {
+//     hideLoader(false);
+//   }
+// };
+// return (
+
+//     <View style={styles.container}>
+//       <CustomLoadingSpinner />
+
+//       {posts?.map((post, index) => (
+//         <CardItem post={post} key={index} />
+//       ))}
+//     </View>
+// );
+// }
 
 
 
 
+
+
+
+
+
+
+//  console.log('USERFROMRENDERCARD',user),
+  //   console.log('SETPost',posts)
+
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     const token = await AsyncStorage.getItem("authToken");
+  //     const decodedToken = jwt_decode(token);
+  //     const user = decodedToken.user;
+  //     setUser(user);
+  //   };
+  //   fetchUsers(true);
+  //   fetchPosts();
+  // }, []);

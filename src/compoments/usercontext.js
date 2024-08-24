@@ -3,7 +3,8 @@ import { createContext, useState } from "react";
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+                                        // it was null 
+    const [user, setUser] = useState({ _id: '', interests: '', jobType: '', currentJob: '',User:'',Job:'',});
     const [usershare, setuesershare] =useState();
 
     return (

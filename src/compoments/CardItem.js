@@ -1,15 +1,22 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React ,{useState}from 'react';
 import { Avatar } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import Phonebutton from './Phonebutton';
 import Conbutton from './Conbutton';
 import ExpandableBox from './ExpandableBox';
+import CustomLoadingSpinner from './Loading';
+import { useLoading } from './LoadingContext';
+
+
+
 
 const CardItem = (props) => {
   const { User, location, jobType, notes, Phonenumber,image} = props.post;
-    // console.log("avtareee:",props.post)
+    //  console.log("avtareee:",props.post)
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(true); 
+  const { showLoader, hideLoader } = useLoading();
 
   return (
     <View style={styles.card}>
@@ -17,13 +24,27 @@ const CardItem = (props) => {
         <Text style={styles.location}>{location}</Text>
       </View>
       <View style={styles.userInfo}>
+      
         <Avatar
           onPress={() => navigation.navigate('drawer', { screen: 'UserProfile', params: { User: User } })}
           size={70}
           rounded
-          source={{ uri: User?.image }}
+          source={User?.image ? { uri: User.image } : null}
+          icon={User?.image ? null : { name: 'person', type: 'material', color: 'purple' }}
+          iconStyle={{ color: 'purple' }}
           containerStyle={styles.avatar}
+          onLoadStart={() => setLoading(true)} // Show loader when image starts loading
+          onLoadEnd={() => setLoading(false)}  // Hide loader when image finishes loading
+          onError={() => setLoading(false)}    // Hide loader if there is an error
         />
+       {loading && (
+            <View style={StyleSheet.absoluteFill} pointerEvents="none">
+              <CustomLoadingSpinner style={styles.loader} />
+            </View>
+          )}
+          
+        
+
         <View style={styles.userDetails}>
           <Text style={styles.userName}>{User?.name}</Text>
           <Text style={styles.jobTypeLabel}>Job Type:</Text>
@@ -57,6 +78,31 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderColor: '#e0e0e0',
     borderWidth: 1,
+  },
+  avatarContainer: {
+    position: 'relative',
+    marginRight: 10,
+    width: 70,  // Ensure this matches your Avatar size
+    height: 70, // Ensure this matches your Avatar size
+  },
+  loaderContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1, // Ensure the loader is above the Avatar image
+  },
+  loader: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   header: {
     borderBottomWidth: 1,

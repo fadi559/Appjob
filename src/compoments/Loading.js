@@ -10,7 +10,7 @@ const CustomLoadingSpinner = ({ style }) => {
     const dot3 = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        if (!isLoading) return;  // Only start the animation if isLoading is true
+        if (!isLoading) return; 
 
         const animate = (dot, delay) => Animated.loop(
             Animated.sequence([

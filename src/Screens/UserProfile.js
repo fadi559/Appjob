@@ -1,16 +1,21 @@
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext,useState,useEffect } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { Avatar } from '@rneui/themed';
 import { UserContext } from '../compoments/usercontext';
+import CustomLoadingSpinner from '../compoments/Loading';
+import { useLoading } from '../compoments/LoadingContext';
+import { Image } from 'react-native-elements';
 
 
 const UserProfile = () => {
   const { user, setUser } = useContext(UserContext);
+  const { showLoader, hideLoader } = useLoading();
+  const [loading, setLoading] = useState(true);
   const route = useRoute();
   const User = route.params?.User;
 
-  console.log("Userr::", route.params);
+  // console.log("Userr::", route.params);
 
   const RenderSkills = () => {
     if (!User?.skills || User?.skills.length === 0) {
@@ -35,15 +40,31 @@ const UserProfile = () => {
     ));
   };
 
+  useEffect(() => {
+    if (User?.image) {
+      // Preload the image to ensure it's available when needed
+      Image.prefetch(User.image)
+        .then(() => setLoading(false)) // Set loading to false when prefetch is done
+        .catch(() => setLoading(false)); // Handle errors
+    } else {
+      setLoading(false);
+    }
+  }, [User?.image]);
   return (
     <ScrollView style={styles.container}>
       <View style={styles.profileHeader}>
-        <Avatar
-          size={100}
-          rounded
-          icon={{ name: 'person', type: 'material' }}
-          containerStyle={styles.avatar}
-        />
+      <Avatar
+        size={100}
+        rounded
+        source={User?.image ? { uri: User.image } : null}
+        icon={!User?.image ? { name: 'person', type: 'material' } : null}
+        containerStyle={styles.avatar}
+        onLoadStart={() => setLoading(true)}   // Show loader when image starts loading
+        onLoadEnd={() => setLoading(false)}    // Hide loader when image finishes loading
+        onError={() => setLoading(false)}      // Hide loader if there is an error
+      />
+      {loading && <CustomLoadingSpinner style={styles.loader} />} 
+
         <View style={styles.headerTextContainer}>
           <Text style={styles.name}>{User?.name}</Text>
           <Text style={styles.subtitle}>{User?.title}</Text>

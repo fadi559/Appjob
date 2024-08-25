@@ -15,28 +15,6 @@ import  ImagePicker from 'react-native-image-picker';
 
 
 
-// const createFormData = (photo, body) => {
-//   const data = new FormData();
-
-//   if (photo && photo.uri) {
-//     const photoUri = Platform.OS === 'android' ? photo.uri : photo.uri.replace('file://', '');
-//     data.append('photo', {
-//       name: photo.fileName,
-//       type: photo.type,
-//       uri: photoUri,
-//     });
-//   } else {
-//     console.log('Photo or photo.uri is undefined');
-//   }
-
-//   Object.keys(body).forEach((key) => {
-//     data.append(key, body[key]);
-//   });
-
-//   return data;
-// };
-
-
 
 
 const ProfilePage = () => {
@@ -47,7 +25,7 @@ const ProfilePage = () => {
   const [title, setTitle] = useState('Profile Photo');
   const [photo, setPhoto] = useState(null);
   
-console.log("avatar::",avatar)
+console.log("avatar55::",avatar)
   console.log("user::",user)
 
   const handleChoosePhoto = () => {
@@ -72,7 +50,6 @@ console.log("avatar::",avatar)
   
         console.log('Formatted File URI: ', fileUri);
   
-       
         const formData = new FormData();
         formData.append('file', {
           name: selectedPhoto.fileName,
@@ -81,16 +58,16 @@ console.log("avatar::",avatar)
         });
         formData.append('userId', user._id); 
 
-        axios.post(Api.SavePhotoUrl, formData, {
+        axios.post(Api.SavePhotoUrl,formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         })
-       
         .then(response => {
           setAvatar(response.data.secure_url);
           setUser({...user ,image: { url: response.data.secure_url } });
           console.log('Photo uploaded and URL received:', response.data.secure_url);
+              
         })
         .catch(error => {
           if (error.response) {
@@ -104,118 +81,6 @@ console.log("avatar::",avatar)
       }
       });
     };
-    
-        
-  //       .then(response => {
-  //         console.log('Photo uploaded and URL received:', response.data.secure_url);
-  //         setAvatar(response.data.secure_url);
-  //         setUser({ ...user, image: { url: response.data.secure_url } });
-  //         setTitle('Profile Photo');
-  //       })
-  //       .catch(error => {
-  //         console.log('Failed to upload photo:', error.response ? error.response.data : error.message);
-  //       });
-  //     } else {
-  //       console.log('No assets found in response');
-  //     }
-  //   });
-  // };
-  
-
-  
-
-  
-  //  const handleChoosePhoto = () => {
-
-    
-  //     const options = {
-  //       noData: true,
-  //     };
-  //     launchImageLibrary (options, response => {
-  //       if (response.uri) {
-  //         this.setState({ photo: response })
-  //       }
-  //  })
-    
-    
-  //   const createFormData = (photo, body) => {
-  //     const data = new FormData();
-    
-  //     data.append("photo", {
-  //       name: photo.fileName,
-  //       type: photo.type,
-  //       uri:
-  //         Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
-  //     });
-    
-  //     Object.keys(body).forEach(key => {
-  //       data.append(key, body[key]);
-  //     });
-    
-  //     return data;
-  //   };
-  //   handleChoosePhoto = () => {
-
-  //     fetch(Api.updateProfileImage2, {
-  //       method: "POST",
-  //       body: createFormData(this.state.photo, { userId: "123" })
-  //     })
-  //       .then(response => response.json())
-  //       .then(response => {
-  //         console.log("upload succes", response);
-  //         alert("Upload success!");
-  //         this.setState({ photo: null });
-  //       })
-  //       .catch(error => {
-  //         console.log("upload error", error);
-  //         alert("Upload failed!");
-  //       });
-  //   };
-  
-    
-
-  
-  //  }
-
-//   const handleUploadPhoto = async (image) => {
-//     showLoader(true);
-//     const data = new FormData();
-//     data.append('userId', user._id);
-//     data.append('image', {
-//       uri: image.uri,
-//       name: 'profile.jpg',
-//       type: 'image/jpeg',
-//     });
-// console.log('picker resauLLT',image.uri)
-//     try {
-//       console.log("datares",data)
-//       console.log('user44',user)
-//       const response = await axios.post(Api.updateProfileImage, {
-        
-        
-//         headers: {
-//           'Content-Type': 'multipart/form-data',
-//         },
-//         body: JSON.stringify({
-//           data,
-//           user,
-          
-//         }),
-//       });
-//       if (response.data.user) {
-//         setUser(response.data.user);
-//         Alert.alert('Profile image updated successfully');
-//         console.log("REspnse44:",response)
-//       }
-//     } catch (error) {
-      
-//       console.log('Error updating profile image88:', error);
-//       Alert.alert('Error updating profile image88: ' + error.message);
-//     } finally {
-//       hideLoader(false);
-//     }
-//   };
-
   const deleteSkill = async (skill) => {
     showLoader(true);
     try {
@@ -300,7 +165,7 @@ console.log("avatar::",avatar)
           <Avatar
             size={120}
             rounded
-            source={{ uri:avatar}}
+            source={{  uri:user?.image }}
             containerStyle={styles.avatar}
           />
           <TouchableOpacity onPress={handleChoosePhoto} style={styles.addPhotoButton}>

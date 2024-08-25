@@ -43,7 +43,6 @@ const Card = ({ item }) => {
     }
   };
   return (
-
     
         <View style={styles.container}>
           <CustomLoadingSpinner />

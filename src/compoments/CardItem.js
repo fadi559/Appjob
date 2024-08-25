@@ -33,9 +33,9 @@ const CardItem = (props) => {
           icon={User?.image ? null : { name: 'person', type: 'material', color: 'purple' }}
           iconStyle={{ color: 'purple' }}
           containerStyle={styles.avatar}
-          onLoadStart={() => setLoading(true)} // Show loader when image starts loading
-          onLoadEnd={() => setLoading(false)}  // Hide loader when image finishes loading
-          onError={() => setLoading(false)}    // Hide loader if there is an error
+          onLoadStart={() => setLoading(true)} 
+          onLoadEnd={() => setLoading(false)}
+          onError={() => setLoading(false)}    
         />
        {loading && (
             <View style={StyleSheet.absoluteFill} pointerEvents="none">

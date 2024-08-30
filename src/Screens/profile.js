@@ -50,6 +50,7 @@ console.log("avatar55::",avatar)
   
         console.log('Formatted File URI: ', fileUri);
   
+       
         const formData = new FormData();
         formData.append('file', {
           name: selectedPhoto.fileName,
@@ -63,11 +64,11 @@ console.log("avatar55::",avatar)
             'Content-Type': 'multipart/form-data',
           },
         })
+       
         .then(response => {
           setAvatar(response.data.secure_url);
           setUser({...user ,image: { url: response.data.secure_url } });
           console.log('Photo uploaded and URL received:', response.data.secure_url);
-              
         })
         .catch(error => {
           if (error.response) {
@@ -165,7 +166,7 @@ console.log("avatar55::",avatar)
           <Avatar
             size={120}
             rounded
-            source={{  uri:user?.image }}
+            source={{uri:user?.image}}
             containerStyle={styles.avatar}
           />
           <TouchableOpacity onPress={handleChoosePhoto} style={styles.addPhotoButton}>

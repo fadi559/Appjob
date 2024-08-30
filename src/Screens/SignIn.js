@@ -31,10 +31,6 @@ const SignIn = ({ navigtion }) => {
 
   const handleSignin = async () => {
 
-
-    //  const sucsses = await loadFromAsyncStorage()
-
-
     if (!email || !password) {
       navigation.navigate('tab', { screen: 'home' });
       // neeed to delet the navgition 

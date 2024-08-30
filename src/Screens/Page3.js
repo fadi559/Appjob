@@ -85,22 +85,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f0f0f5',
+    backgroundColor: '#f8f9fa',  // Updated to match Page1
   },
   content: {
-    width: '80%',
+    width: '90%',  // Updated to match Page1
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',  // Updated to match Page1
     padding: 20,
-    borderRadius: 10,
+    borderRadius: 15,  // Updated to match Page1
     shadowColor: '#000',
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.2,  // Updated to match Page1
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 2 },
   },
   title: {
     fontSize: 24,
-    marginBottom: 16,
+    marginBottom: 20,  // Updated to match Page1
     textAlign: 'center',
     color: '#333',
   },
@@ -115,10 +115,10 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   nextButton: {
-    backgroundColor: 'black',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
+    backgroundColor: '#007bff',  // Updated to match Page1
+    paddingVertical: 12,  // Updated to match Page1
+    paddingHorizontal: 25,  // Updated to match Page1
+    borderRadius: 10,  // Updated to match Page1
   },
   nextText: {
     color: '#fff',
@@ -126,11 +126,11 @@ const styles = StyleSheet.create({
   },
   skipButton: {
     position: 'absolute',
-    top: 40,
+    top: 70,  // Updated to match Page1
     right: 20,
   },
   skipText: {
-    color: 'black',
+    color: '#007bff',  // Updated to match Page1
     fontSize: 16,
   },
   checkboxContainer: {

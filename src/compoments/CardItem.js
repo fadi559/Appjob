@@ -37,11 +37,11 @@ const CardItem = (props) => {
           onLoadEnd={() => setLoading(false)}
           onError={() => setLoading(false)}    
         />
-       {loading && (
+       {/* {loading && (
             <View style={StyleSheet.absoluteFill} pointerEvents="none">
               <CustomLoadingSpinner style={styles.loader} />
             </View>
-          )}
+          )} */}
           
         
 

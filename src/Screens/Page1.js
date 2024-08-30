@@ -20,6 +20,7 @@ const Page1 = () => {
     { label: 'Other', value: 'Other' },
   ]);
   const { user, setUser } = useContext(UserContext);
+  console.log("usernoW:",user);
   const navigation = useNavigation();
 
   useEffect(() => {

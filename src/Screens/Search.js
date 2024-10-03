@@ -1,9 +1,9 @@
-import {FlatList, Image, StyleSheet, Text, TextInput, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {Button} from 'react-native-elements';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {useNavigation} from '@react-navigation/native';
-import {Api} from '../res/api';
+import { FlatList, Image, StyleSheet, Text, TextInput, View, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Button } from 'react-native-elements';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+import { Api } from '../res/api';
 import _ from 'lodash';
 
 const Search = () => {
@@ -11,27 +11,24 @@ const Search = () => {
   const [skill, setSkill] = useState('');
   const [experience, setExperience] = useState('');
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const renderData = data => {
+  const renderData = (data) => {
     return (
       <FlatList
         data={data}
-        keyExtractor={item => item._id}
-        renderItem={({item}) => (
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => (
           <View style={styles.card}>
-            {console.log(item)}
-            <Image source={{uri: item.image}} style={styles.profileImage} />
+            <Image source={{ uri: item.image }} style={styles.profileImage} />
             <Text style={styles.name}>{item.name}</Text>
             <Text style={styles.email}>Email: {item.email}</Text>
             <Text style={styles.phoneNumber}>Phone: {item.phoneNumber}</Text>
-            <Text style={styles.currentJob}>
-              Current Job: {item.currentJob}
-            </Text>
+            <Text style={styles.currentJob}>Current Job: {item.currentJob}</Text>
             <Text style={styles.role}>Role: {item.role}</Text>
             <Text style={styles.interests}>Interests: {item.interests}</Text>
-            <Text style={styles.jobType}>
-              Preferred Job Type: {item.jobType}
-            </Text>
+            <Text style={styles.jobType}>Preferred Job Type: {item.jobType}</Text>
           </View>
         )}
         ListEmptyComponent={() => (
@@ -44,21 +41,25 @@ const Search = () => {
   };
 
   const searchApi = async () => {
-    try {
-      const body = {};
-      skill
-        ? (body.skills = {
-            $regex: skill,
-            $options: 'i',
-          })
-        : body;
-      experience
-        ? (body.skills = {
-            $regex: experience,
-            $options: 'i',
-          })
-        : experience;
+    setLoading(true);
+    setError(null);
+    const body = {};
 
+    if (skill) {
+      body.skills = {
+        $regex: skill,
+        $options: 'i',
+      };
+    }
+
+    if (experience) {
+      body.experiences = {
+        $regex: experience,
+        $options: 'i',
+      };
+    }
+
+    try {
       const response = await fetch(Api.filterData, {
         method: 'POST',
         headers: {
@@ -67,17 +68,16 @@ const Search = () => {
         body: JSON.stringify(body),
       });
       const responseData = await response.json();
+
       if (responseData && responseData.data) {
-        console.log('---------------');
-        console.log(responseData.data);
-        console.log('---------------');
         setData(responseData.data);
       } else {
         setData([]);
       }
     } catch (error) {
-      console.error('Failed to fetch data:', error);
-      setData([]);
+      setError('Failed to fetch data. Please try again later.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,29 +92,37 @@ const Search = () => {
   }, [skill, experience]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <Button
         onPress={() => {
           navigation.goBack();
         }}
-        title={'back'}
+        title={'Back'}
       />
-      <Text>Skills</Text>
+      <Text style={styles.label}>Skills</Text>
       <TextInput
         style={styles.input}
         onChangeText={setSkill}
         value={skill}
-        placeholder="search skills"
+        placeholder="Search skills"
       />
-      <Text>Experiences</Text>
+      <Text style={styles.label}>Experiences</Text>
       <TextInput
         style={styles.input}
         onChangeText={setExperience}
         value={experience}
-        placeholder="search experiences"
+        placeholder="Search experiences"
       />
 
-      {renderData(data)}
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" style={styles.loadingIndicator} />
+      ) : error ? (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      ) : (
+        renderData(data)
+      )}
     </SafeAreaView>
   );
 };
@@ -122,22 +130,31 @@ const Search = () => {
 export default Search;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
   input: {
     height: 40,
-    margin: 12,
+    marginVertical: 8,
     borderWidth: 1,
     padding: 10,
     borderRadius: 8,
     borderColor: '#ccc',
   },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 8,
+  },
   card: {
     backgroundColor: '#fff',
     padding: 16,
     marginVertical: 8,
-    marginHorizontal: 16,
     borderRadius: 8,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
     elevation: 5,
@@ -186,5 +203,16 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 18,
     color: '#777',
+  },
+  loadingIndicator: {
+    marginTop: 20,
+  },
+  errorContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  errorText: {
+    fontSize: 18,
+    color: 'red',
   },
 });

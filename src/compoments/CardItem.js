@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React ,{useState}from 'react';
+import React ,{useState,useContext}from 'react';
 import { Avatar } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import Phonebutton from './Phonebutton';
@@ -7,6 +7,8 @@ import Conbutton from './Conbutton';
 import ExpandableBox from './ExpandableBox';
 import CustomLoadingSpinner from './Loading';
 import { useLoading } from './LoadingContext';
+import { UserContext } from './usercontext';
+import { Strings } from '../res/Strings';
 
 
 
@@ -17,6 +19,7 @@ const CardItem = (props) => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true); 
   const { showLoader, hideLoader } = useLoading();
+  const {language,setLanguage} = useContext(UserContext)
 
   return (
     <View style={styles.card}>
@@ -47,12 +50,12 @@ const CardItem = (props) => {
 
         <View style={styles.userDetails}>
           <Text style={styles.userName}>{User?.name}</Text>
-          <Text style={styles.jobTypeLabel}>Job Type:</Text>
+          <Text style={styles.jobTypeLabel}>{Strings.HomePage.JobType[language]} </Text>
           <Text style={styles.jobType}>{jobType}</Text>
         </View>
       </View>
       <View style={styles.details}>
-        <Text style={styles.notesTitle}>Notes:</Text>
+        <Text style={styles.notesTitle}>{Strings.HomePage.Notes[language]} </Text>
         <ExpandableBox content={notes} />
       </View>
       <View style={styles.buttons}>
@@ -134,7 +137,7 @@ const styles = StyleSheet.create({
     color: '#2d3436',
   },
   jobTypeLabel: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#3a416f',
     marginTop: 8,
   },
@@ -147,7 +150,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   notesTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     color: '#2d3436',
     marginBottom: 5,

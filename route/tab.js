@@ -14,6 +14,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Searchbox from "../src/Screens/Searchbox";
 import { TouchableOpacity } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import SearchButton from "../src/compoments/SearchButton";
 
 
 
@@ -115,7 +116,7 @@ const tabsParams ={
       // ),
       
       headerLeft: () => (
-        <Searchbox/>
+        <SearchButton/>
       ),
       tabBarLabel: 'Home',
       tabBarIcon: ({ color, size }) => (

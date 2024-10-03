@@ -29,6 +29,7 @@ const Searchbox = (props) => {
   const navigation = useNavigation();
   const { showLoader, hideLoader,isLoading } = useLoading();
   const [searchMode, setSearchMode] = useState('users'); 
+  const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   
 // console.log("name",users);
 //  console.log('userrs2',users);
@@ -84,6 +85,13 @@ const Searchbox = (props) => {
 
   }
   };
+
+  const toggleFilterModal = () => {
+    setIsFilterModalVisible(!isFilterModalVisible);
+  };
+
+
+  
 
   const renderUser = ({ item }) => (
           //  console.log("i)tt.",item),
@@ -144,25 +152,8 @@ const Searchbox = (props) => {
           onSubmitEditing={handleSearch}
           
         />
-        <View style={styles.modeSwitchContainer}>
-    <TouchableOpacity
-      style={[styles.modeButton, searchMode === 'users' ? styles.activeModeButton:{}]}
-      onPress={() => setSearchMode('users')}
-    >
-     <Text style={searchMode === 'users' ? styles.activeModeButtonText : styles.inactiveModeButtonText}>
-    Users
-  </Text>
-    </TouchableOpacity>
-    <View style={styles.modeDivider} />
-    <TouchableOpacity
-      style={[styles.modeButton, searchMode === 'jobs' ? styles.activeModeButton : {}]}
-      onPress={() => setSearchMode('jobs')}
-    >
-      <Text style={searchMode === 'jobs' ? styles.activeModeButtonText :styles.inactiveModeButtonText}>
-    Jobs
-  </Text>
-    </TouchableOpacity>
-  </View>
+
+        
         </View>
 
   
@@ -171,11 +162,9 @@ const Searchbox = (props) => {
       // console.log("jobs,",jobs),
         <FlatList
         data={searchMode === 'users' ? users : jobs}
-          // data={users}
-          // keyExtractor={item => item._users} 
-          // keyExtractor={item => item.id}
+          
            keyExtractor={(item, index) => item.id ? item.id.toString() : index.toString()}
-          // keyExtractor={(item) => item.id ? item.id.toString() : item._id ? item._id.toString() : Math.random().toString()} 
+      
           style={styles.resultList}
            renderItem={renderUser}
           

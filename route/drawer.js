@@ -11,6 +11,7 @@ import { Images } from "../src/Images/images";
 import Icon from "react-native-ionicons";
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import Home from "../src/Screens/home";
+import ProfilePage from "../src/Screens/profile";
 
 const Drawer = createDrawerNavigator();
 const Darwernav = () => {
@@ -26,6 +27,8 @@ const Darwernav = () => {
                     }
                )} /> */}
              
+  
+             
              <Drawer.Screen name='UserProfile' component={UserProfile} 
              options={({ route, navigation, }) => ( {
                headerStyle:{
@@ -36,13 +39,17 @@ const Darwernav = () => {
                drawerType:'front',
                headerLeft:()=>( <Button style={styles.Button} 
                     
-                    icon={{name:'arrow-back',
+                    icon={{
+                    name:'arrow-back',
                     type:'FontAwesome',
-                    style:{backgroundColor:"#3A416F"},
+                    color:'white',
                     size:30,
                }}
                onPress={()=>navigation.goBack()}/>),
              })}  /> 
+
+
+
 
              <Drawer.Screen name='JobProfile' component={JobProfile} 
              options={({ route, navigation, }) => ( {
@@ -62,9 +69,15 @@ const Darwernav = () => {
                onPress={()=> navigation.navigate('tab', {screen: 'Home' })}
                
                />),
+               
 
              })}  /> 
-
+       
+      {/* <Drawer.Screen
+        name="ProfilePage"
+        component={ProfilePage}
+        options={{ headerShown: false }}
+      /> */}
 
           </Drawer.Navigator>
      );

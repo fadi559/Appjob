@@ -9,7 +9,7 @@ import { Api } from '../res/api';
 import { Alert } from 'react-native';
 import CustomLoadingSpinner from '../compoments/Loading';
 import { useLoading } from '../compoments/LoadingContext';
-
+import { Strings } from '../res/Strings';
 
 
 
@@ -19,6 +19,7 @@ const AddExperience = ({ route, navigation }) => {
     const [experience, setExperience] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
     const { showLoader, hideLoader } = useLoading();
+    const {language,setLanguage} = useContext(UserContext)
     
   //   console.log("newExperienceee:,",newExperience)
   // console.log("experience:",experience)
@@ -31,7 +32,8 @@ const AddExperience = ({ route, navigation }) => {
     const handleAddExperience = async (experiences) => {
       if (newExperience.trim() === '') {
         // Alert the user if the input is empty
-        Alert.alert("Invalid Input", "Please type your experience before adding.");
+        Alert.alert(Strings.ExperiencePageWithALert.InvalidExperienceInputAlert[language].title,
+          Strings.ExperiencePageWithALert.InvalidExperienceInputAlert[language].message,);
       } else {
         setNewExperience('');
        
@@ -68,7 +70,7 @@ const AddExperience = ({ route, navigation }) => {
       <View style={styles.inputpostion}>
       <TextInput
           style={styles.input}
-          placeholder="Experience Description"
+          placeholder= {Strings.ExperiencePageWithALert.EnterNewExperienceInput[language]}
           value={newExperience}
           onChangeText={setNewExperience}
           placeholderTextColor='#888'
@@ -76,7 +78,7 @@ const AddExperience = ({ route, navigation }) => {
          <Button 
          buttonStyle={{backgroundColor:'#3A416F', width:130,
          left:100,borderRadius:30,}}
-            title='Add'
+            title={Strings.YesAndCancelandSkip.Add[language]}
             onPress={handleAddExperience}/>
            
        

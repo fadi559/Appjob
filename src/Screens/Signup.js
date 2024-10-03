@@ -11,6 +11,7 @@ import { useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Input } from 'react-native-elements';
 import { color } from '@rneui/base';
+import { Strings } from '../res/Strings';
 
 
 
@@ -22,6 +23,7 @@ const SignupScreen = ({navigtion},props) => {
   const [password, setPassword] = useState('');
   const[loading,setloading]=useState(false);
   const {setUser}=useContext(UserContext);
+  const {language,setLanguage} = useContext(UserContext)
 
 
   const handleSignup = async () => {
@@ -48,27 +50,28 @@ const SignupScreen = ({navigtion},props) => {
         setloading(false);
         console. log ("SIGN up SUCCESS »> ", data); 
         setUser(data.user)
-      Alert.alert ("Sign up successful");
+      // Alert.alert ("Sign up successful");
         navigation.navigate('UpdateProfileImage',{ userId: data.user});
         // navigation.navigate('stack', { screen: 'Page1', params: { userId: data.user._id} })
       }
       //   navigation.navigate('stack',{screen:'SignIn'});
       // }
       }  catch (error) {
-        Alert.alert('Signup Failed', error);
+        Alert.alert( Strings.ALertSginUp.SignupFailed[language], error);
+        Strings.ALertSginUp.FaieldALert[language]
         console.error('Signup Error:', error);
         setloading(false);
       }
     };
   return (  
     <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
+      <Text style={styles.title}> {Strings.EntreyPage.sign_up[language]}</Text>
 
       <TextInput
         style={styles.input}
         value={name}
         onChangeText={(text) => setName(text)}
-        placeholder="Your Name"
+        placeholder={ Strings.EntreyPage.yourName[language]}
         placeholderTextColor="#888"
       />
 
@@ -76,7 +79,7 @@ const SignupScreen = ({navigtion},props) => {
         style={styles.input}
         value={email}
         onChangeText={(text) => setEmail(text)}
-        placeholder="Your Email"
+        placeholder={ Strings.EntreyPage.email[language]}
         keyboardType="email-address"
         placeholderTextColor="#888"
       />
@@ -85,7 +88,7 @@ const SignupScreen = ({navigtion},props) => {
         style={styles.input}
         value={password}
         onChangeText={(text) => setPassword(text)}
-        placeholder="Your Password"
+        placeholder={ Strings.EntreyPage.password[language]}
         secureTextEntry
         placeholderTextColor="#888"
       />
@@ -93,18 +96,18 @@ const SignupScreen = ({navigtion},props) => {
         style={styles.input}
         value={phoneNumber}
         onChangeText={(text) => setphoneNumber(text)}
-        placeholder="Your PhoneNumber "
+        placeholder={ Strings.EntreyPage.phoneNumber[language]}
         keyboardType="numeric"
         maxLength={10}
         placeholderTextColor="#888"
     
       /> 
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Sign Up</Text>
+        <Text style={styles.buttonText}>{ Strings.EntreyPage.sign_up[language]}</Text>
       </TouchableOpacity>
-      <Text style={{marginTop:15}}>Already Joined  <Text style={styles.SmallSignInButton} 
-       onPress={()=>navigation.navigate('stack',{screen:'ChooseProfileImage'})
-      } >signIn</Text>  </Text>
+      <Text style={{marginTop:15}}>{ Strings.EntreyPage.AlreadyJoin[language]} <Text style={styles.SmallSignInButton} 
+       onPress={()=>navigation.navigate('stack',{screen:'SignIn'})
+      } >{ Strings.EntreyPage.sign_in[language]}      </Text>  </Text>
                     
     </View>
   );

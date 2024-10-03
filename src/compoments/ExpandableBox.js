@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { UserContext } from './usercontext';
+import { Strings } from '../res/Strings';
+
+
 
 const ExpandableBox = ({ content }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-
+  const {language,setLanguage} = useContext(UserContext)
   const hasContent = content && content.length > 0;
   // Limit for text to be shown in collapsed mode
   const previewLimit =40;
@@ -14,10 +18,9 @@ const ExpandableBox = ({ content }) => {
       </Text>
       {hasContent && content.length > previewLimit && (
         <TouchableOpacity onPress={() => setIsExpanded(!isExpanded)} style={styles.button}>
-          <Text style={styles.showMore}>{isExpanded ? 'Show Less' : 'Show More...'}</Text>
+          <Text style={styles.showMore}>{isExpanded ? Strings.HomePage.ShowLess[language] : Strings.HomePage.Showmore[language]}</Text>
         </TouchableOpacity>
       )}
-      
     </View>
   );
 };  

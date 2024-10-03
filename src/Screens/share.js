@@ -7,7 +7,12 @@
   import { Api } from '../res/api';
   import CustomLoadingSpinner from '../compoments/Loading';
   import { useLoading } from '../compoments/LoadingContext';
-  
+  import { Strings } from '../res/Strings';
+
+
+
+
+
   const ShareScreen = (props) => {
     const navigation = useNavigation();
     const [jobType, setJobType] = useState('');
@@ -16,6 +21,7 @@
     const [Phonenumber, setPhonenumber] = useState('');
     const { user, setUser } = useContext(UserContext);
     const { showLoader, hideLoader } = useLoading();
+    const {language,setLanguage} = useContext(UserContext)
   
     const handlepost = async () => {
       const jobPostData = {
@@ -27,12 +33,12 @@
       };
   
       if (!jobType || !location || !notes || !Phonenumber) {
-        Alert.alert('Error', 'All fields are required.');
+        Alert.alert(Strings.ShareALert.AllfieldsReq[language]);
         return;
       }
   
       if (Phonenumber.length !== 10 || !/^\d+$/.test(Phonenumber)) {
-        Alert.alert('Invalid Phone Number', 'Please enter a valid 10-digit phone number');
+        Alert.alert(Strings.ShareALert.InvalidPhoneNumber[language]);
         return;
       }
   
@@ -55,7 +61,7 @@
         setPhonenumber('');
   
         setTimeout(() => {
-          Alert.alert('Success', 'Job posted successfully!');
+          Alert.alert(Strings.ShareALert.JobPostSuccess[language]);
         }, 500);
       } catch (error) {
         console.log('Error posting job:', error);
@@ -71,7 +77,7 @@
           </View>
   
           <Input
-            placeholder="Job Type"
+            placeholder={Strings.SharePage.JobType[language]}
             value={jobType}
             onChangeText={(text) => setJobType(text)}
             containerStyle={styles.inputContainer}
@@ -79,7 +85,7 @@
           />
   
           <Input
-            placeholder="Location"
+            placeholder={Strings.SharePage.Location[language]}
             value={location}
             onChangeText={(text) => setLocation(text)}
             containerStyle={styles.inputContainer}
@@ -87,7 +93,7 @@
           />
   
           <Input
-            placeholder="Notes"
+            placeholder={Strings.SharePage.Notes[language]}
             value={notes}
             onChangeText={(text) => setNotes(text)}
             containerStyle={styles.inputContainer}
@@ -95,7 +101,7 @@
           />
   
           <Input
-            placeholder="Phone Number"
+            placeholder={Strings.SharePage.phoneNumber[language]}
             value={Phonenumber}
             onChangeText={(text) => setPhonenumber(text)}
             containerStyle={styles.inputContainer}
@@ -105,7 +111,7 @@
           />
   
           <Button
-            title="Share"
+            title={Strings.SharePage.Share[language]}
             onPress={handlepost}
             buttonStyle={styles.shareButton}
             containerStyle={styles.shareButtonContainer}

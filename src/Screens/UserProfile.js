@@ -6,6 +6,7 @@ import { UserContext } from '../compoments/usercontext';
 import CustomLoadingSpinner from '../compoments/Loading';
 import { useLoading } from '../compoments/LoadingContext';
 import { Image } from 'react-native-elements';
+import { Strings } from '../res/Strings';
 
 
 const UserProfile = () => {
@@ -14,6 +15,8 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(true);
   const route = useRoute();
   const User = route.params?.User;
+  const {language,setLanguage} = useContext(UserContext)
+        
 
   // console.log("Userr::", route.params);
 
@@ -72,14 +75,14 @@ const UserProfile = () => {
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Skills</Text>
+        <Text style={styles.sectionTitle}>{Strings.ProfilePage.Skills[language]}</Text>
         <View style={styles.skillsContainer}>
           {RenderSkills()}
         </View>
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Experience</Text>
+        <Text style={styles.sectionTitle}>{Strings.ProfilePage.Experience[language]}</Text>
         {RenderExperiences()}
       </View>
     </ScrollView>

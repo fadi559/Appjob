@@ -11,6 +11,7 @@ import UpdateProfileImage from "../src/Screens/UpdateProfileImage";
 import Page1 from "../src/Screens/Page1";
 import Page2 from "../src/Screens/Page2";
 import Page3 from "../src/Screens/Page3";
+import CustomDrawer from "../src/Screens/ProfileDrawerpage";
 
 
 
@@ -28,7 +29,10 @@ const Stacknav = () => {
        <Stack.Screen name="Page2" component={Page2} />
         <Stack.Screen name="Page3" component={Page3} />
        <Stack.Screen name='SignIn' component={SignIn}/> 
-       <Stack.Screen name='SignupScreen' component={SignupScreen} />  
+       <Stack.Screen name='SignupScreen' component={SignupScreen}/>
+    
+        
+
      </Stack.Navigator>
 
 

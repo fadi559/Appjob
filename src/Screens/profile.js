@@ -14,9 +14,11 @@ import  ImagePicker from 'react-native-image-picker';
 import { Strings } from '../res/Strings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Dimensions } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
 const { width } = Dimensions.get('window');
+
 
 
 
@@ -32,6 +34,7 @@ const ProfilePage = () => {
   const drawerAnimation = useState(new Animated.Value(-width * 0.75))[0];
   const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
 
+  
   
 console.log("avatar55::",avatar)
   console.log("user::",user)
@@ -164,46 +167,7 @@ console.log("avatar55::",avatar)
         <Text style={styles.experienceText}>{experience}</Text>
       </TouchableOpacity>
     ));
-  };
-
-  const toggleDrawer = () => {
-    if (isDrawerOpen) {
-      Animated.timing(drawerAnimation, {
-        toValue: -width * 0.75, // Hide drawer
-        duration: 300,
-        useNativeDriver: true,
-      }).start(() => setIsDrawerOpen(false));
-    } else {
-      setIsDrawerOpen(true);
-      Animated.timing(drawerAnimation, {
-        toValue: 0, // Show drawer
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    }
-  };
-
-  // Add settings button to header using useLayoutEffect
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <TouchableOpacity
-          onPress={toggleDrawer} // Opens the custom drawer
-          style={styles.settingsButton}
-        >
-          <Image
-            source={require('../Images/SettingWhitw2.png')} // Your settings icon image
-            style={styles.settingsIcon}
-          />
-        </TouchableOpacity>
-      ),
-    });
-  }, [navigation]);
-
-  const selectLanguage = (selectedLanguage) => {
-    setLanguage(selectedLanguage);
-    toggleDrawer(); // Close the drawer after selecting a language
-  };
+  };  
 
 
 
@@ -251,51 +215,10 @@ console.log("avatar55::",avatar)
         </View>
       </View>
     </ScrollView>
-    <Animated.View style={[styles.drawer, { transform: [{ translateX: drawerAnimation }] }]}>
-        <View style={styles.drawerContent}>
-          <Text style={styles.drawerTitle}>Settings</Text>
-          
 
-          <TouchableOpacity
-            style={styles.drawerButton}
-            onPress={() => setIsLanguageModalVisible(true)} // Show modal when pressed
-          >
-            <Text style={styles.drawerButtonText}>Select Language</Text>
-          </TouchableOpacity>
-        </View>
-      </Animated.View>
 
-      {/* Language Modal */}
-      <Modal
-        visible={isLanguageModalVisible}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setIsLanguageModalVisible(false)} // Close modal when back button is pressed on Android
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.languageModal}>
-            <Text style={styles.modalHeader}>Select Language</Text>
-            <TouchableOpacity style={styles.languageOption} onPress={() => selectLanguage('eng')}>
-              <Text style={styles.languageText}>English</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.languageOption} onPress={() => selectLanguage('arabic')}>
-              <Text style={styles.languageText}>عربيه</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.languageOption} onPress={() => selectLanguage('hebrew')}>
-              <Text style={styles.languageText}>Hebrew</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => setIsLanguageModalVisible(false)} // Close modal
-            >
-              <Text style={styles.closeButtonText}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </View>
-  );
-};
+  )};
 
 const styles = StyleSheet.create({
   container: {
@@ -475,43 +398,55 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
   },
+
   languageModal: {
-    width: '80%',
-    padding: 20,
-    backgroundColor: '#fff',
-    borderRadius: 15,
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   modalHeader: {
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 20,
   },
-  languageOption: {
+   languageOption: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 10,
     backgroundColor: '#f0f0f0',
     borderRadius: 10,
     width: '100%',
-    alignItems: 'center',
   },
   languageText: {
     fontSize: 16,
     color: '#333',
   },
+  checkmarkIcon: {
+    width: 20,
+    height: 20,
+    tintColor: '#007bff', // Blue color for the check mark
+  },
   closeButton: {
     marginTop: 10,
-    padding: 10,
-    backgroundColor: '#e74c3c',
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    backgroundColor: '#000',
     borderRadius: 6,
     alignItems: 'center',
   },
   closeButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
   },
+
 
 });
 

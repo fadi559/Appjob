@@ -85,6 +85,7 @@ const UserProfile = () => {
         <Text style={styles.sectionTitle}>{Strings.ProfilePage.Experience[language]}</Text>
         {RenderExperiences()}
       </View>
+     
     </ScrollView>
   );
 };

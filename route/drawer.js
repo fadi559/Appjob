@@ -14,6 +14,7 @@ import Home from "../src/Screens/home";
 import ProfilePage from "../src/Screens/profile";
 
 const Drawer = createDrawerNavigator();
+
 const Darwernav = () => {
 
      return (

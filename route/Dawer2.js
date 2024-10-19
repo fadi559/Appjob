@@ -28,7 +28,7 @@ const DrawerNavigator = () => {
         component={ProfilePage}
         options={({ navigation }) => ({
           headerLeft: () => <CustomDrawer navigation={navigation} />,  
-          title: '',
+          title: 'profile',
           height: false,
         })}
       />

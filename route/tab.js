@@ -14,14 +14,20 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Searchbox from "../src/Screens/Searchbox";
 import { TouchableOpacity } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import SearchButton from "../src/compoments/SearchButton";
+import CustomDrawer from "../src/Screens/ProfileDrawerpage";
+import { Image } from "react-native-elements";
+import ProfileDrawer from "./Dawer2";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 
-
-const TabNavigtor = (props, Route) => {
+const TabNavigtor = (props,route,navigation) => {
+  
+  
+  
   const Tab = createBottomTabNavigator();
-
-  const navigation = useNavigation();
-
+  const Drawer = createDrawerNavigator();
+  
 
 
   return (
@@ -34,13 +40,12 @@ const TabNavigtor = (props, Route) => {
     borderBottomWidth:0.8,},tabBarActiveTintColor:'#3A416F',}} >
 
      
-      <Tab.Screen {...tabsParams.profile }  />
+<Tab.Screen {...tabsParams(props.navigation).profile} />
       {/* <Tab.Screen {...tabsParams.Nofiction} /> */}
-      <Tab.Screen {...tabsParams.share} />
+      <Tab.Screen {...tabsParams(props.navigation).share} />
       {/* <Tab.Screen {...tabsParams.loaction} /> */}
-      <Tab.Screen {...tabsParams.home} />
+      <Tab.Screen {...tabsParams(props.navigation).home} />
     
-
     </Tab.Navigator>
     </SafeAreaProvider>
     
@@ -50,16 +55,40 @@ const TabNavigtor = (props, Route) => {
 
 
 
-const tabsParams ={
+const tabsParams = (navigation,props,route) =>({
+ 
 
   profile: {
+    
     name: "Profile",
-    component: Profile,
+    component: ProfileDrawer,
     options: {
       tabBarLabel: 'Profile',
       tabBarIcon: ({ color, size }) => (
+        
         <AntDesign name="profile" size={size} />
       ),
+    headerShown: false,  // Hide the header for the Profile page
+      // headerLeft: () => (
+      //   <TouchableOpacity
+      //     onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+      //     style={{ marginLeft: 15 }}
+      //   >
+      //     <Image
+      //       source={require('../src/Images/SettingWhitw2.png')}
+      //       style={{ width: 25, height: 25 }}
+      //     />
+      //   </TouchableOpacity>
+      // ),
+      
+      
+       
+    
+      // <Image source={require('../src/Images/SettingWhitw2.png')} style={{ width: 30, height: 30,}} />
+   
+        
+      
+      
     }
   },
   //  Nofiction: {
@@ -115,14 +144,18 @@ const tabsParams ={
       // ),
       
       headerLeft: () => (
+        // <SearchButton/>
         <Searchbox/>
+        
       ),
       tabBarLabel: 'Home',
       tabBarIcon: ({ color, size }) => (
         <MaterialCommunityIcons name="home" size={size} />
       ),
     })
-  },
-};
+  }
+  })
+
+
 
 export default TabNavigtor;

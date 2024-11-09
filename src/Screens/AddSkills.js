@@ -9,8 +9,7 @@ import SuccessAnimation from '../compoments/SuccessAnimation';
 import { Api } from '../res/api';
 import CustomLoadingSpinner from '../compoments/Loading';
 import { useLoading } from '../compoments/LoadingContext';
-
-
+import { Strings } from '../res/Strings';
 
 
 const AddSkills = ({ route, navigation }) => {
@@ -18,7 +17,7 @@ const AddSkills = ({ route, navigation }) => {
     const [newSkill, setNewSkill] = useState('');
     const [skill, setSkill] = useState('');
     const { showLoader, hideLoader } = useLoading();
-
+    const {language,setLanguage} = useContext(UserContext)
         
     
     // const [skills, setSkills] = useState([]);
@@ -30,7 +29,8 @@ const AddSkills = ({ route, navigation }) => {
     const handleAddSkill = async (skills) => {
       if (newSkill.trim() === '') {
         
-        Alert.alert("Invalid Input", "Please type your skill before adding.");
+        Alert.alert(Strings.SkillsPageWithALert.InvalidInputAlert[language].title,
+          Strings.SkillsPageWithALert.InvalidInputAlert[language].message,);
         return;
       } else {
         setNewSkill('');
@@ -76,7 +76,8 @@ const AddSkills = ({ route, navigation }) => {
       
       <TextInput
           style={styles.input}
-          placeholder="Enter a new skill"
+          placeholder=  {Strings.SkillsPageWithALert.EnterNewSkillInput[language]}
+         
           value={newSkill}
           onChangeText={setNewSkill}
            placeholderTextColor="#888"
@@ -84,7 +85,7 @@ const AddSkills = ({ route, navigation }) => {
          <Button 
          buttonStyle={{backgroundColor:'#3A416F', width:130,
          left:100,borderRadius:30,}}
-            title='Add'
+            title=  {Strings.YesAndCancelandSkip.Add[language]}
             onPress={handleAddSkill} />
         </View>
     </View>

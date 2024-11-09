@@ -144,7 +144,8 @@ const tabsParams = (navigation,props,route) =>({
       // ),
       
       headerLeft: () => (
-        <SearchButton/>
+        // <SearchButton/>
+        <Searchbox/>
         
       ),
       tabBarLabel: 'Home',

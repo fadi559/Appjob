@@ -10,6 +10,7 @@ const Search = () => {
   const navigation = useNavigation();
   const [skill, setSkill] = useState('');
   const [experience, setExperience] = useState('');
+  const [Name, setName] = useState('');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -55,6 +56,12 @@ const Search = () => {
     if (experience) {
       body.experiences = {
         $regex: experience,
+        $options: 'i',
+      };
+    }
+    if (Name) {
+      body.name = {
+        $regex: Name,
         $options: 'i',
       };
     }
@@ -112,6 +119,13 @@ const Search = () => {
         onChangeText={setExperience}
         value={experience}
         placeholder="Search experiences"
+      />
+       <Text style={styles.label}>Name</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={setName}
+        value={Name}
+        placeholder="Search  name"
       />
 
       {loading ? (

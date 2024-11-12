@@ -34,8 +34,8 @@ const Searchbox = (props) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
 
-console.log("RESualt55:",results)
-console.log("SETresulat344:",setResults)
+// console.log("RESualt55:",results)
+// console.log("SETresulat344:",setResults)
 
   
 // console.log("name",users);
@@ -61,10 +61,10 @@ console.log("SETresulat344:",setResults)
     }
     showLoader(true);
     try {
-      const body = {};
+      const body ={};
   
       if (text.trim()) {
-        body.searchTerm = text;
+        // body.searchTerm = text;
       }
       if (selectedOptions.includes('Skills')) {
         body.skills = {
@@ -78,6 +78,22 @@ console.log("SETresulat344:",setResults)
           $options: 'i',
         };
       }
+      if (selectedOptions.includes('name')) {
+        body.name = {
+          $regex: text,
+          $options: 'i',
+        };
+      }
+      if (selectedOptions.includes('jobType')) {
+        body.jobType = {
+          $regex: text,
+          $options: 'i',
+        };
+      }
+      console.log(body,"body");
+      console.log("###2999##");
+
+
   
       const response = await fetch(Api.filterData, {
         method: 'POST',
@@ -85,6 +101,10 @@ console.log("SETresulat344:",setResults)
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
+        // body: JSON.stringify({skills:{
+        //   $regex: "n",
+        //   $options: 'i',
+        // }}),
       });
       const responseData = await response.json();
   
@@ -111,7 +131,10 @@ console.log("SETresulat344:",setResults)
     });
   };
   const renderResult = ({ item }) => (
+    console.log("HHHHh",item),
   <TouchableOpacity style={styles.resultItem} onPress={() => navigation.navigate('ResultDetails', { item })}>
+    <Text style={styles.resultText}>{item.skills}</Text>
+    <Text style={styles.resultText}>{item.experiences}</Text>
     <Text style={styles.resultText}>{item.name}</Text>
   </TouchableOpacity>
 );

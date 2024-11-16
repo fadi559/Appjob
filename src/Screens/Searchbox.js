@@ -64,7 +64,7 @@ const Searchbox = (props) => {
       const body ={};
   
       if (text.trim()) {
-        // body.searchTerm = text;
+        
       }
       if (selectedOptions.includes('Skills')) {
         body.skills = {
@@ -78,13 +78,13 @@ const Searchbox = (props) => {
           $options: 'i',
         };
       }
-      if (selectedOptions.includes('name')) {
+      if (selectedOptions.includes('Users')) {
         body.name = {
           $regex: text,
           $options: 'i',
         };
       }
-      if (selectedOptions.includes('jobType')) {
+      if (selectedOptions.includes('jobJobsType')) {
         body.jobType = {
           $regex: text,
           $options: 'i',
@@ -101,10 +101,7 @@ const Searchbox = (props) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
-        // body: JSON.stringify({skills:{
-        //   $regex: "n",
-        //   $options: 'i',
-        // }}),
+       
       });
       const responseData = await response.json();
   
@@ -126,17 +123,33 @@ const Searchbox = (props) => {
         ? prevOptions.filter((item) => item !== option)
         : [...prevOptions, option];
   
-      handleSearch(); // Initiate a search when a filter is applied
+      handleSearch(); 
       return updatedOptions;
     });
   };
   const renderResult = ({ item }) => (
     console.log("HHHHh",item),
-  <TouchableOpacity style={styles.resultItem} onPress={() => navigation.navigate('ResultDetails', { item })}>
-    <Text style={styles.resultText}>{item.skills}</Text>
-    <Text style={styles.resultText}>{item.experiences}</Text>
-    <Text style={styles.resultText}>{item.name}</Text>
+    <TouchableOpacity
+    style={styles.resultItem}
+    onPress={() => navigation.navigate('ResultDetails', { item })}
+  >
+    <Text style={styles.nameText}>{item.name}</Text>
+    <View style={styles.infoContainer}>
+      <Text style={styles.labelText}>Skills:</Text>
+      <Text style={styles.infoText}>{item.skills}</Text>
+    </View>
+    <View style={styles.infoContainer}>
+      <Text style={styles.labelText2}>Experience:</Text>
+      <Text style={styles.infoText2}>{item.experiences}</Text>
+    </View>
+    
+    <View style={styles.infoContainer}>
+      <Text style={styles.labelText2}>Job:</Text>
+      <Text style={styles.infoText2}>{item.jobType}</Text>
+    </View>
+    
   </TouchableOpacity>
+
 );
   
   return (
@@ -172,41 +185,47 @@ const Searchbox = (props) => {
             </TouchableOpacity>
           </View>
   
-          {/* Filter Modal */}
+         
           <Modal
-            visible={isFilterModalVisible}
-            animationType="slide"
-            transparent={true}
-            onRequestClose={() => setIsFilterModalVisible(false)}
+  visible={isFilterModalVisible}
+  animationType="slide"
+  transparent={true}
+  onRequestClose={() => setIsFilterModalVisible(false)}
+>
+  <TouchableOpacity 
+    style={styles.modalOverlay} 
+    activeOpacity={1} 
+    onPress={() => setIsFilterModalVisible(false)} // Close the modal when tapping outside
+  >
+    <View style={styles.modalContainer}>
+      <View style={styles.modalHalfContent}>
+        <Text style={styles.modalTitle}>Filter Options</Text>
+        {['Skills', 'Experience', 'Users', 'Jobs'].map((option, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => toggleFilterOption(option)}
+            style={styles.filterOptionContainer}
           >
-            <View style={styles.modalContainer}>
-              <View style={styles.modalHalfContent}>
-                <Text style={styles.modalTitle}>Filter Options</Text>
-                {['Skills', 'Experience', 'Users', 'Jobs'].map((option, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => toggleFilterOption(option)}
-                    style={styles.filterOptionContainer}
-                  >
-                    <Text style={styles.filterOption}>{option}</Text>
-                    <View
-                      style={[
-                        styles.lightIndicator,
-                        selectedOptions.includes(option) && styles.lightIndicatorActive,
-                      ]}
-                    />
-                  </TouchableOpacity>
-                ))}
-                <TouchableOpacity
-                  onPress={() => setIsFilterModalVisible(false)}
-                  style={styles.closeButtonContainer}
-                >
-                  <Text style={styles.closeButton}>Close</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
-  
+            <Text style={styles.filterOption}>{option}</Text>
+            <View
+              style={[
+                styles.lightIndicator,
+                selectedOptions.includes(option) && styles.lightIndicatorActive,
+              ]}
+            />
+          </TouchableOpacity>
+        ))}
+        <TouchableOpacity
+          onPress={() => setIsFilterModalVisible(false)}
+          style={styles.closeButtonContainer}
+        >
+          <Text style={styles.closeButton}>Close</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </TouchableOpacity>
+</Modal>
+
           {console.log("Results before rendering:", results)}
   
           {searchTerm !== '' && (
@@ -253,22 +272,78 @@ const styles = StyleSheet.create({
     flex: 1,
     
   },
- 
-  searchContainer: {
+
+
+  resultItem: {
+    backgroundColor: '#f9f9f9',
+    borderRadius: 8,
+    padding: 12,
+    marginVertical: 6,
+    marginHorizontal: 10,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+   
+  },
+  nameText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom:10,
+    margin:-9,
+  },
+  infoContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#E7E7E7',
-    borderRadius: 10,
-    paddingHorizontal: 10,
+    flexWrap: 'wrap',
+    marginBottom: 3,
   },
-  textInput: {
+  labelText: {
+    fontSize: 12,
+    
+    fontWeight: '600',
+    color: '#555',
+    marginRight: 3,
+  },
+  infoText: {
+    fontSize: 12,
+    color: '#333',
+    flexShrink: 1, 
+    
+  },
+  labelText2: {
+    fontSize: 12,
+    margin:9,
+    fontWeight: '600',
+    color: '#555',
+    marginBottom:5,
+    
+  },
+  infoText2: {
+    marginBottom:0,
+    fontSize: 12,
+    color: '#333',
+    flexShrink: 1, 
+  },
+
+
+
+
+
+
+
+  modalOverlay: {
     flex: 1,
-    height: 40,
+    
+    justifyContent: 'flex-end', // Position the modal content at the bottom
   },
+
   modalContainer: {
     flex: 1,
     justifyContent: 'flex-end',
   },
+
   modalHalfContent: {
     height: '50%',
     backgroundColor: '#fff',
@@ -280,6 +355,25 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
+  },
+
+
+
+
+
+
+
+
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#E7E7E7',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+  },
+  textInput: {
+    flex: 1,
+    height: 40,
   },
   modalTitle: {
     fontSize: 22,
@@ -318,7 +412,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'red',
   },
-
 
 
 
@@ -375,21 +468,16 @@ const styles = StyleSheet.create({
   // },
   resultList: {
     marginTop: 10,
-     marginVertical:-230,
+     marginVertical:-260,
     left:13,
     backgroundColor:'white',
     borderRadius:10,
     // width:"110%",
   },
   resultText: {
-    fontSize: 16,
-  },
-  resultItem: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    height:43, 
-    borderRadius:10,
+    
+    Size: 16,
+   
   },
   userItem:{
     marginTop:1,
@@ -414,18 +502,10 @@ const styles = StyleSheet.create({
      marginTop:25,
      left:6,
   },
-  SerachResaultEmpty:{
-    alignSelf:'center',
-    top:70,
-    fontSize:20,
-  },
   spinnerLoading:{
     top:80,
   },
-  SerachTermResultFalse:{
-    alignSelf:"center",
-      top:80,    
-  },
+  
 })
 export default Searchbox
 

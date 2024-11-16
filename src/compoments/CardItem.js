@@ -15,7 +15,7 @@ import { Strings } from '../res/Strings';
 
 const CardItem = (props) => {
   const { User, location, jobType, notes, Phonenumber,image} = props.post;
-    //  console.log("avtareee:",props.post)
+      // console.log("avtareee:",props.post)
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true); 
   const { showLoader, hideLoader } = useLoading();

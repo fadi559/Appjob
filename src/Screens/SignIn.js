@@ -72,7 +72,7 @@ const dropdownAnimation = useRef(new Animated.Value(-200)).current;
       console.error('Signin Error:', error);
       hideLoader(false)
     }
-    // };
+    // }; New skill from iPhone
   };
   const loadFromAsyncStorage = async () => {
     let data = await AsyncStorage.getItem("@auth");

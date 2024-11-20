@@ -8,7 +8,7 @@ export const Api={
     jobposts2:baseUrl + "/api/jobposts2",
     serach:baseUrl+"/api/search",
     filterData:baseUrl+"/api/filterData",
-    Addskils:baseUrl+"/api/skills",
+    Addskills:baseUrl+"/api/BothSkills",
     AddExperince:baseUrl+"/api/experiences",
     preferences:baseUrl+"/api/preferences",
     deleteSkill:(skill,id) => baseUrl+`/api/SkillsDelete?id=${id}&skill=${skill}`,

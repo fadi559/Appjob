@@ -29,11 +29,12 @@ const Card = ({ item }) => {
       fetchPosts();
     }, [])
   );
+  
   const fetchPosts = async () => {
     showLoader(true);
     try {
       const response = await fetch(Api.jobposts2).then(res => res?.json())
-      // console.log("jobs: " , response);
+       console.log("jobs: " , response);
       setPosts(response);
     } catch (error) {
       console.log("error fetching posts", error);
@@ -47,15 +48,18 @@ const Card = ({ item }) => {
         <View style={styles.container}>
           <CustomLoadingSpinner />
     
-          {posts?.map((post, index) => (
-            <CardItem post={post} key={index} />
-          ))}
+          {Array.isArray(posts) && posts.length > 0 ? (
+      posts.map((post, index) => (
+        <CardItem post={post} key={index} />
+      ))
+    ) : (
+      <Text>No Posts Available</Text> // Show a fallback UI if there are no posts
+    )}
         </View>
     );
     }
     
     
-  
 const styles = StyleSheet.create({
   container: {
     flex: 1,

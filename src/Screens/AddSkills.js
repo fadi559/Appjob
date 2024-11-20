@@ -1,6 +1,6 @@
 // AddSkillPage.js
 import React, { useState } from 'react';
-import { View, TextInput, Image,StyleSheet, TouchableOpacity,Alert } from 'react-native';
+import { View, TextInput, Image,StyleSheet, TouchableOpacity,Alert, SafeAreaView } from 'react-native';
 import { UserContext } from '../compoments/usercontext';
 import { useContext } from 'react';
 import { Button } from '@rneui/base'; 
@@ -39,7 +39,7 @@ const AddSkills = ({ route, navigation }) => {
         const body = JSON.stringify({ skill:newSkill , userId: user._id })
         showLoader(true);
         try {
-          await fetch(Api.Addskils, {
+          await fetch(Api.Addskills,{
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -62,7 +62,8 @@ const AddSkills = ({ route, navigation }) => {
 
   return (
     
-    <View style={styles.MainVeiew}>
+    
+      <SafeAreaView style={styles.MainVeiew}>
         
             <TouchableOpacity onPress={()=>navigation.goBack()}>
         <Image
@@ -88,7 +89,7 @@ const AddSkills = ({ route, navigation }) => {
             title=  {Strings.YesAndCancelandSkip.Add[language]}
             onPress={handleAddSkill} />
         </View>
-    </View>
+        </SafeAreaView>
   );
 };
 

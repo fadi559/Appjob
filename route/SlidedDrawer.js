@@ -58,10 +58,10 @@ const [isModalVisible, setModalVisible] = useState(false); // State to toggle th
                     <Text style={styles.languageText}>English</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { setLanguage('arabic'); setModalVisible(false); }} style={styles.languageOption}>
-                    <Text style={styles.languageText}>Arabic</Text>
+                    <Text style={styles.languageText}>العربيه</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { setLanguage('hebrew'); setModalVisible(false); }} style={styles.languageOption}>
-                    <Text style={styles.languageText}>Hebrew</Text>
+                    <Text style={styles.languageText}>עברית</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
                     <Text style={styles.closeText}>Close</Text>

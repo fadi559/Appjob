@@ -16,6 +16,8 @@ export const Api={
     updateProfileImage:baseUrl + "/api/updateProfileImage",
     updateProfileImage2:baseUrl+ "/api/updateProfileImage2",
     SavePhotoUrl:baseUrl + "/api/upload-photo",
+    GetSkills:baseUrl+"/api/GetSkills",
+    GetJobType:baseUrl+"/api/GetJobType",
  } 
 // localhost
 // 192.168.1.241

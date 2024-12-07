@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     // #E9ECEF
     top:14,
     left:1,
-    maxWidth:280,
+    maxWidth:300,
   },
   button: {
     // padding: 5,

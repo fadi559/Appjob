@@ -33,7 +33,7 @@ const CardItem = (props) => {
           size={70}
           rounded
           source={User?.image ? { uri: User.image } : null}
-          icon={User?.image ? null : { name: 'person', type: 'material', color: 'purple' }}
+          icon={User?.image ? null : { name: 'person', type: 'material', color: '#b0c4de', size:48, }}
           iconStyle={{ color: 'purple' }}
           containerStyle={styles.avatar}
           onLoadStart={() => setLoading(true)} 

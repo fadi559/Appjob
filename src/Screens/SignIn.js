@@ -1,7 +1,7 @@
 
 import React, { useContext, useRef, useState } from 'react';
 import ReactNativeBiometrics from 'react-native-biometrics';
-import { View, Text, StyleSheet, Alert, Image ,Modal} from 'react-native';
+import { View, Text, StyleSheet, Alert, Image ,Modal, SafeAreaView} from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import Biometrics from 'react-native-biometrics';
 import { useNavigation } from '@react-navigation/native'
@@ -72,7 +72,7 @@ const dropdownAnimation = useRef(new Animated.Value(-200)).current;
       console.error('Signin Error:', error);
       hideLoader(false)
     }
-    // }; New skill from iPhone
+    
   };
   const loadFromAsyncStorage = async () => {
     let data = await AsyncStorage.getItem("@auth");
@@ -150,8 +150,8 @@ const dropdownAnimation = useRef(new Animated.Value(-200)).current;
 
   return (
   
-    
-    <View style={styles.container}>
+   
+    <SafeAreaView style={styles.container}>
     <TouchableOpacity onPress={toggleDropdown} style={styles.MainLangugeButton}>
   <LinearGradient
     colors={['#ff7e5f', '#feb47b']} 
@@ -221,7 +221,7 @@ const dropdownAnimation = useRef(new Animated.Value(-200)).current;
 )}
 
       {/* <Text>Biometrics not available on this device</Text> */}
-    </View>
+      </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({

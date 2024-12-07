@@ -19,6 +19,13 @@ import CustomDrawer from "../src/Screens/ProfileDrawerpage";
 import { Image } from "react-native-elements";
 import ProfileDrawer from "./Dawer2";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import SearchButton3 from "../src/compoments/SecendSearchButton";
+import { SlideInRight } from "react-native-reanimated";
+
+
+
+
+
 
 
 const TabNavigtor = (props,route,navigation) => {
@@ -143,8 +150,14 @@ const tabsParams = (navigation,props,route) =>({
       
       // ),
       
+      
       headerLeft: () => (
-        <SearchButton/>
+        // <SearchButton/>
+      //  <SearchButton2/>
+      
+     <SearchButton3/>
+      
+
         // <Searchbox/>
         
       ),

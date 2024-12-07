@@ -9,11 +9,13 @@ import SignupScreen from "../src/Screens/Signup";
 import SignIn from "../src/Screens/SignIn"
 import AddSkills from "../src/Screens/AddSkills";
 import AddExperience from "../src/Screens/AddExperience";
+import SearchScreen22 from "../src/Screens/NewSearchBar";
 
 
 
 
 const StackPro = (props, route) => {
+  
   const Stack = createNativeStackNavigator();
   return (
 
@@ -28,6 +30,9 @@ const StackPro = (props, route) => {
        options={({route,navigation})=>({
         
         })} /> 
+
+
+
      </Stack.Navigator>
   );
 }

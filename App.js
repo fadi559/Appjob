@@ -22,12 +22,11 @@ import { useEffect } from 'react';
             // Perform any async tasks, and then hide the splash screen
             const performAsyncTasks = async () => {
                 
-                SplashScreen.hide(); // Hide splash after tasks are done
+                SplashScreen.hide(); 
             };
     
             performAsyncTasks();
-        }, []); // Empty dependency array means this runs once on mount
-     
+        }, []); 
 
       return (
             <View style={{ flex: 1 }}>

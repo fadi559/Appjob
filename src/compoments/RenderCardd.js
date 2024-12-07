@@ -46,14 +46,14 @@ const Card = ({ item }) => {
   return (
     
         <View style={styles.container}>
-          <CustomLoadingSpinner />
+          <CustomLoadingSpinner/>
     
           {Array.isArray(posts) && posts.length > 0 ? (
       posts.map((post, index) => (
         <CardItem post={post} key={index} />
       ))
     ) : (
-      <Text>No Posts Available</Text> // Show a fallback UI if there are no posts
+              <Text></Text>
     )}
         </View>
     );

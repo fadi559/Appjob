@@ -1,10 +1,11 @@
-import { FlatList, Image, StyleSheet, Text, TextInput, View, ActivityIndicator } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, TextInput, View, ActivityIndicator,TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { Api } from '../res/api';
 import _ from 'lodash';
+
 
 const Search = () => {
   const navigation = useNavigation();
@@ -14,8 +15,83 @@ const Search = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [SkillsData,setSkillsdata] = useState([]);
+  const [selectedType,setSelectedType] = useState("skill");
+
+
+
+
+
+
+  const [Type,setType]= useState({
+    skill:{
+      pressed:true,
+      Text:"",
+      
+    },
+    name:{
+      pressed:false,
+      Text:"",
+    },
+    jobType:{
+      pressed:false,
+      Text:"",
+    },
+  });
+
+const GetSkillsAPi=async(body)=>{
+
+  try {
+    const response = await fetch(Api.GetSkills, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    const responseData = await response.json();
+
+    if (responseData && responseData.data) {
+      setSkillsdata(responseData.data);
+      console.log(responseData,"ppppp")
+    } else {
+      setSkillsdata([])
+    }
+  } catch (error) {
+    setError('Failed to fetch data. Please try again later.');
+  } finally {
+    setLoading(false);
+  }
+}
+const GetJobTypeApi =async(body)=>{
+
+  try {
+    const response = await fetch(Api.GetJobType, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    const responseData = await response.json();
+
+    if (responseData && responseData.data) {
+      setSkillsdata(responseData.data);
+      console.log(responseData,"ppppp")
+    } else {
+      setSkillsdata([])
+    }
+  } catch (error) {
+    setError('Failed to fetch data. Please try again later.');
+  } finally {
+    setLoading(false);
+  }
+
+}
+
 
   const renderData = (data) => {
+    console.log(data,"DatanoW44")
     return (
       <FlatList
         data={data}
@@ -46,22 +122,22 @@ const Search = () => {
     setError(null);
     const body = {};
 
-    if (skill) {
+    if (Type.skill.Text) {
       body.skills = {
-        $regex: skill,
+        $regex: Type.skill.Text,
         $options: 'i',
       };
     }
 
-    if (experience) {
+    if (Type.jobType.Text) {
       body.experiences = {
-        $regex: experience,
+        $regex: Type.jobType.Text,
         $options: 'i',
       };
     }
-    if (Name) {
+    if (Type.name.Text) {
       body.name = {
-        $regex: Name,
+        $regex: Type.name.Text,
         $options: 'i',
       };
     }
@@ -88,15 +164,41 @@ const Search = () => {
     }
   };
 
-  // Debounce search to limit API calls
+  
   useEffect(() => {
+    console.log("CONSLNoww66",Type.skill.Text)
     const debounceSearch = _.debounce(() => {
       searchApi();
-    }, 500); // Adjust delay as needed (500ms in this case)
+      GetSkillsAPi();
+      GetJobTypeApi();
+    }, 500);
 
     debounceSearch();
     return debounceSearch.cancel;
-  }, [skill, experience]);
+  }, [Type]);
+
+
+  const RenderSkills=()=>{
+    return(
+      SkillsData.map((skill,i)=>
+      
+      <TouchableOpacity key={i} onPress={()=>{
+      Type.skill.Text=skill.name
+      setType({...Type})
+      }} >
+        <Text> {skill.name}</Text>
+      </TouchableOpacity>
+      )
+    )
+
+  }
+
+  const HandelSerach=(Text)=>{
+    
+    Type[selectedType].Text=Text
+    setType({...Type})
+
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -106,27 +208,46 @@ const Search = () => {
         }}
         title={'Back'}
       />
-      <Text style={styles.label}>Skills</Text>
+     
+
       <TextInput
         style={styles.input}
-        onChangeText={setSkill}
-        value={skill}
-        placeholder="Search skills"
+        onChangeText={(v)=>HandelSerach(v)}
+        value={Type[selectedType].Text}
+        placeholder={"Search " + selectedType}
       />
-      <Text style={styles.label}>Experiences</Text>
-      <TextInput
+      <View>
+
+    {RenderSkills()}
+
+      </View>
+      {/* <Text style={styles.label}>Experiences</Text> */}
+      {/* <TextInput
         style={styles.input}
         onChangeText={setExperience}
         value={experience}
         placeholder="Search experiences"
-      />
-       <Text style={styles.label}>Name</Text>
-      <TextInput
+      /> */}
+
+      <TouchableOpacity onPress={()=>{setSelectedType("skill")}}>
+      <Text style={styles.label}>Skills</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={()=>{setSelectedType("name")}}>
+      <Text style={styles.label}>Name</Text>
+      </TouchableOpacity>
+
+
+      <TouchableOpacity onPress={()=>{setSelectedType("jobType")}}>
+      <Text style={styles.label}>jobType</Text>
+      </TouchableOpacity>
+      
+      {/* <TextInput
         style={styles.input}
         onChangeText={setName}
         value={Name}
         placeholder="Search  name"
-      />
+      /> */}
 
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" style={styles.loadingIndicator} />

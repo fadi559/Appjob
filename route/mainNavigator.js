@@ -12,6 +12,8 @@ import Search from "../src/Screens/Search";
 import ProfileDrawer from "./Dawer2";
 import DrawerNavigator from "./Dawer2";
 import CustomDrawer from "../src/Screens/ProfileDrawerpage";
+import SearchScreen22 from "../src/Screens/NewSearchBar";
+import { RollInLeft, SlideInLeft, SlideInRight, SlideOutDown, SlideOutRight } from "react-native-reanimated";
 
 
 const Stack = createNativeStackNavigator();
@@ -26,6 +28,7 @@ const MainNavigator = (props,route) => {
              {/* <CustomLoadingSpinner /> */}
             <Stack.Navigator initialRouteName='stack' screenOptions={{
                 headerShown: false,
+               
 
             }}>
                 <Stack.Screen name='StackProfile' component={StackPro} options={({presentation:"containedModal"})}/>
@@ -33,12 +36,24 @@ const MainNavigator = (props,route) => {
                 <Stack.Screen name='stack' component={Stacknav} />
                 <Stack.Screen name='drawer' component={Darwernav} />
                 <Stack.Screen name='Search' component={Search} />
-              
+                <Stack.Screen
+          name="SearchScreen22"
+          component={SearchScreen22}
+          options={{
+            animation:'slide_from_right',
+          onTransitionStart: () => console.log('Transition Start'),
+          onTransitionEnd: () => console.log('Transition End'),
+
+
+          }}
+          />
 
             </Stack.Navigator>
+            
         </NavigationContainer>
         
     )
 }
+
 
 export default MainNavigator;

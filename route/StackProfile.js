@@ -10,6 +10,8 @@ import SignIn from "../src/Screens/SignIn"
 import AddSkills from "../src/Screens/AddSkills";
 import AddExperience from "../src/Screens/AddExperience";
 import SearchScreen22 from "../src/Screens/NewSearchBar";
+import SkillPage from "../src/Screens/SkillSearchPage";
+import JobTypePage from "../src/Screens/JobTypePage";
 
 
 
@@ -29,7 +31,12 @@ const StackPro = (props, route) => {
         <Stack.Screen name='AddExperience' component={AddExperience}
        options={({route,navigation})=>({
         
-        })} /> 
+        })} />
+
+
+  {/* <Stack.Screen name="SearchScreen22" component={SearchScreen22} /> */}
+  <Stack.Screen name="JobTypePage" component={JobTypePage} />
+  <Stack.Screen name="SkillPage" component={SkillPage} />
 
 
 

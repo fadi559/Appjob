@@ -11,9 +11,10 @@ const Search = () => {
   const navigation = useNavigation();
   const [skill, setSkill] = useState('');
   const [experience, setExperience] = useState('');
-  const [Name, setName] = useState('');
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [Name, setName] = useState('');
+
+  const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [SkillsData,setSkillsdata] = useState([]);
   const [selectedType,setSelectedType] = useState("skill");
@@ -351,3 +352,10 @@ const styles = StyleSheet.create({
     color: 'red',
   },
 });
+
+
+
+
+
+
+

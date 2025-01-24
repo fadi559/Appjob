@@ -14,6 +14,7 @@ import DrawerNavigator from "./Dawer2";
 import CustomDrawer from "../src/Screens/ProfileDrawerpage";
 import SearchScreen22 from "../src/Screens/NewSearchBar";
 import { RollInLeft, SlideInLeft, SlideInRight, SlideOutDown, SlideOutRight } from "react-native-reanimated";
+import ResaultPage from "../src/Screens/ResaultPage";
 
 
 const Stack = createNativeStackNavigator();
@@ -36,16 +37,18 @@ const MainNavigator = (props,route) => {
                 <Stack.Screen name='stack' component={Stacknav} />
                 <Stack.Screen name='drawer' component={Darwernav} />
                 <Stack.Screen name='Search' component={Search} />
+                <Stack.Screen name='ResaultPage' component={ResaultPage} />
                 <Stack.Screen
           name="SearchScreen22"
           component={SearchScreen22}
+         
           options={{
-            animation:'slide_from_right',
-          onTransitionStart: () => console.log('Transition Start'),
-          onTransitionEnd: () => console.log('Transition End'),
-
-
+            animation:'slide_from_left',
+            animationDuration:140,   ///the one how make the pag movies faster =
+            
+           
           }}
+          
           />
 
             </Stack.Navigator>

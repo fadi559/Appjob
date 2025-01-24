@@ -45,10 +45,10 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (User?.image) {
-      // Preload the image to ensure it's available when needed
+     
       Image.prefetch(User.image)
-        .then(() => setLoading(false)) // Set loading to false when prefetch is done
-        .catch(() => setLoading(false)); // Handle errors
+        .then(() => setLoading(false)) 
+        .catch(() => setLoading(false)); 
     } else {
       setLoading(false);
     }

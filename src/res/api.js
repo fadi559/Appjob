@@ -6,7 +6,6 @@ export const Api={
     signIn:baseUrl +"/api/signIn",
     jobposts:baseUrl +  "/api/jobposts",
     jobposts2:baseUrl + "/api/jobposts2",
-    serach:baseUrl+"/api/search",
     filterData:baseUrl+"/api/filterData",
     Addskills:baseUrl+"/api/BothSkills",
     AddExperince:baseUrl+"/api/experiences",
@@ -18,6 +17,8 @@ export const Api={
     SavePhotoUrl:baseUrl + "/api/upload-photo",
     GetSkills:baseUrl+"/api/GetSkills",
     GetJobType:baseUrl+"/api/GetJobType",
+    getJobsByTitle:baseUrl+"/api/getJobsByTitle",
+    getSkillsByTitle:baseUrl+"/api/getSkillsByTitle"
  } 
 // localhost
 // 192.168.1.241

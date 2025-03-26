@@ -13,7 +13,7 @@ import CustomLoadingSpinner from '../compoments/Loading'
 import { useLoading } from '../compoments/LoadingContext'
 // import { Icon } from 'react-native-vector-icons/Icon'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import JobProfile from './JobProfile'
+import JobProfile from './JobProfilepage'
 
 
 

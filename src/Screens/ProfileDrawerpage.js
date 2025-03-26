@@ -6,7 +6,7 @@ import { FlatList } from 'react-native'
 import { UserContext } from '../compoments/usercontext'
 import { useContext } from 'react'
 import { useNavigation,DrawerActions } from '@react-navigation/native'
-import JobProfile from './JobProfile'
+import JobProfile from './JobProfilepage'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';

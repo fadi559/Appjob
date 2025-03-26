@@ -34,7 +34,7 @@ const JobTypePage = () => {
       });
       const responseData = await response.json();
       if (responseData && responseData.data) {
-        setJobs(responseData.data); // Set the fetched jobs
+        setJobs(responseData.data); 
         console.log('Response data:', responseData);
       } else {
         setJobs([]); 
@@ -57,7 +57,7 @@ const JobTypePage = () => {
         <View style={styles.jobDetails}>
           <Text style={styles.jobTitle}>{item.jobType || 'Job Title'}</Text>
           <Text style={styles.jobCompany}>{item.User?.name || 'Company Name'}</Text>
-          <Text style={styles.jobCompany}>{item.loaction || 'Company Name'}</Text>
+          <Text style={styles.jobCompany}>{item.location || 'Company loaction'}</Text>
         </View>
       </View>
     </TouchableOpacity>

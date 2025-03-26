@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Api } from '../res/api';
 import CustomLoadingSpinner from '../compoments/Loading';
 import { Icon } from 'react-native-elements';
-import JobProfile from './JobProfile';
+import JobProfile from './JobProfilepage';
 import SkillPage from './SkillSearchPage';
 import JobTypePage from './JobTypePage';
 
@@ -24,9 +24,9 @@ import JobTypePage from './JobTypePage';
 const SearchScreen22 = () => {
   const [search, setSearch] = useState('');
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState(['name']); // Default to 'name'
+  const [selectedFilters, setSelectedFilters] = useState(['name']); 
   const [ALLData, setALLData] = useState([]);
-  const [loading, setLoading] = useState(false); // Loader state
+  const [loading, setLoading] = useState(false); 
   const navigation = useNavigation();
 
   const [Type, setType] = useState({
@@ -39,8 +39,8 @@ const SearchScreen22 = () => {
     const newType = { skill: { pressed: false, Text: '' }, name: { pressed: false, Text: '' }, jobType: { pressed: false, Text: '' } };
     newType[option].pressed = true;
     setType(newType);
-    setSearch(''); // Clear the search input when switching filters
-    setALLData([]); // Clear previous results
+    setSearch(''); 
+    setALLData([]); 
     setSelectedFilters([option]);
     setIsFilterModalVisible(false);
   };
@@ -103,7 +103,6 @@ const SearchScreen22 = () => {
 
 
 
-
   const handleSearchChange = (text) => {
     setSearch(text); 
     const activeFilter = selectedFilters[0];
@@ -156,7 +155,7 @@ const SearchScreen22 = () => {
     const activeFilter = selectedFilters[0];
     if (activeFilter === 'name') {
         navigation.navigate('drawer', {
-            screen: 'JobProfile',
+            screen: 'UserProfile',
             params: { jobTypeName :item.name },
           });
       
@@ -217,6 +216,7 @@ const SearchScreen22 = () => {
           placeholder={`Search ${selectedFilters[0]}...`}
           placeholderTextColor="#888"
           value={search}
+          
           onChangeText={handleSearchChange}
         />
         <TouchableOpacity onPress={() => setIsFilterModalVisible(true)}>
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 16,
         paddingVertical: 12,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#E7E7E7',
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
       },
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 25,
-        backgroundColor: '#f9f9f9',
+        backgroundColor: '#E7E7E7',
         fontSize: 16,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },

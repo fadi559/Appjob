@@ -4,7 +4,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/native';
 import UserProfile from "../src/Screens/UserProfile";
-import JobProfile from "../src/Screens/JobProfile";
+import JobProfile from "../src/Screens/JobProfilepage";
 import { Image, StyleSheet } from "react-native";
 import { Button } from "react-native-elements/dist/buttons/Button";
 import { Images } from "../src/Images/images";
@@ -19,6 +19,7 @@ const Darwernav = () => {
 
      return (
 
+         
           <Drawer.Navigator>
                {/* <Drawer.Screen name="ChatScreen" component={ChatScreen} 
                options={({ route, navigation, }) => (
@@ -81,9 +82,11 @@ const Darwernav = () => {
       /> */}
 
           </Drawer.Navigator>
+        
      );
 
 }
+
 
 const styles = StyleSheet.create({
      Button:{

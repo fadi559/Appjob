@@ -11,6 +11,7 @@ import {
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Api } from '../res/api';
 import CustomLoadingSpinner from '../compoments/Loading';
+import UserProfile from './UserProfile';
 
 const SkillPage = () => {
   const route = useRoute();
@@ -45,7 +46,17 @@ const SkillPage = () => {
   };
 
   const renderUserItem = ({ item }) => (
-    <TouchableOpacity style={styles.userCard}>
+    <TouchableOpacity
+      style={styles.userCard}
+      onPress={() => navigation.navigate('drawer', { 
+        screen: 'UserProfile', 
+        params: { 
+          userId: item._id,        // Pass user ID
+          userName: item.name,     // Pass user name
+          skillName: skillName     // Pass skill name
+        } 
+      })}
+    >
       <View style={styles.userContent}>
         {item.image ? (
           <Image source={{ uri: item.image }} style={styles.userImage} />
@@ -61,12 +72,14 @@ const SkillPage = () => {
       </View>
     </TouchableOpacity>
   );
+  
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Image source={require('../Images/backIcon.png')} style={styles.backIcon} />
+        
         </TouchableOpacity>
         <Text style={styles.header}>{skillName || 'Skill'}</Text>
       </View>
@@ -100,7 +113,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#FFF',
+    backgroundColor: '#F5F5F5',
     borderBottomWidth: 1,
     borderBottomColor: '#E0E0E0',
   },

@@ -13,7 +13,7 @@ import { Api } from '../res/api';
 import UserProfile from '../Screens/UserProfile';
 import { useLoading } from './LoadingContext';
 import CustomLoadingSpinner from './Loading';
-import JobProfile from '../Screens/JobProfile';
+import JobProfile from '../Screens/JobProfilepage';
 
 
 

@@ -1,6 +1,6 @@
 import UpdateProfileImage from "../Screens/UpdateProfileImage"
 
-export const baseUrl ='http://localhost:8000'
+export const baseUrl ='http://192.168.1.241:8000'
 export const Api={
     signup:baseUrl + "/api/signup",
     signIn:baseUrl +"/api/signIn",

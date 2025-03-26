@@ -12,7 +12,7 @@ import Search from "../src/Screens/Search";
 import ProfileDrawer from "./Dawer2";
 import DrawerNavigator from "./Dawer2";
 import CustomDrawer from "../src/Screens/ProfileDrawerpage";
-import SearchScreen22 from "../src/Screens/NewSearchBar";
+import SearchScreen22 from "../src/Screens/SearchScreen22";
 import { RollInLeft, SlideInLeft, SlideInRight, SlideOutDown, SlideOutRight } from "react-native-reanimated";
 import ResaultPage from "../src/Screens/ResaultPage";
 

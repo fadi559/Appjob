@@ -47,12 +47,9 @@ const TabNavigtor = (props,route,navigation) => {
     borderBottomWidth:0.8,},tabBarActiveTintColor:'#3A416F',}} >
 
      
-<Tab.Screen {...tabsParams(props.navigation).profile} />
-      {/* <Tab.Screen {...tabsParams.Nofiction} /> */}
-      <Tab.Screen {...tabsParams(props.navigation).share} />
-      {/* <Tab.Screen {...tabsParams.loaction} /> */}
-      <Tab.Screen {...tabsParams(props.navigation).home} />
-    
+{Object.values(tabsParams(navigation)).map((tab) => (
+          <Tab.Screen key={tab.name} {...tab} />
+        ))}
     </Tab.Navigator>
     </SafeAreaProvider>
     
@@ -67,7 +64,7 @@ const tabsParams = (navigation,props,route) =>({
 
   profile: {
     
-    name: "Profile",
+    name: "ProfileTab",
     component: ProfileDrawer,
     options: {
       tabBarLabel: 'Profile',
@@ -150,16 +147,9 @@ const tabsParams = (navigation,props,route) =>({
       
       // ),
       
-      
       headerLeft: () => (
-        // <SearchButton/>
-      //  <SearchButton2/>
       
-     <SearchButton3/>
-      
-
-        // <Searchbox/>
-        
+     <SearchButton3/>    
       ),
       tabBarLabel: 'Home',
       tabBarIcon: ({ color, size }) => (

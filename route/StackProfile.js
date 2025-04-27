@@ -2,7 +2,6 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Chat from "../src/Screens/chat";
-import Tabnavictor from "./tab";
 import { StyleSheet, Button, Image } from "react-native";
 import ChatScreen from "../src/Screens/ChatScreen";
 import SignupScreen from "../src/Screens/Signup";

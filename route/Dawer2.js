@@ -1,13 +1,15 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import CustomDrawer from '../src/Screens/ProfileDrawerpage';
+ import CustomDrawer from '../src/Screens/ProfileDrawerpage';
 import ProfilePage from '../src/Screens/profile';
 import {Image} from 'react-native-reanimated/lib/typescript/Animated';
-import TabNavigtor from './tab';
-import MainNavigator from './mainNavigator';
 import SettingsScreen from '../src/Screens/SettingsScreen';
 import SlidedDrawer from './SlidedDrawer';
+
+
+
+
 
 const Drawer = createDrawerNavigator();
 
